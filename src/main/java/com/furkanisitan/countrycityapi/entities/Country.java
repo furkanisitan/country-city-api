@@ -24,7 +24,7 @@ public class Country extends Entity<Long> {
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(name = "life-expectancy", scale = 1)
+    @Column(name = "life_expectancy", scale = 1)
     private double lifeExpectancy;
 
     //region equals & hashCode
