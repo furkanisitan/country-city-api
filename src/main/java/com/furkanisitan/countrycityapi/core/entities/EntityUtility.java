@@ -9,6 +9,9 @@ public abstract class EntityUtility<T extends Entity<?>> {
 
     protected final T clazz;
 
+    /**
+     * @param clazz the instance of the entity to handle.
+     */
     protected EntityUtility(T clazz) {
         this.clazz = clazz;
     }

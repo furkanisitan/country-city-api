@@ -5,5 +5,8 @@ package com.furkanisitan.countrycityapi.core.entities;
  */
 public interface HasUtility<T extends EntityUtility<Entity<?>>> {
 
+    /**
+     * @return an instance of a class of type {@link T} that contains helper methods for entity.
+     */
     T utility();
 }
