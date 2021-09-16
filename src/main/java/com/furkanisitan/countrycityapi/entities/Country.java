@@ -32,6 +32,9 @@ public class Country extends Entity<Long> {
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private Set<City> cities = new HashSet<>();
 
+    @OneToMany(mappedBy = "country", orphanRemoval = true)
+    private Set<CountryLanguage> countryLanguages = new HashSet<>();
+
     //region equals & hashCode
     @Override
     public boolean equals(Object o) {
