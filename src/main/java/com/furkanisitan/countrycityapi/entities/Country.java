@@ -1,14 +1,15 @@
 package com.furkanisitan.countrycityapi.entities;
 
 import com.furkanisitan.countrycityapi.core.entities.Entity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +27,10 @@ public class Country extends Entity<Long> {
 
     @Column(name = "life_expectancy", scale = 1)
     private double lifeExpectancy;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    private Set<City> cities = new HashSet<>();
 
     //region equals & hashCode
     @Override
