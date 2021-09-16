@@ -38,7 +38,7 @@ public class Country extends Entity<Long> {
 
     @Override
     public int hashCode() {
-        return code == null ? getClass().hashCode() : code.hashCode();
+        return Objects.hashCode(code);
     }
     //endregion
 
