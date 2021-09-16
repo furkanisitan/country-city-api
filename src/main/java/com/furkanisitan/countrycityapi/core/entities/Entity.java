@@ -26,7 +26,7 @@ public abstract class Entity<ID extends Serializable> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ID id;
+    protected ID id;
 
     /**
      * @implNote If a control for subclasses is desired, this method should be overridden.
