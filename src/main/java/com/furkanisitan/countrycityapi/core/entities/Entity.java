@@ -41,7 +41,6 @@ public abstract class Entity<ID extends Serializable> {
 
     @Override
     public int hashCode() {
-        // The id can be empty. If so, it should return hashcode by class type.
-        return id == null ? getClass().hashCode() : id.hashCode();
+        return Objects.hashCode(id);
     }
 }
