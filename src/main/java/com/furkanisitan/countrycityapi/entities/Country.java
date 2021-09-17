@@ -1,6 +1,8 @@
 package com.furkanisitan.countrycityapi.entities;
 
 import com.furkanisitan.countrycityapi.core.entities.Entity;
+import com.furkanisitan.countrycityapi.core.entities.HasUtility;
+import com.furkanisitan.countrycityapi.entities.utilities.CountryUtility;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ import java.util.Set;
 @javax.persistence.Entity
 @Table(name = "countries")
 @AttributeOverride(name = "id", column = @Column(name = "country_id", nullable = false))
-public class Country extends Entity<Long> {
+public class Country extends Entity<Long> implements HasUtility<CountryUtility> {
 
     @Column(unique = true, length = 5, nullable = false)
     private String code;
@@ -49,5 +51,10 @@ public class Country extends Entity<Long> {
         return Objects.hashCode(code);
     }
     //endregion
+
+    @Override
+    public CountryUtility utility() {
+        return new CountryUtility(this);
+    }
 
 }
