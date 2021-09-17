@@ -2,6 +2,7 @@ package com.furkanisitan.countrycityapi.entities.ids;
 
 import com.furkanisitan.countrycityapi.entities.Country;
 import com.furkanisitan.countrycityapi.entities.Language;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class CountryLanguageId implements Serializable {
 

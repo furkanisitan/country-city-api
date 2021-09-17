@@ -18,4 +18,10 @@ public class CountryLanguage extends CompositeEntity<CountryLanguageId> {
 
     @Column(name = "is_official")
     private boolean official;
+
+    public static CountryLanguage from(Country country, Language language) {
+        CountryLanguage countryLanguage = new CountryLanguage();
+        countryLanguage.setId(new CountryLanguageId(country, language));
+        return countryLanguage;
+    }
 }
