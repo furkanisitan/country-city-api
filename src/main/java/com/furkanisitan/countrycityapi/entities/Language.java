@@ -7,11 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -26,9 +23,6 @@ public class Language extends Entity<Long> {
 
     @Column(length = 100, nullable = false)
     private String name;
-
-    @OneToMany(mappedBy = "country", orphanRemoval = true)
-    private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
     //region equals & hashCode
     @Override
