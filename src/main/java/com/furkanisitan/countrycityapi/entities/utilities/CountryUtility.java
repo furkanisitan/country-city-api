@@ -5,8 +5,11 @@ import com.furkanisitan.countrycityapi.entities.City;
 import com.furkanisitan.countrycityapi.entities.Country;
 import com.furkanisitan.countrycityapi.entities.CountryLanguage;
 import com.furkanisitan.countrycityapi.entities.Language;
+import com.furkanisitan.countrycityapi.entities.ids.CountryLanguageId;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
+
+import java.util.Iterator;
 
 public class CountryUtility extends EntityUtility<Country> {
 
@@ -78,7 +81,6 @@ public class CountryUtility extends EntityUtility<Country> {
         countryLanguage.setOfficial(isOfficial);
 
         clazz.getCountryLanguages().add(countryLanguage);
-        language.getCountryLanguages().add(countryLanguage);
     }
 
     /**
@@ -88,14 +90,18 @@ public class CountryUtility extends EntityUtility<Country> {
      * @throws IllegalArgumentException if language is {@literal null}.
      */
     public void removeLanguage(@NonNull Language language) {
-        // TODO Implement this method when writing test methods.
-    }
+        Assert.notNull(language, "language must not be null");
 
-    /**
-     * Removes all of the languages from this country.
-     */
-    public void clearLanguages() {
-        // TODO Implement this method when writing test methods.
+        CountryLanguageId id = new CountryLanguageId(clazz, language);
+
+        for (Iterator<CountryLanguage> iterator = clazz.getCountryLanguages().iterator(); iterator.hasNext(); ) {
+            CountryLanguage countryLanguage = iterator.next();
+
+            if (countryLanguage.getId().equals(id)) {
+                iterator.remove();
+                countryLanguage.setId(null);
+            }
+        }
     }
 
 }
