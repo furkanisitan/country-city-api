@@ -34,6 +34,7 @@ public class Country extends Entity<Long> implements HasUtility<CountryUtility> 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "country", orphanRemoval = true)
     private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
