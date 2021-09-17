@@ -29,7 +29,7 @@ public class Country extends Entity<Long> {
     private double lifeExpectancy;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
 
     @OneToMany(mappedBy = "country", orphanRemoval = true)
