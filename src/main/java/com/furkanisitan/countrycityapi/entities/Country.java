@@ -35,7 +35,7 @@ public class Country extends Entity<Long> implements HasUtility<CountryUtility> 
     private Set<City> cities = new HashSet<>();
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "country", orphanRemoval = true)
+    @OneToMany(mappedBy = "id.country", orphanRemoval = true)
     private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
     //region equals & hashCode
