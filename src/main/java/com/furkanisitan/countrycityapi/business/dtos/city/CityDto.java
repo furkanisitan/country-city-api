@@ -7,6 +7,7 @@ public class CityDto {
 
     private Long id;
     private String name;
+    private long population;
     private String countryCode;
 
 }

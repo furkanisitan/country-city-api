@@ -6,6 +6,7 @@ import lombok.Data;
 public class CityCreateDto {
 
     private String name;
+    private long population;
     private String countryCode;
 
 }
