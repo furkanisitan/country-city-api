@@ -5,6 +5,7 @@ import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
 import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
 import com.furkanisitan.countrycityapi.core.exceptions.EntityNotExistsException;
 import com.furkanisitan.countrycityapi.core.exceptions.ForeignKeyConstraintViolationException;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -22,7 +23,9 @@ public interface CityService {
      *
      * @param id the primary key of the entity.
      * @return a {@link CityDto} by {@literal id}.
+     * @implSpec return {@code null} if entity not exists by {@literal id}.
      */
+    @Nullable
     CityDto findById(Long id);
 
     /**
