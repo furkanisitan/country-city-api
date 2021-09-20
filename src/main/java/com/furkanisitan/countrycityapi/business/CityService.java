@@ -6,9 +6,12 @@ import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
 import com.furkanisitan.countrycityapi.core.exceptions.EntityNotExistsException;
 import com.furkanisitan.countrycityapi.core.exceptions.ForeignKeyConstraintViolationException;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 public interface CityService {
 
     /**
@@ -35,7 +38,7 @@ public interface CityService {
      * @return the added city by mapping it to {@link CityDto}.
      * @throws ForeignKeyConstraintViolationException if country is not exists by {@link CityCreateDto#getCountryCode()}.
      */
-    CityDto create(CityCreateDto cityCreateDto);
+    CityDto create(@Valid CityCreateDto cityCreateDto);
 
     /**
      * Updates the city.
@@ -44,7 +47,7 @@ public interface CityService {
      * @throws EntityNotExistsException               if city is not exists.
      * @throws ForeignKeyConstraintViolationException if country is not exists by {@link CityUpdateDto#getCountryCode()}.
      */
-    void update(CityUpdateDto cityUpdateDto);
+    void update(@Valid CityUpdateDto cityUpdateDto);
 
     /**
      * Deletes city by {@literal id}.
