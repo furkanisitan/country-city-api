@@ -22,7 +22,7 @@ public class City extends Entity<Long> {
     @Column(nullable = false)
     private long population;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
 
