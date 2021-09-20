@@ -41,6 +41,7 @@ public class CityManager implements CityService {
         return CityMapper.INSTANCE.toCityDto(repository.findById(id).orElse(null));
     }
 
+    @Transactional
     @Override
     public CityDto create(CityCreateDto cityCreateDto) {
 
@@ -55,6 +56,7 @@ public class CityManager implements CityService {
         return CityMapper.INSTANCE.toCityDto(repository.save(city));
     }
 
+    @Transactional
     @Override
     public void update(CityUpdateDto cityUpdateDto) {
 
