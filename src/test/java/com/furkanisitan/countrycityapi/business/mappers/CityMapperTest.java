@@ -15,17 +15,24 @@ class CityMapperTest {
     @Test
     void toCityDto_AllFieldsAreEqualsByCity() {
 
+        Country country = new Country();
+        country.setCode("country_code");
+
         City city = new City();
         city.setId(1L);
         city.setName("city_name");
         city.setPopulation(22);
+        city.setCountry(country);
+
 
         CityDto dto = CityMapper.INSTANCE.toCityDto(city);
+
 
         assertAll(
                 () -> assertEquals(city.getId(), dto.getId()),
                 () -> assertEquals(city.getName(), dto.getName()),
-                () -> assertEquals(city.getPopulation(), dto.getPopulation())
+                () -> assertEquals(city.getPopulation(), dto.getPopulation()),
+                () -> assertEquals(city.getCountry().getCode(), dto.getCountryCode())
         );
     }
 

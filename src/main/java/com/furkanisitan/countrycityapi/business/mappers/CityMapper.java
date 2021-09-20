@@ -5,6 +5,7 @@ import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
 import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
 import com.furkanisitan.countrycityapi.entities.City;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -17,6 +18,7 @@ public interface CityMapper {
 
     List<CityDto> toCityDtoList(List<City> source);
 
+    @Mapping(target = "countryCode", source = "country.code")
     CityDto toCityDto(City source);
 
     City fromCityCreateDto(CityCreateDto source);
