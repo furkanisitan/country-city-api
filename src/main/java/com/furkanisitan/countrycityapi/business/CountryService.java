@@ -1,6 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.countrycityapi.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country;
 import org.springframework.lang.Nullable;
 
 public interface CountryService {

@@ -1,6 +1,6 @@
 package com.furkanisitan.countrycityapi.dataaccess;
 
-import com.furkanisitan.countrycityapi.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

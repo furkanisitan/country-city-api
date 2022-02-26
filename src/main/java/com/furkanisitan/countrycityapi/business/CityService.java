@@ -1,10 +1,10 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
-import com.furkanisitan.countrycityapi.core.exceptions.EntityNotExistsException;
-import com.furkanisitan.countrycityapi.core.exceptions.ForeignKeyConstraintViolationException;
+import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
+import com.furkanisitan.core.exceptions.RecordNotFoundException;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,45 +15,45 @@ import java.util.List;
 public interface CityService {
 
     /**
-     * Returns all cities by mapping them to {@link CityDto}.
+     * Returns all cities by mapping them to {@link CityResponse}.
      *
-     * @return all cities by mapping them to {@link CityDto}.
+     * @return all cities by mapping them to {@link CityResponse}.
      */
-    List<CityDto> findAll();
+    List<CityResponse> findAll();
 
     /**
-     * Returns a {@link CityDto} by {@literal id}.
+     * Returns a {@link CityResponse} by {@literal id}.
      *
      * @param id the primary key of the entity.
-     * @return a {@link CityDto} by {@literal id}.
+     * @return a {@link CityResponse} by {@literal id}.
      * @implSpec return {@code null} if entity not exists by {@literal id}.
      */
     @Nullable
-    CityDto findById(Long id);
+    CityResponse findById(Long id);
 
     /**
      * Creates a new city.
      *
-     * @param cityCreateDto the dto object required to create a new city.
-     * @return the added city by mapping it to {@link CityDto}.
-     * @throws ForeignKeyConstraintViolationException if country is not exists by {@link CityCreateDto#getCountryCode()}.
+     * @param request the dto object required to create a new city.
+     * @return the added city by mapping it to {@link CityResponse}.
+     * @throws ForeignKeyConstraintException if country is not exists by {@link CityCreateRequest#getCountryCode()}.
      */
-    CityDto create(@Valid CityCreateDto cityCreateDto);
+    CityResponse create(@Valid CityCreateRequest request);
 
     /**
      * Updates the city.
      *
-     * @param cityUpdateDto the dto object required to update the city.
-     * @throws EntityNotExistsException               if city is not exists.
-     * @throws ForeignKeyConstraintViolationException if country is not exists by {@link CityUpdateDto#getCountryCode()}.
+     * @param request the dto object required to update the city.
+     * @throws RecordNotFoundException       if city is not exists.
+     * @throws ForeignKeyConstraintException if country is not exists by {@link CityUpdateRequest#getCountryCode()}.
      */
-    void update(@Valid CityUpdateDto cityUpdateDto);
+    void update(@Valid CityUpdateRequest request);
 
     /**
      * Deletes city by {@literal id}.
      *
      * @param id the primary key of the entity.
-     * @throws EntityNotExistsException if city is not exists by {@literal id}.
+     * @throws RecordNotFoundException if city is not exists by {@literal id}.
      */
     void deleteById(Long id);
 

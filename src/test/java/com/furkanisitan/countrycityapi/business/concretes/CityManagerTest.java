@@ -1,14 +1,14 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
+import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
+import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.business.CountryService;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
-import com.furkanisitan.countrycityapi.core.exceptions.EntityNotExistsException;
-import com.furkanisitan.countrycityapi.core.exceptions.ForeignKeyConstraintViolationException;
 import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
-import com.furkanisitan.countrycityapi.entities.City;
-import com.furkanisitan.countrycityapi.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,21 +41,21 @@ class CityManagerTest {
         Country country = new Country();
         country.setCode(countryCode);
 
-        CityCreateDto cityCreateDto = new CityCreateDto();
-        cityCreateDto.setCountryCode(countryCode);
+        CityCreateRequest request = new CityCreateRequest();
+        request.setCountryCode(countryCode);
 
         City city = new City();
         city.setCountry(country);
 
-        when(countryService.getByCode(cityCreateDto.getCountryCode())).thenReturn(country);
+        when(countryService.getByCode(request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
 
-        CityDto cityDto = cityManager.create(cityCreateDto);
+        CityResponse response = cityManager.create(request);
 
         assertAll(
-                () -> assertNotNull(cityDto),
-                () -> assertEquals(cityCreateDto.getCountryCode(), cityDto.getCountryCode())
+                () -> assertNotNull(response),
+                () -> assertEquals(request.getCountryCode(), response.getCountryCode())
         );
 
     }
@@ -63,48 +63,48 @@ class CityManagerTest {
     @Test
     void create_ThrowsForeignKeyConstraintViolationException_CountryCodeNotExists() {
 
-        CityCreateDto cityCreateDto = new CityCreateDto();
+        CityCreateRequest request = new CityCreateRequest();
 
-        when(countryService.getByCode(cityCreateDto.getCountryCode())).thenReturn(null);
+        when(countryService.getByCode(request.getCountryCode())).thenReturn(null);
 
-        assertThrows(ForeignKeyConstraintViolationException.class, () -> cityManager.create(cityCreateDto));
+        assertThrows(ForeignKeyConstraintException.class, () -> cityManager.create(request));
     }
 
     @Test
     void update_DoesNotThrowsException() {
 
-        CityUpdateDto cityUpdateDto = new CityUpdateDto();
+        CityUpdateRequest request = new CityUpdateRequest();
         City city = new City();
         Country country = new Country();
 
-        when(cityRepository.findById(cityUpdateDto.getId())).thenReturn(Optional.of(city));
-        when(countryService.getByCode(cityUpdateDto.getCountryCode())).thenReturn(country);
+        when(cityRepository.findById(request.getId())).thenReturn(Optional.of(city));
+        when(countryService.getByCode(request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
-        assertDoesNotThrow(() -> cityManager.update(cityUpdateDto));
+        assertDoesNotThrow(() -> cityManager.update(request));
     }
 
     @Test
     void update_ThrowsEntityNotExistsException_IdNotExists() {
 
-        CityUpdateDto cityUpdateDto = new CityUpdateDto();
-        cityUpdateDto.setId(1L);
+        CityUpdateRequest request = new CityUpdateRequest();
+        request.setId(1L);
 
-        when(cityRepository.findById(cityUpdateDto.getId())).thenReturn(Optional.empty());
+        when(cityRepository.findById(request.getId())).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotExistsException.class, () -> cityManager.update(cityUpdateDto));
+        assertThrows(RecordNotFoundException.class, () -> cityManager.update(request));
     }
 
     @Test
     void update_ThrowsForeignKeyConstraintViolationException_CountryCodeNotExists() {
 
-        CityUpdateDto cityUpdateDto = new CityUpdateDto();
+        CityUpdateRequest request = new CityUpdateRequest();
         City city = new City();
 
-        when(cityRepository.findById(cityUpdateDto.getId())).thenReturn(Optional.of(city));
-        when(countryService.getByCode(cityUpdateDto.getCountryCode())).thenReturn(null);
+        when(cityRepository.findById(request.getId())).thenReturn(Optional.of(city));
+        when(countryService.getByCode(request.getCountryCode())).thenReturn(null);
 
-        assertThrows(ForeignKeyConstraintViolationException.class, () -> cityManager.update(cityUpdateDto));
+        assertThrows(ForeignKeyConstraintException.class, () -> cityManager.update(request));
     }
 
     @Test
@@ -121,6 +121,6 @@ class CityManagerTest {
 
         when(cityRepository.existsById(anyLong())).thenReturn(Boolean.FALSE);
 
-        assertThrows(EntityNotExistsException.class, () -> cityManager.deleteById(anyLong()));
+        assertThrows(RecordNotFoundException.class, () -> cityManager.deleteById(anyLong()));
     }
 }

@@ -1,9 +1,9 @@
 package com.furkanisitan.countrycityapi.business.mappers;
 
-import com.furkanisitan.countrycityapi.business.dtos.country.CountryCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.country.CountryDto;
-import com.furkanisitan.countrycityapi.business.dtos.country.CountryUpdateDto;
-import com.furkanisitan.countrycityapi.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -15,12 +15,12 @@ public interface CountryMapper {
 
     CountryMapper INSTANCE = Mappers.getMapper(CountryMapper.class);
 
-    List<CountryDto> toCountryDtoList(List<Country> source);
+    List<CountryResponse> toResponseList(List<Country> source);
 
-    CountryDto toCountryDto(Country source);
+    CountryResponse toResponse(Country source);
 
-    Country fromCountryCreateDto(CountryCreateDto source);
+    Country fromCreateRequest(CountryCreateRequest source);
 
-    void updateFromCountryUpdateDto(CountryUpdateDto source, @MappingTarget Country target);
+    void updateFromUpdateRequest(CountryUpdateRequest source, @MappingTarget Country target);
 
 }

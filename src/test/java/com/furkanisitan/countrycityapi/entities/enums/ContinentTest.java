@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.entities.enums;
 
+import com.furkanisitan.countrycityapi.model.entities.enums.Continent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

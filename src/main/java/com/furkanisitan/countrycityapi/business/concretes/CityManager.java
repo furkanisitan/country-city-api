@@ -1,17 +1,18 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
+import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
+import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.business.CountryService;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
 import com.furkanisitan.countrycityapi.business.mappers.CityMapper;
-import com.furkanisitan.countrycityapi.core.exceptions.EntityNotExistsException;
-import com.furkanisitan.countrycityapi.core.exceptions.ForeignKeyConstraintViolationException;
 import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
-import com.furkanisitan.countrycityapi.entities.City;
-import com.furkanisitan.countrycityapi.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
+@Primary
 public class CityManager implements CityService {
 
     private final CityRepository repository;
@@ -32,45 +34,44 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public List<CityDto> findAll() {
-        return CityMapper.INSTANCE.toCityDtoList(repository.findAll());
+    public List<CityResponse> findAll() {
+        return CityMapper.INSTANCE.toResponseList(repository.findAll());
     }
 
     @Override
-    public CityDto findById(Long id) {
-        return CityMapper.INSTANCE.toCityDto(repository.findById(id).orElse(null));
+    public CityResponse findById(Long id) {
+        return CityMapper.INSTANCE.toResponse(repository.findById(id).orElse(null));
     }
 
     @Transactional
     @Override
-    public CityDto create(CityCreateDto cityCreateDto) {
+    public CityResponse create(CityCreateRequest request) {
 
         // Check if there is a country with the foreign key 'countryCode'
-        Country country = countryService.getByCode(cityCreateDto.getCountryCode());
+        Country country = countryService.getByCode(request.getCountryCode());
         if (country == null)
-            throw new ForeignKeyConstraintViolationException("countryCode", cityCreateDto.getCountryCode());
+            throw new ForeignKeyConstraintException("countryCode", request.getCountryCode());
 
-        City city = CityMapper.INSTANCE.fromCityCreateDto(cityCreateDto);
+        City city = CityMapper.INSTANCE.fromCreateRequest(request);
         city.setCountry(country);
 
-        return CityMapper.INSTANCE.toCityDto(repository.save(city));
+        return CityMapper.INSTANCE.toResponse(repository.save(city));
     }
 
     @Transactional
     @Override
-    public void update(CityUpdateDto cityUpdateDto) {
+    public void update(CityUpdateRequest request) {
 
-        City city = repository.findById(cityUpdateDto.getId())
+        City city = repository.findById(request.getId())
                 // Check if the city is exists
-                .orElseThrow(() -> new EntityNotExistsException(City.class.getSimpleName(), Pair.of("id", cityUpdateDto.getId())));
-
+                .orElseThrow(() -> new RecordNotFoundException(City.class.getSimpleName(), Pair.of("id", request.getId())));
 
         // Check if there is a country with the foreign key 'countryCode'
-        Country country = countryService.getByCode(cityUpdateDto.getCountryCode());
+        Country country = countryService.getByCode(request.getCountryCode());
         if (country == null)
-            throw new ForeignKeyConstraintViolationException("countryCode", cityUpdateDto.getCountryCode());
+            throw new ForeignKeyConstraintException("countryCode", request.getCountryCode());
 
-        CityMapper.INSTANCE.updateFromCityUpdateDto(cityUpdateDto, city);
+        CityMapper.INSTANCE.updateFromUpdateRequest(request, city);
         city.setCountry(country);
 
         repository.save(city);
@@ -80,7 +81,7 @@ public class CityManager implements CityService {
     public void deleteById(Long id) {
 
         if (!repository.existsById(id))
-            throw new EntityNotExistsException(City.class.getSimpleName(), Pair.of("id", id));
+            throw new RecordNotFoundException(City.class.getSimpleName(), Pair.of("id", id));
 
         repository.deleteById(id);
     }

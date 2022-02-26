@@ -1,9 +1,9 @@
 package com.furkanisitan.countrycityapi.business.mappers;
 
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
-import com.furkanisitan.countrycityapi.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.City;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -16,13 +16,13 @@ public interface CityMapper {
 
     CityMapper INSTANCE = Mappers.getMapper(CityMapper.class);
 
-    List<CityDto> toCityDtoList(List<City> source);
+    List<CityResponse> toResponseList(List<City> source);
 
     @Mapping(target = "countryCode", source = "country.code")
-    CityDto toCityDto(City source);
+    CityResponse toResponse(City source);
 
-    City fromCityCreateDto(CityCreateDto source);
+    City fromCreateRequest(CityCreateRequest source);
 
-    void updateFromCityUpdateDto(CityUpdateDto source, @MappingTarget City target);
+    void updateFromUpdateRequest(CityUpdateRequest source, @MappingTarget City target);
 
 }

@@ -1,7 +1,7 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,12 +25,12 @@ class CityServiceTest {
     @Test
     void create_DoesNotThrowsException() {
 
-        CityCreateDto cityCreateDto = new CityCreateDto();
-        cityCreateDto.setName("city_name");
-        cityCreateDto.setCountryCode("country_code");
-        cityCreateDto.setPopulation(100);
+        CityCreateRequest request = new CityCreateRequest();
+        request.setName("city_name");
+        request.setCountryCode("country_code");
+        request.setPopulation(100);
 
-        assertDoesNotThrow(() -> fakeCityService.create(cityCreateDto));
+        assertDoesNotThrow(() -> fakeCityService.create(request));
     }
 
     @ParameterizedTest
@@ -41,24 +41,24 @@ class CityServiceTest {
     })
     void create_ThrowsConstraintViolationException_FieldsIsNotValid(String name, String countryCode, long population) {
 
-        CityCreateDto cityCreateDto = new CityCreateDto();
-        cityCreateDto.setName(name);
-        cityCreateDto.setCountryCode(countryCode);
-        cityCreateDto.setPopulation(population);
+        CityCreateRequest request = new CityCreateRequest();
+        request.setName(name);
+        request.setCountryCode(countryCode);
+        request.setPopulation(population);
 
-        assertThrows(ConstraintViolationException.class, () -> fakeCityService.create(cityCreateDto));
+        assertThrows(ConstraintViolationException.class, () -> fakeCityService.create(request));
     }
 
     @Test
     void update_DoesNotThrowsException() {
 
-        CityUpdateDto cityUpdateDto = new CityUpdateDto();
-        cityUpdateDto.setId(1L);
-        cityUpdateDto.setName("city_name");
-        cityUpdateDto.setCountryCode("country_code");
-        cityUpdateDto.setPopulation(100);
+        CityUpdateRequest request = new CityUpdateRequest();
+        request.setId(1L);
+        request.setName("city_name");
+        request.setCountryCode("country_code");
+        request.setPopulation(100);
 
-        assertDoesNotThrow(() -> fakeCityService.update(cityUpdateDto));
+        assertDoesNotThrow(() -> fakeCityService.update(request));
     }
 
     @ParameterizedTest
@@ -70,13 +70,13 @@ class CityServiceTest {
     })
     void update_ThrowsConstraintViolationException_FieldsIsNotValid(Long id, String name, String countryCode, long population) {
 
-        CityUpdateDto cityUpdateDto = new CityUpdateDto();
-        cityUpdateDto.setId(id);
-        cityUpdateDto.setName(name);
-        cityUpdateDto.setCountryCode(countryCode);
-        cityUpdateDto.setPopulation(population);
+        CityUpdateRequest request = new CityUpdateRequest();
+        request.setId(id);
+        request.setName(name);
+        request.setCountryCode(countryCode);
+        request.setPopulation(population);
 
-        assertThrows(ConstraintViolationException.class, () -> fakeCityService.update(cityUpdateDto));
+        assertThrows(ConstraintViolationException.class, () -> fakeCityService.update(request));
     }
 
 }

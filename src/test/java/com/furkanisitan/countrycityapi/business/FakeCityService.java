@@ -1,8 +1,8 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.countrycityapi.business.dtos.city.CityCreateDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityDto;
-import com.furkanisitan.countrycityapi.business.dtos.city.CityUpdateDto;
+import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +13,22 @@ import java.util.List;
 class FakeCityService implements CityService {
 
     @Override
-    public List<CityDto> findAll() {
+    public List<CityResponse> findAll() {
         return null;
     }
 
     @Override
-    public CityDto findById(Long id) {
+    public CityResponse findById(Long id) {
         return null;
     }
 
     @Override
-    public CityDto create(CityCreateDto cityCreateDto) {
+    public CityResponse create(CityCreateRequest request) {
         return null;
     }
 
     @Override
-    public void update(CityUpdateDto cityUpdateDto) {
+    public void update(CityUpdateRequest request) {
 
     }
 
