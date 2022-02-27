@@ -1,10 +1,9 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
-import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
-import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.business.CityService;
-import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.business.mappers.CityMapper;
+import com.furkanisitan.countrycityapi.business.validators.CityValidator;
+import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
 import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.Country;
@@ -13,7 +12,6 @@ import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +23,14 @@ import java.util.List;
 public class CityManager implements CityService {
 
     private final CityRepository repository;
-    private final CountryService countryService;
+    private final CityValidator validator;
+    private final CountryValidator countryValidator;
 
     @Autowired
-    public CityManager(CityRepository repository, CountryService countryService) {
+    public CityManager(CityRepository repository, CityValidator validator, CountryValidator countryValidator) {
         this.repository = repository;
-        this.countryService = countryService;
+        this.validator = validator;
+        this.countryValidator = countryValidator;
     }
 
     @Override
@@ -47,10 +47,7 @@ public class CityManager implements CityService {
     @Override
     public CityResponse create(CityCreateRequest request) {
 
-        // Check if there is a country with the foreign key 'countryCode'
-        Country country = countryService.getByCode(request.getCountryCode());
-        if (country == null)
-            throw new ForeignKeyConstraintException("countryCode", request.getCountryCode());
+        Country country = countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode());
 
         City city = CityMapper.INSTANCE.fromCreateRequest(request);
         city.setCountry(country);
@@ -62,14 +59,8 @@ public class CityManager implements CityService {
     @Override
     public void update(CityUpdateRequest request) {
 
-        City city = repository.findById(request.getId())
-                // Check if the city is exists
-                .orElseThrow(() -> new RecordNotFoundException(City.class.getSimpleName(), Pair.of("id", request.getId())));
-
-        // Check if there is a country with the foreign key 'countryCode'
-        Country country = countryService.getByCode(request.getCountryCode());
-        if (country == null)
-            throw new ForeignKeyConstraintException("countryCode", request.getCountryCode());
+        City city = validator.findIfIdIsExists(request.getId());
+        Country country = countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode());
 
         CityMapper.INSTANCE.updateFromUpdateRequest(request, city);
         city.setCountry(country);
@@ -77,12 +68,11 @@ public class CityManager implements CityService {
         repository.save(city);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
 
-        if (!repository.existsById(id))
-            throw new RecordNotFoundException(City.class.getSimpleName(), Pair.of("id", id));
-
+        validator.idIsExists(id);
         repository.deleteById(id);
     }
 }
