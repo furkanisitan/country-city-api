@@ -1,6 +1,5 @@
-package com.furkanisitan.countrycityapi.business.concretes.mappers;
+package com.furkanisitan.countrycityapi.business.mappers;
 
-import com.furkanisitan.countrycityapi.business.mappers.CityMapper;
 import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
