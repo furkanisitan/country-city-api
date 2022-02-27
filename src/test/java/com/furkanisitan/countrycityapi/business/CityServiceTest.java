@@ -2,6 +2,7 @@ package com.furkanisitan.countrycityapi.business;
 
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -79,4 +82,34 @@ class CityServiceTest {
         assertThrows(ConstraintViolationException.class, () -> fakeCityService.update(request));
     }
 
+}
+
+@Service
+@Qualifier("fakeCityService")
+class FakeCityService implements CityService {
+
+    @Override
+    public List<CityResponse> findAll() {
+        return null;
+    }
+
+    @Override
+    public CityResponse findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public CityResponse create(CityCreateRequest request) {
+        return null;
+    }
+
+    @Override
+    public void update(CityUpdateRequest request) {
+
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
 }
