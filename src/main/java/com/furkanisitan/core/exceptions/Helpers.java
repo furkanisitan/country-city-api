@@ -3,9 +3,9 @@ package com.furkanisitan.core.exceptions;
 import org.springframework.data.util.Pair;
 
 /**
- * This class contains helper methods for {@link com.furkanisitan.core.exceptions} package.
+ * This interface contains helper methods for {@link com.furkanisitan.core.exceptions} package.
  */
-class Helpers {
+interface Helpers {
 
     /**
      * Creates an error message for not found.
@@ -16,7 +16,7 @@ class Helpers {
      * @implNote example output could be like this: Record not found for parameters {id:'1'}.
      */
     @SafeVarargs
-    public static String notFound(String name, Pair<String, Object>... parameters) {
+    static String notFound(String name, Pair<String, Object>... parameters) {
 
         StringBuilder builder = new StringBuilder(name + " not found");
 
