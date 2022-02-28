@@ -47,7 +47,7 @@ public class CountryUtility extends EntityUtility<Country> {
     }
 
     /**
-     * Removes all of the cities from this country.
+     * Removes all the cities from this country.
      */
     public void clearCities() {
         for (City city : clazz.getCities())
@@ -102,6 +102,16 @@ public class CountryUtility extends EntityUtility<Country> {
                 countryLanguage.setId(null);
             }
         }
+    }
+
+    /**
+     * Removes all the languages from this country.
+     */
+    public void clearLanguages() {
+
+        for (CountryLanguage countryLanguage : clazz.getCountryLanguages())
+            countryLanguage.setId(null);
+        clazz.getCountryLanguages().clear();
     }
 
 }
