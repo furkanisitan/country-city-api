@@ -9,10 +9,12 @@ import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 public interface CountryService {
 
     /**
