@@ -4,7 +4,7 @@ import com.furkanisitan.core.model.Request;
 import lombok.Data;
 
 @Data
-public class CountryLanguageCreateRequest implements Request {
+public class CountryLanguageRequest implements Request {
 
     private Long languageId;
     private boolean isOfficial;
