@@ -9,6 +9,7 @@ import com.furkanisitan.countrycityapi.model.entities.ids.CountryLanguageId;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
+import javax.persistence.CascadeType;
 import java.util.Iterator;
 
 public class CountryUtility extends EntityUtility<Country> {
@@ -20,41 +21,7 @@ public class CountryUtility extends EntityUtility<Country> {
         super(clazz);
     }
 
-    //region cities
-
-    /**
-     * Adds the given city to this country.
-     *
-     * @param city element to be added to this country.
-     * @throws IllegalArgumentException if city is {@literal null}.
-     */
-    public void addCity(@NonNull City city) {
-        Assert.notNull(city, "city must not be null");
-        clazz.getCities().add(city);
-        city.setCountry(clazz);
-    }
-
-    /**
-     * Removes the given city from this country.
-     *
-     * @param city element to be removed from this country.
-     * @throws IllegalArgumentException if city is {@literal null}.
-     */
-    public void removeCity(@NonNull City city) {
-        Assert.notNull(city, "city must not be null");
-        clazz.getCities().remove(city);
-        city.setCountry(null);
-    }
-
-    /**
-     * Removes all the cities from this country.
-     */
-    public void clearCities() {
-        for (City city : clazz.getCities())
-            city.setCountry(null);
-        clazz.getCities().clear();
-    }
-    //endregion
+    //region languages
 
     /**
      * Adds the given language to this country.
@@ -73,6 +40,8 @@ public class CountryUtility extends EntityUtility<Country> {
      * @param language   element to be added to this country.
      * @param isOfficial the value to be assigned to 'official' field of {@link CountryLanguage} class.
      * @throws IllegalArgumentException if language is {@literal null}.
+     * @implNote It is assumed that {@link CascadeType#ALL} is used
+     * in the {@link Country#countryLanguages} definition.
      */
     public void addLanguage(@NonNull Language language, boolean isOfficial) {
         Assert.notNull(language, "language must not be null");
@@ -113,5 +82,7 @@ public class CountryUtility extends EntityUtility<Country> {
             countryLanguage.setId(null);
         clazz.getCountryLanguages().clear();
     }
+
+    //endregion
 
 }
