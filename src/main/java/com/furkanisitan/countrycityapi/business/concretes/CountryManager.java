@@ -62,15 +62,24 @@ public class CountryManager implements CountryService {
     public void update(CountryUpdateRequest request) {
 
         Country country = validator.findIfIdIsExists(request.getId());
+        validator.codeIsUnique(request.getCode(), request.getId());
+
         CountryMapper.INSTANCE.updateFromUpdateRequest(request, country);
 
-        // TODO delete and re-add all languages or update by checking
+        country.utility().clearLanguages();
+        for (var countryLanguage : request.getLanguages()) {
+            var language = languageValidator.getIfIdForeignKeyIsExists(countryLanguage.getLanguageId());
+            country.utility().addLanguage(language, countryLanguage.isOfficial());
+        }
+
+        repository.save(country);
     }
 
     @Transactional
     @Override
     public void deleteById(Long id) {
-
+        validator.idIsExists(id);
+        repository.deleteById(id);
     }
 
 }

@@ -48,6 +48,27 @@ public class CountryValidator {
     }
 
     /**
+     * Checks if {@literal id} is exists.
+     *
+     * @param id   the primary key of the entity.
+     * @param name the name of primary key.
+     * @throws RecordNotFoundException if {@literal id} is not exists.
+     */
+    public void idIsExists(Long id, String name) {
+        if (!repository.existsById(id))
+            throw new RecordNotFoundException(Country.class.getSimpleName(), Pair.of(name, id));
+    }
+
+    /**
+     * {@code name} defaults to {@value ID_PRIMARY_KEY_NAME}.
+     *
+     * @see #idIsExists(Long, String)
+     */
+    public void idIsExists(Long id) {
+        idIsExists(id, ID_PRIMARY_KEY_NAME);
+    }
+
+    /**
      * Checks if {@literal code} is exists.
      *
      * @param code the foreign key of country.

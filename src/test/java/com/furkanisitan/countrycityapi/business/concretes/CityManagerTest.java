@@ -29,7 +29,7 @@ class CityManagerTest {
     @Mock
     private CityRepository cityRepository;
     @Mock
-    private CityValidator validator;
+    private CityValidator cityValidator;
     @Mock
     private CountryValidator countryValidator;
 
@@ -78,7 +78,7 @@ class CityManagerTest {
         City city = new City();
         Country country = new Country();
 
-        when(validator.findIfIdIsExists(request.getId())).thenReturn(city);
+        when(cityValidator.findIfIdIsExists(request.getId())).thenReturn(city);
         when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
@@ -91,7 +91,7 @@ class CityManagerTest {
         CityUpdateRequest request = new CityUpdateRequest();
         request.setId(1L);
 
-        when(validator.findIfIdIsExists(request.getId()))
+        when(cityValidator.findIfIdIsExists(request.getId()))
                 .thenThrow(RecordNotFoundException.class);
 
         assertThrows(RecordNotFoundException.class, () -> cityManager.update(request));
@@ -103,7 +103,7 @@ class CityManagerTest {
         CityUpdateRequest request = new CityUpdateRequest();
         City city = new City();
 
-        when(validator.findIfIdIsExists(request.getId())).thenReturn(city);
+        when(cityValidator.findIfIdIsExists(request.getId())).thenReturn(city);
         when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode()))
                 .thenThrow(ForeignKeyConstraintException.class);
 
@@ -113,7 +113,7 @@ class CityManagerTest {
     @Test
     void deleteById_DoesNotThrowsException() {
 
-        doNothing().when(validator).idIsExists(anyLong());
+        doNothing().when(cityValidator).idIsExists(anyLong());
 
         assertDoesNotThrow(() -> cityManager.deleteById(anyLong()));
     }
@@ -121,7 +121,7 @@ class CityManagerTest {
     @Test
     void deleteById_ThrowsRecordNotFoundException_IdNotExists() {
 
-        doThrow(RecordNotFoundException.class).when(validator).idIsExists(anyLong());
+        doThrow(RecordNotFoundException.class).when(cityValidator).idIsExists(anyLong());
 
         assertThrows(RecordNotFoundException.class, () -> cityManager.deleteById(anyLong()));
     }

@@ -1,10 +1,11 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
-import com.furkanisitan.countrycityapi.model.entities.Country;
-import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryLanguageCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.springframework.lang.Nullable;
@@ -36,7 +37,8 @@ public interface CountryService {
      *
      * @param request the dto object required to create a new country.
      * @return the added city by mapping it to {@link CountryResponse}.
-     * @throws UniqueConstraintException if country code is not unique.
+     * @throws UniqueConstraintException     if country code is not unique.
+     * @throws ForeignKeyConstraintException if country is not exists by {@link CityUpdateRequest#getCountryCode()}.
      */
     CountryResponse create(@Valid CountryCreateRequest request);
 
@@ -44,8 +46,9 @@ public interface CountryService {
      * Updates the country.
      *
      * @param request the dto object required to update the country.
-     * @throws RecordNotFoundException if country is not exists.
-     * @throws UniqueConstraintException if country code is not unique.
+     * @throws RecordNotFoundException       if country is not exists.
+     * @throws UniqueConstraintException     if country code is not unique.
+     * @throws ForeignKeyConstraintException if language is not exists by {@link CountryLanguageCreateRequest#getLanguageId()}.
      */
     void update(@Valid CountryUpdateRequest request);
 
