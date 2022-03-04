@@ -1,15 +1,19 @@
 package com.furkanisitan.countrycityapi.business.validators;
 
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
+import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.countrycityapi.dataaccess.LanguageRepository;
 import com.furkanisitan.countrycityapi.model.entities.Language;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class LanguageValidator extends Validator<Language, Long> {
 
     private static final String ID_FOREIGN_KEY_NAME = "languageId";
+    private static final String CODE_UNIQUE_KEY_NAME = "code";
 
     private final LanguageRepository repository;
 
@@ -38,6 +42,53 @@ public class LanguageValidator extends Validator<Language, Long> {
      */
     public Language getIfIdForeignKeyIsExists(Long id) {
         return getIfIdForeignKeyIsExists(id, ID_FOREIGN_KEY_NAME);
+    }
+
+    /**
+     * Checks if {@literal code} is unique.
+     *
+     * @param code unique value to validate.
+     * @param name the name of unique field.
+     * @throws UniqueConstraintException if {@literal code} is not unique.
+     */
+    public void codeIsUnique(String code, String name) {
+
+        if (repository.existsByCode(code))
+            throw new UniqueConstraintException(name, code);
+    }
+
+    /**
+     * {@code name} defaults to {@value CODE_UNIQUE_KEY_NAME}.
+     *
+     * @see #codeIsUnique(String, String)
+     */
+    public void codeIsUnique(String code) {
+        codeIsUnique(code, CODE_UNIQUE_KEY_NAME);
+    }
+
+    /**
+     * Checks if {@literal code} is unique for update operation.
+     *
+     * @param code unique value to validate.
+     * @param id   primary key of the course to be updated.
+     * @param name the name of unique field.
+     * @throws UniqueConstraintException if {@literal code} is not unique for update.
+     */
+    public void codeIsUnique(String code, Long id, String name) {
+
+        Language language = repository.getLanguageByCode(code).orElse(null);
+
+        if (language != null && !Objects.equals(language.getId(), id))
+            throw new UniqueConstraintException(name, code);
+    }
+
+    /**
+     * {@code name} defaults to {@value CODE_UNIQUE_KEY_NAME}.
+     *
+     * @see #codeIsUnique(String, Long, String)
+     */
+    public void codeIsUnique(String code, Long id) {
+        codeIsUnique(code, id, CODE_UNIQUE_KEY_NAME);
     }
 
 }

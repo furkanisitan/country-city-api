@@ -38,9 +38,9 @@ public interface CountryService {
      * Creates a new country.
      *
      * @param request the dto object required to create a new country.
-     * @return the added city by mapping it to {@link CountryResponse}.
+     * @return the added country by mapping it to {@link CountryResponse}.
      * @throws UniqueConstraintException     if country code is not unique.
-     * @throws ForeignKeyConstraintException if country is not exists by {@link CityUpdateRequest#getCountryCode()}.
+     * @throws ForeignKeyConstraintException if country is not exists by {@link CountryLanguageRequest#getLanguageId()}.
      */
     CountryResponse create(@Valid CountryCreateRequest request);
 

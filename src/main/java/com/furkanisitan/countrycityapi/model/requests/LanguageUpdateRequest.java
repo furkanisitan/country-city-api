@@ -3,13 +3,14 @@ package com.furkanisitan.countrycityapi.model.requests;
 import com.furkanisitan.core.model.Request;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Data
-public class CountryCreateRequest implements Request {
+public class LanguageUpdateRequest implements Request {
+
+    @NotNull
+    private Long id;
 
     @NotBlank
     private String code;
@@ -17,7 +18,4 @@ public class CountryCreateRequest implements Request {
     @NotBlank
     private String name;
 
-    private double lifeExpectancy;
-
-    private List<@Valid CountryLanguageRequest> languages = new ArrayList<>();
 }

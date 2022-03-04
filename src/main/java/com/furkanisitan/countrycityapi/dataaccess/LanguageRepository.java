@@ -11,4 +11,8 @@ public interface LanguageRepository extends JpaRepository<Language, Long> {
 
     Optional<Language> getLanguageById(Long id);
 
+    Optional<Language> getLanguageByCode(String code);
+
+    boolean existsByCode(String code);
+
 }
