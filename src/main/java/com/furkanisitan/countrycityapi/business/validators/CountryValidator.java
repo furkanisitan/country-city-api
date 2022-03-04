@@ -1,20 +1,17 @@
 package com.furkanisitan.countrycityapi.business.validators;
 
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
-import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
-public class CountryValidator {
+public class CountryValidator extends Validator<Country, Long> {
 
-    private static final String ID_PRIMARY_KEY_NAME = "id";
     private static final String CODE_FOREIGN_KEY_NAME = "countryCode";
     private static final String CODE_UNIQUE_KEY_NAME = "code";
 
@@ -22,50 +19,8 @@ public class CountryValidator {
 
     @Autowired
     public CountryValidator(CountryRepository repository) {
+        super(repository, Country.class.getSimpleName());
         this.repository = repository;
-    }
-
-    /**
-     * Checks if {@literal id} is exists.
-     *
-     * @param id   the primary key of the entity.
-     * @param name the name of primary key.
-     * @return the {@link Country} entity if exists by id.
-     * @throws RecordNotFoundException if {@literal id} is not exists.
-     */
-    public Country findIfIdIsExists(Long id, String name) {
-        return repository.findById(id).orElseThrow(() ->
-                new RecordNotFoundException(Country.class.getSimpleName(), Pair.of(name, id)));
-    }
-
-    /**
-     * {@code name} defaults to {@value ID_PRIMARY_KEY_NAME}.
-     *
-     * @see #findIfIdIsExists(Long, String)
-     */
-    public Country findIfIdIsExists(Long id) {
-        return findIfIdIsExists(id, ID_PRIMARY_KEY_NAME);
-    }
-
-    /**
-     * Checks if {@literal id} is exists.
-     *
-     * @param id   the primary key of the entity.
-     * @param name the name of primary key.
-     * @throws RecordNotFoundException if {@literal id} is not exists.
-     */
-    public void idIsExists(Long id, String name) {
-        if (!repository.existsById(id))
-            throw new RecordNotFoundException(Country.class.getSimpleName(), Pair.of(name, id));
-    }
-
-    /**
-     * {@code name} defaults to {@value ID_PRIMARY_KEY_NAME}.
-     *
-     * @see #idIsExists(Long, String)
-     */
-    public void idIsExists(Long id) {
-        idIsExists(id, ID_PRIMARY_KEY_NAME);
     }
 
     /**

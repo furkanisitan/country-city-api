@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LanguageValidator {
+public class LanguageValidator extends Validator<Language, Long> {
 
     private static final String ID_FOREIGN_KEY_NAME = "languageId";
 
@@ -15,6 +15,7 @@ public class LanguageValidator {
 
     @Autowired
     public LanguageValidator(LanguageRepository repository) {
+        super(repository, Language.class.getSimpleName());
         this.repository = repository;
     }
 
@@ -38,4 +39,5 @@ public class LanguageValidator {
     public Language getIfIdForeignKeyIsExists(Long id) {
         return getIfIdForeignKeyIsExists(id, ID_FOREIGN_KEY_NAME);
     }
+
 }
