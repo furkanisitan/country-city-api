@@ -7,12 +7,14 @@ import lombok.Getter;
  */
 
 @Getter
-public class UniqueConstraintException extends RuntimeException{
+public class UniqueConstraintException extends RuntimeException {
 
     private final String name;
     private final Object value;
 
     /**
+     * Creates a new UniqueConstraintException.
+     *
      * @param name  the name of the unique field.
      * @param value the rejected value.
      */
