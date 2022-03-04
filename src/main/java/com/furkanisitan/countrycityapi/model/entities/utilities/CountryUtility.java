@@ -1,7 +1,6 @@
 package com.furkanisitan.countrycityapi.model.entities.utilities;
 
 import com.furkanisitan.core.model.utility.EntityUtility;
-import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.entities.CountryLanguage;
 import com.furkanisitan.countrycityapi.model.entities.Language;
@@ -24,10 +23,9 @@ public class CountryUtility extends EntityUtility<Country> {
     //region languages
 
     /**
-     * Adds the given language to this country.
+     * {@code isOfficial} defaults to {@code false}.
      *
-     * @param language element to be added to this country.
-     * @throws IllegalArgumentException if language is {@literal null}.
+     * @see #addLanguage(Language, boolean)
      */
     public void addLanguage(@NonNull Language language) {
         Assert.notNull(language, "language must not be null");
