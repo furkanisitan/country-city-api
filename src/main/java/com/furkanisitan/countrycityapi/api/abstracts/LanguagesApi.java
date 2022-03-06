@@ -50,7 +50,8 @@ public interface LanguagesApi {
     @ApiResponse(responseCode = "204", content = @Content)
     @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "blank", description = "fieldName: code | name", value = Examples.Error.BAD_REQUEST_BLANK),
-            @ExampleObject(name = "null", description = "fieldName: id", value = Examples.Error.BAD_REQUEST_NULL)}))
+            @ExampleObject(name = "null", description = "fieldName: id", value = Examples.Error.BAD_REQUEST_NULL),
+            @ExampleObject(name = "mismatch", description = "param: id - field: id", value = Examples.Error.BAD_REQUEST_MISMATCH)}))
     @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Result.class),
             examples = @ExampleObject(name = "no record", description = "recordName: Language", value = Examples.Error.NOT_FOUND_BY_ID)))
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class),
