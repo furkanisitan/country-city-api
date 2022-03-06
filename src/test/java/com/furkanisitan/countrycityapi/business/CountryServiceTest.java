@@ -1,6 +1,10 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.countrycityapi.model.requests.*;
+import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
+import com.furkanisitan.countrycityapi.model.responses.CountryListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,7 +52,7 @@ class CountryServiceTest {
         assertThrows(ConstraintViolationException.class, () -> fakeCountryService.create(request));
     }
 
-   @Test
+    @Test
     void create_ThrowsConstraintViolationException_LanguageRequestFieldsIsNotValid() {
 
         CountryCreateRequest request = new CountryCreateRequest();
@@ -98,7 +102,7 @@ class FakeCountryService implements CountryService {
 
 
     @Override
-    public List<CountryResponse> findAll() {
+    public List<CountryListResponse> findAll() {
         return null;
     }
 
@@ -108,7 +112,7 @@ class FakeCountryService implements CountryService {
     }
 
     @Override
-    public CountryResponse create(CountryCreateRequest request) {
+    public CountryCreateResponse create(CountryCreateRequest request) {
         return null;
     }
 

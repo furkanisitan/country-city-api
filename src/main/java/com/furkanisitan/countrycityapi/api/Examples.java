@@ -14,8 +14,8 @@ public final class Examples {
     public static final class Country {
 
         public static final class Success {
-            public static final String GET_ALL = "{\"success\":true,\"message\":\"The request has been processed successfully.\",\"payload\":[{\"id\":1,\"name\":\"Turkey\",\"code\":\"TR\",\"lifeExpectancy\":78.6,\"languages\":[{\"languageId\":1,\"isOfficial\":true}]}]}";
-            public static final String GET = "{\"success\":true,\"message\":\"The request has been processed successfully.\",\"payload\":{\"id\":1,\"name\":\"Turkey\",\"code\":\"TR\",\"lifeExpectancy\":78.6,\"languages\":[{\"languageId\":1,\"isOfficial\":true}]}}";
+            public static final String GET_ALL = "{\"success\":true,\"message\":\"The request has been processed successfully.\",\"payload\":[{\"id\":1,\"name\":\"Turkey\",\"code\":\"TR\",\"lifeExpectancy\":78.6}]}";
+            public static final String GET = "{\"success\":true,\"message\":\"The request has been processed successfully.\",\"payload\":{\"id\":1,\"name\":\"Turkey\",\"code\":\"TR\",\"lifeExpectancy\":78.6,\"languages\":[{\"languageId\":1,\"isOfficial\":true}],\"cities\":[{\"id\":1,\"name\":\"Ankara\",\"population\":5747325,\"countryCode\":\"TR\"}]}}";
             public static final String CREATE = "{\"success\":true,\"message\":\"Resource(s) added successfully.\",\"payload\":{\"id\":1,\"name\":\"Turkey\",\"code\":\"TR\",\"lifeExpectancy\":78.6,\"languages\":[{\"languageId\":1,\"isOfficial\":true}]}}";
         }
     }

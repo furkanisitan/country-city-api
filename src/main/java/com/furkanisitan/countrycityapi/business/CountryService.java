@@ -7,6 +7,8 @@ import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
+import com.furkanisitan.countrycityapi.model.responses.CountryListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
@@ -18,11 +20,11 @@ import java.util.List;
 public interface CountryService {
 
     /**
-     * Returns all countries by mapping them to {@link CountryResponse}.
+     * Returns all countries by mapping them to {@link CountryListResponse}.
      *
-     * @return all countries by mapping them to {@link CountryResponse}.
+     * @return all countries by mapping them to {@link CountryListResponse}.
      */
-    List<CountryResponse> findAll();
+    List<CountryListResponse> findAll();
 
     /**
      * Returns a {@link CountryResponse} by {@literal id}.
@@ -38,11 +40,11 @@ public interface CountryService {
      * Creates a new country.
      *
      * @param request the dto object required to create a new country.
-     * @return the added country by mapping it to {@link CountryResponse}.
+     * @return the added country by mapping it to {@link CountryCreateResponse}.
      * @throws UniqueConstraintException     if country code is not unique.
      * @throws ForeignKeyConstraintException if country is not exists by {@link CountryLanguageRequest#getLanguageId()}.
      */
-    CountryResponse create(@Valid CountryCreateRequest request);
+    CountryCreateResponse create(@Valid CountryCreateRequest request);
 
     /**
      * Updates the country.

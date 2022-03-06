@@ -31,7 +31,7 @@ public class Country extends BaseEntity<Long> implements HasUtility<CountryUtili
     private double lifeExpectancy;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "country", orphanRemoval = true)
     private Set<City> cities = new HashSet<>();
 
     @Setter(AccessLevel.NONE)

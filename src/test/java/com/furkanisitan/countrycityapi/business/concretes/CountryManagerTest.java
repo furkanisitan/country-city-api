@@ -8,8 +8,10 @@ import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.entities.Language;
-import com.furkanisitan.countrycityapi.model.requests.*;
-import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
+import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
+import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,7 +21,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +54,7 @@ class CountryManagerTest {
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
 
-        CountryResponse response = countryManager.create(request);
+        CountryCreateResponse response = countryManager.create(request);
 
 
         assertAll(

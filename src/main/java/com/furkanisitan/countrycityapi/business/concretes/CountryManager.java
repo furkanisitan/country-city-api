@@ -8,6 +8,8 @@ import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
+import com.furkanisitan.countrycityapi.model.responses.CountryListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -33,7 +35,7 @@ public class CountryManager implements CountryService {
     }
 
     @Override
-    public List<CountryResponse> findAll() {
+    public List<CountryListResponse> findAll() {
         return CountryMapper.INSTANCE.toResponseList(repository.findAll());
     }
 
@@ -44,7 +46,7 @@ public class CountryManager implements CountryService {
 
     @Transactional
     @Override
-    public CountryResponse create(CountryCreateRequest request) {
+    public CountryCreateResponse create(CountryCreateRequest request) {
 
         validator.codeIsUnique(request.getCode());
         Country country = CountryMapper.INSTANCE.fromCreateRequest(request);
@@ -54,7 +56,7 @@ public class CountryManager implements CountryService {
             country.utility().addLanguage(proxyLanguage, language.isOfficial());
         }
 
-        return CountryMapper.INSTANCE.toResponse(repository.save(country));
+        return CountryMapper.INSTANCE.toCreateResponse(repository.save(country));
     }
 
     @Transactional
