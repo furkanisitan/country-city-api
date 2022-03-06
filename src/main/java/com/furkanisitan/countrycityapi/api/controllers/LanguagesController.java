@@ -3,13 +3,16 @@ package com.furkanisitan.countrycityapi.api.controllers;
 import com.furkanisitan.core.api.ResponseEntities;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
+import com.furkanisitan.countrycityapi.api.abstracts.LanguagesApi;
 import com.furkanisitan.countrycityapi.business.LanguageService;
 import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.LanguageCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.LanguageUpdateRequest;
 import org.springframework.data.util.Pair;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.net.URI;
@@ -17,8 +20,7 @@ import java.net.URI;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @RestController
-@RequestMapping("/api/languages")
-public class LanguagesController {
+public class LanguagesController implements LanguagesApi {
 
     private final LanguageService languageService;
 
@@ -26,13 +28,14 @@ public class LanguagesController {
         this.languageService = languageService;
     }
 
-    @GetMapping
+    @Override
     public ResponseEntity<Object> getAll() {
+
         return ResponseEntities.ok(languageService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> get(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Object> get(long id) {
 
         var response = languageService.findById(id);
 
@@ -42,8 +45,8 @@ public class LanguagesController {
         return ResponseEntities.ok(response);
     }
 
-    @PostMapping
-    public ResponseEntity<Object> create(@RequestBody LanguageCreateRequest request) {
+    @Override
+    public ResponseEntity<Object> create(LanguageCreateRequest request) {
 
         var response = languageService.create(request);
 
@@ -54,8 +57,8 @@ public class LanguagesController {
         return ResponseEntities.created(uri, response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable long id, @RequestBody LanguageUpdateRequest request) {
+    @Override
+    public ResponseEntity<Object> update(long id, LanguageUpdateRequest request) {
 
         if (id != request.getId())
             throw new RouteBodyMismatchException("id");
@@ -65,12 +68,11 @@ public class LanguagesController {
         return ResponseEntities.noContent();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable long id) {
+    @Override
+    public ResponseEntity<Object> delete(long id) {
 
         languageService.deleteById(id);
 
         return ResponseEntities.noContent();
     }
-
 }
