@@ -24,7 +24,7 @@ interface Helpers {
             builder.append(" for parameters");
 
         for (Pair<String, Object> pair : parameters)
-            builder.append(String.format(" {%s='%s'}", pair.getFirst(), pair.getSecond()));
+            builder.append(String.format(" (%s='%s')", pair.getFirst(), pair.getSecond()));
 
         return builder.append('.').toString();
     }
