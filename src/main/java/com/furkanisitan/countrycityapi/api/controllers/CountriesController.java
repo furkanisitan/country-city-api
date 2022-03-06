@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cities")
-public class CountryController {
+public class CountriesController {
 
     private final CountryService countryService;
 
     @Autowired
-    public CountryController(CountryService countryService) {
+    public CountriesController(CountryService countryService) {
         this.countryService = countryService;
     }
 }

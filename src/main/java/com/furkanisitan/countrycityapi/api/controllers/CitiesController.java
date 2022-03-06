@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cities")
-public class CityController {
+public class CitiesController {
 
     private final CityService cityService;
 
     @Autowired
-    public CityController(CityService cityService) {
+    public CitiesController(CityService cityService) {
         this.cityService = cityService;
     }
 }

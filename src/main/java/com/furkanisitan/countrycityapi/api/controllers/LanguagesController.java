@@ -18,11 +18,11 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 
 @RestController
 @RequestMapping("/api/languages")
-public class LanguageController {
+public class LanguagesController {
 
     private final LanguageService languageService;
 
-    public LanguageController(LanguageService languageService) {
+    public LanguagesController(LanguageService languageService) {
         this.languageService = languageService;
     }
 
@@ -49,7 +49,7 @@ public class LanguageController {
 
         // location header
         URI uri = MvcUriComponentsBuilder.fromMethodCall(
-                on(LanguageController.class).get(response.getId())).buildAndExpand().toUri();
+                on(LanguagesController.class).get(response.getId())).buildAndExpand().toUri();
 
         return ResponseEntities.created(uri, response);
     }
