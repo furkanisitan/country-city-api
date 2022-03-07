@@ -30,13 +30,11 @@ public class LanguagesController implements LanguagesApi {
 
     @Override
     public ResponseEntity<Object> getAll() {
-
         return ResponseEntities.ok(languageService.findAll());
     }
 
     @Override
     public ResponseEntity<Object> get(long id) {
-
         var response = languageService.findById(id);
 
         if (response == null)
@@ -47,7 +45,6 @@ public class LanguagesController implements LanguagesApi {
 
     @Override
     public ResponseEntity<Object> create(LanguageCreateRequest request) {
-
         var response = languageService.create(request);
 
         // location header
@@ -59,12 +56,10 @@ public class LanguagesController implements LanguagesApi {
 
     @Override
     public ResponseEntity<Object> update(long id, LanguageUpdateRequest request) {
-
         if (id != request.getId())
             throw new RouteBodyMismatchException("id");
 
         languageService.update(request);
-
         return ResponseEntities.noContent();
     }
 
@@ -72,7 +67,6 @@ public class LanguagesController implements LanguagesApi {
     public ResponseEntity<Object> delete(long id) {
 
         languageService.deleteById(id);
-
         return ResponseEntities.noContent();
     }
 }
