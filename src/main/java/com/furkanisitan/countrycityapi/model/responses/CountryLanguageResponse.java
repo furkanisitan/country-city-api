@@ -7,6 +7,8 @@ import lombok.Data;
 public class CountryLanguageResponse implements Response {
 
     private Long languageId;
+    private String languageName;
+    private String languageCode;
     private boolean isOfficial;
 
 }

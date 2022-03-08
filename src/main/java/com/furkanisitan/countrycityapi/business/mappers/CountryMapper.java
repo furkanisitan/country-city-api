@@ -26,7 +26,7 @@ public interface CountryMapper {
 
     CountryListResponse toListResponse(Country source);
 
-    @Mapping(target = "languages", source = "countryLanguages")
+    @Mapping(target = "languages", source = "countryLanguages", qualifiedByName = "toCountryLanguageResponseList")
     CountryCreateResponse toCreateResponse(Country source);
 
     @Mapping(target = "id", ignore = true)
@@ -39,6 +39,8 @@ public interface CountryMapper {
     List<CountryLanguageResponse> toCountryLanguageResponseList(Collection<CountryLanguage> source);
 
     @Mapping(target = "languageId", source = "id.language.id")
+    @Mapping(target = "languageName", source = "id.language.name")
+    @Mapping(target = "languageCode", source = "id.language.code")
     @Named("toCountryLanguageResponse")
     CountryLanguageResponse toCountryLanguageResponse(CountryLanguage source);
 

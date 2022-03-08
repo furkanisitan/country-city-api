@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class CountryLanguage extends CompositeEntity<CountryLanguageId> {
 
     @Column(name = "is_official")
-    private boolean official;
+    private boolean isOfficial;
 
     public static CountryLanguage from(Country country, Language language) {
         CountryLanguage countryLanguage = new CountryLanguage();
