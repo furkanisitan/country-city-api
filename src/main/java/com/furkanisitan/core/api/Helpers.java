@@ -24,7 +24,7 @@ interface Helpers {
         var i = 0;
         for (var violation : violations) {
             var leafNode = getLeafNode(violation.getPropertyPath());
-            errors[i] = String.format("%s: %s", leafNode.isPresent() ? leafNode.get().getName() : String.valueOf(1 + i++), violation.getMessage());
+            errors[i] = String.format("%s: %s.", leafNode.isPresent() ? leafNode.get().getName() : String.valueOf(1 + i++), violation.getMessage());
         }
 
         return errors;

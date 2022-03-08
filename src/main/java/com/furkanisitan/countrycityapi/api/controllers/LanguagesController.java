@@ -49,7 +49,7 @@ public class LanguagesController implements LanguagesApi {
 
         // location header
         URI uri = MvcUriComponentsBuilder.fromMethodCall(
-                on(LanguagesController.class).get(response.getId())).buildAndExpand().toUri();
+                on(this.getClass()).get(response.getId())).buildAndExpand().toUri();
 
         return ResponseEntities.created(uri, response);
     }

@@ -50,7 +50,7 @@ public class CountriesController implements CountriesApi {
 
         // location header
         URI uri = MvcUriComponentsBuilder.fromMethodCall(
-                on(CountriesController.class).get(response.getId())).buildAndExpand().toUri();
+                on(this.getClass()).get(response.getId())).buildAndExpand().toUri();
 
         return ResponseEntities.created(uri, response);
     }
