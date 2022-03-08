@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.api.controllers;
 
+import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
@@ -47,18 +48,12 @@ public class CountriesController implements CountriesApi {
     @Override
     public ResponseEntity<Object> create(CountryCreateRequest request) {
         var response = countryService.create(request);
-
-        // location header
-        URI uri = MvcUriComponentsBuilder.fromMethodCall(
-                on(this.getClass()).get(response.getId())).buildAndExpand().toUri();
-
-        return ResponseEntities.created(uri, response);
+        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).get(response.getId())), response);
     }
 
     @Override
     public ResponseEntity<Object> update(long id, CountryUpdateRequest request) {
-        if (id != request.getId())
-            throw new RouteBodyMismatchException("id");
+        ApiHelpers.validateMismatch(id, request.getId(), "id");
 
         countryService.update(request);
         return ResponseEntities.noContent();

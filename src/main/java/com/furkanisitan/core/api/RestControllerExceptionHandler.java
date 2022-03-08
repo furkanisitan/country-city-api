@@ -6,6 +6,7 @@ import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.core.results.Result;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,6 +20,13 @@ public abstract class RestControllerExceptionHandler {
     @ResponseBody
     Result handle(ConstraintViolationException e) {
         return Result.fail(ResponseMessages.ERR_VALIDATION, Helpers.buildErrors(e.getConstraintViolations()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    Result handle(MethodArgumentNotValidException e) {
+        return Result.fail(ResponseMessages.ERR_VALIDATION, Helpers.buildErrors(e.getBindingResult().getAllErrors()));
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)

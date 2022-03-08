@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.api.controllers;
 
+import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
@@ -51,18 +53,12 @@ public class CitiesController implements CitiesApi {
     @Override
     public ResponseEntity<Object> create(CityCreateRequest request) {
         var response = cityService.create(request);
-
-        // location header
-        URI uri = MvcUriComponentsBuilder.fromMethodCall(
-                on(this.getClass()).get(response.getId())).buildAndExpand().toUri();
-
-        return ResponseEntities.created(uri, response);
+        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).get(response.getId())), response);
     }
 
     @Override
     public ResponseEntity<Object> update(long id, CityUpdateRequest request) {
-        if (id != request.getId())
-            throw new RouteBodyMismatchException("id");
+        ApiHelpers.validateMismatch(id, request.getId(), "id");
 
         cityService.update(request);
         return ResponseEntities.noContent();

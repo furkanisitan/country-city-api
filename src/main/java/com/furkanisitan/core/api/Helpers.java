@@ -1,7 +1,11 @@
 package com.furkanisitan.core.api;
 
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.StreamSupport;
@@ -25,6 +29,25 @@ interface Helpers {
         for (var violation : violations) {
             var leafNode = getLeafNode(violation.getPropertyPath());
             errors[i++] = String.format("%s: %s.", leafNode.isPresent() ? leafNode.get().getName() : String.valueOf(i), violation.getMessage());
+        }
+
+        return errors;
+    }
+
+    /**
+     * Creates an error list from {@literal objectErrors}.
+     *
+     * @param objectErrors the list of {@link ObjectError}.
+     * @return a {@link String} array containing error messages.
+     */
+    static String[] buildErrors(List<ObjectError> objectErrors) {
+
+        var errors = new String[objectErrors.size()];
+
+        var i = 0;
+        for (var objectError : objectErrors) {
+            errors[i++] = String.format("%s: %s.", objectError instanceof FieldError ?
+                    ((FieldError) objectError).getField() : objectError.getObjectName(), objectError.getDefaultMessage());
         }
 
         return errors;

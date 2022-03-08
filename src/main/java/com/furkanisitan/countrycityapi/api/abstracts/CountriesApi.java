@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping(value = "/api/countries", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "countries", description = "The Country API")
 public interface CountriesApi {
@@ -45,7 +47,7 @@ public interface CountriesApi {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE),
             @ExampleObject(name = "foreign key", description = "key: languages.languageId", value = Examples.Error.CONFLICT_FOREIGN_KEY)}))
     @PostMapping
-    ResponseEntity<Object> create(@RequestBody CountryCreateRequest request);
+    ResponseEntity<Object> create(@Valid @RequestBody CountryCreateRequest request);
 
     @Operation(summary = "Updates a specific country.")
     @ApiResponse(responseCode = "204", content = @Content)
@@ -59,7 +61,7 @@ public interface CountriesApi {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE),
             @ExampleObject(name = "foreign key", description = "key: languages.languageId", value = Examples.Error.CONFLICT_FOREIGN_KEY)}))
     @PutMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable long id, @RequestBody CountryUpdateRequest request);
+    ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody CountryUpdateRequest request);
 
     @Operation(summary = "Deletes a specific country.")
     @ApiResponse(responseCode = "204", content = @Content)

@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping(value = "/api/languages", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Languages", description = "The Language API")
 public interface LanguagesApi {
@@ -44,7 +46,7 @@ public interface LanguagesApi {
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE)}))
     @PostMapping
-    ResponseEntity<Object> create(@RequestBody LanguageCreateRequest request);
+    ResponseEntity<Object> create(@Valid @RequestBody LanguageCreateRequest request);
 
     @Operation(summary = "Updates a specific language.")
     @ApiResponse(responseCode = "204", content = @Content)
@@ -57,7 +59,7 @@ public interface LanguagesApi {
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE)}))
     @PutMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable long id, @RequestBody LanguageUpdateRequest request);
+    ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody LanguageUpdateRequest request);
 
     @Operation(summary = "Deletes a specific language.")
     @ApiResponse(responseCode = "204", content = @Content)

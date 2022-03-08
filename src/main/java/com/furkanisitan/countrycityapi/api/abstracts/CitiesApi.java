@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequestMapping(value = "/api/cities", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Cities", description = "The City API")
 public interface CitiesApi {
@@ -45,7 +47,7 @@ public interface CitiesApi {
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "foreign key", description = "key: countryCode", value = Examples.Error.CONFLICT_FOREIGN_KEY)}))
     @PostMapping
-    ResponseEntity<Object> create(@RequestBody CityCreateRequest request);
+    ResponseEntity<Object> create(@Valid @RequestBody CityCreateRequest request);
 
     @Operation(summary = "Updates a specific city.")
     @ApiResponse(responseCode = "204", content = @Content)
@@ -59,7 +61,7 @@ public interface CitiesApi {
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "foreign key", description = "key: countryCode", value = Examples.Error.CONFLICT_FOREIGN_KEY)}))
     @PutMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable long id, @RequestBody CityUpdateRequest request);
+    ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody CityUpdateRequest request);
 
     @Operation(summary = "Deletes a specific city.")
     @ApiResponse(responseCode = "204", content = @Content)
