@@ -9,12 +9,16 @@ import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.LanguageCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.LanguageUpdateRequest;
 import org.springframework.data.util.Pair;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @RestController
+@RequestMapping(value = "/api/languages", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LanguagesController implements LanguagesApi {
 
     private final LanguageService languageService;
@@ -24,12 +28,14 @@ public class LanguagesController implements LanguagesApi {
     }
 
     @Override
-    public ResponseEntity<Object> getAll() {
+    @GetMapping
+    public ResponseEntity<?> all() {
         return ResponseEntities.ok(languageService.findAll());
     }
 
     @Override
-    public ResponseEntity<Object> get(long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> one(@PathVariable long id) {
         var response = languageService.findById(id);
 
         if (response == null)
@@ -39,13 +45,15 @@ public class LanguagesController implements LanguagesApi {
     }
 
     @Override
-    public ResponseEntity<Object> create(LanguageCreateRequest request) {
+    @PostMapping
+    public ResponseEntity<?> create(@Valid @RequestBody LanguageCreateRequest request) {
         var response = languageService.create(request);
-        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).get(response.getId())), response);
+        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).one(response.getId())), response);
     }
 
     @Override
-    public ResponseEntity<Object> update(long id, LanguageUpdateRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable long id, @Valid @RequestBody LanguageUpdateRequest request) {
         ApiHelpers.validateMismatch(id, request.getId(), "id");
 
         languageService.update(request);
@@ -53,8 +61,8 @@ public class LanguagesController implements LanguagesApi {
     }
 
     @Override
-    public ResponseEntity<Object> delete(long id) {
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable long id) {
         languageService.deleteById(id);
         return ResponseEntities.noContent();
     }

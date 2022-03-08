@@ -3,24 +3,23 @@ package com.furkanisitan.countrycityapi.api.controllers;
 import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
-import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
 import com.furkanisitan.countrycityapi.api.abstracts.CountriesApi;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.model.entities.Country;
-import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import javax.validation.Valid;
 
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @RestController
+@RequestMapping(value = "/api/countries", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CountriesController implements CountriesApi {
 
     private final CountryService countryService;
@@ -31,12 +30,14 @@ public class CountriesController implements CountriesApi {
     }
 
     @Override
-    public ResponseEntity<Object> getAll() {
+    @GetMapping
+    public ResponseEntity<?> all() {
         return ResponseEntities.ok(countryService.findAll());
     }
 
     @Override
-    public ResponseEntity<Object> get(long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> one(@PathVariable long id) {
         var response = countryService.findById(id);
 
         if (response == null)
@@ -46,13 +47,15 @@ public class CountriesController implements CountriesApi {
     }
 
     @Override
-    public ResponseEntity<Object> create(CountryCreateRequest request) {
+    @PostMapping
+    public ResponseEntity<?> create(@Valid @RequestBody CountryCreateRequest request) {
         var response = countryService.create(request);
-        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).get(response.getId())), response);
+        return ResponseEntities.created(ApiHelpers.getUri(on(this.getClass()).one(response.getId())), response);
     }
 
     @Override
-    public ResponseEntity<Object> update(long id, CountryUpdateRequest request) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable long id, @Valid @RequestBody CountryUpdateRequest request) {
         ApiHelpers.validateMismatch(id, request.getId(), "id");
 
         countryService.update(request);
@@ -60,7 +63,8 @@ public class CountriesController implements CountriesApi {
     }
 
     @Override
-    public ResponseEntity<Object> delete(long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable long id) {
         countryService.deleteById(id);
         return ResponseEntities.noContent();
     }

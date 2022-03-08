@@ -13,29 +13,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
-@RequestMapping(value = "/api/languages", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Languages", description = "The Language API")
 public interface LanguagesApi {
 
     @Operation(summary = "Returns a list of languages.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
             @ExampleObject(Examples.Language.Success.GET_ALL)}))
-    @GetMapping
-    ResponseEntity<Object> getAll();
+    ResponseEntity<?> all();
 
     @Operation(summary = "Returns a specific language.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
             @ExampleObject(Examples.Language.Success.GET)}))
     @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "no record", description = "recordName: Language", value = Examples.Error.NOT_FOUND_BY_ID)}))
-    @GetMapping("/{id}")
-    ResponseEntity<Object> get(@PathVariable long id);
+    ResponseEntity<?> one(long id);
 
     @Operation(summary = "Creates a new language.")
     @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
@@ -45,8 +38,7 @@ public interface LanguagesApi {
             @ExampleObject(name = "blank", description = "fieldName: code | name", value = Examples.Error.BAD_REQUEST_BLANK)}))
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE)}))
-    @PostMapping
-    ResponseEntity<Object> create(@Valid @RequestBody LanguageCreateRequest request);
+    ResponseEntity<?> create(LanguageCreateRequest request);
 
     @Operation(summary = "Updates a specific language.")
     @ApiResponse(responseCode = "204", content = @Content)
@@ -58,14 +50,12 @@ public interface LanguagesApi {
             @ExampleObject(name = "no record", description = "recordName: Language", value = Examples.Error.NOT_FOUND_BY_ID)}))
     @ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "unique", description = "fieldName: code", value = Examples.Error.CONFLICT_NOT_UNIQUE)}))
-    @PutMapping("/{id}")
-    ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody LanguageUpdateRequest request);
+    ResponseEntity<?> update(long id, LanguageUpdateRequest request);
 
     @Operation(summary = "Deletes a specific language.")
     @ApiResponse(responseCode = "204", content = @Content)
     @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Result.class), examples = {
             @ExampleObject(name = "no record", description = "recordName: Language", value = Examples.Error.NOT_FOUND_BY_ID)}))
-    @DeleteMapping("/{id}")
-    ResponseEntity<Object> delete(@PathVariable long id);
+    ResponseEntity<?> delete(long id);
 
 }
