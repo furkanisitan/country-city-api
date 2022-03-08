@@ -4,8 +4,9 @@ import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Objects;
 
-public class ApiHelpers {
+public interface ApiHelpers {
 
     /**
      * @param routeValue    The route value.
@@ -14,8 +15,8 @@ public class ApiHelpers {
      * @param propertyName  The name of the value in the body.
      * @throws RouteBodyMismatchException if {@literal routeValue} and {@literal propertyValue} are not equal.
      */
-    public static void validateMismatch(Long routeValue, Long propertyValue, String routeName, String propertyName) {
-        if (routeValue.equals(propertyValue))
+    static void validateMismatch(Long routeValue, Long propertyValue, String routeName, String propertyName) {
+        if (!Objects.equals(routeValue, propertyValue))
             throw new RouteBodyMismatchException(routeName, propertyName);
     }
 
@@ -24,9 +25,8 @@ public class ApiHelpers {
      *
      * @see #validateMismatch(Long, Long, String, String)
      */
-    public static void validateMismatch(Long routeValue, Long propertyValue, String routeName) {
-        if (routeValue.equals(propertyValue))
-            throw new RouteBodyMismatchException(routeName);
+    static void validateMismatch(Long routeValue, Long propertyValue, String routeName) {
+        validateMismatch(routeValue, propertyValue, routeName, routeName);
     }
 
     /**
@@ -37,7 +37,7 @@ public class ApiHelpers {
      * @see MvcUriComponentsBuilder#on(Class)
      * @see MvcUriComponentsBuilder#controller(Class)
      */
-    public static URI getUri(Object info) {
+    static URI getUri(Object info) {
         return MvcUriComponentsBuilder.fromMethodCall(info).buildAndExpand().toUri();
     }
 
