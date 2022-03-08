@@ -19,7 +19,7 @@ public class UniqueConstraintException extends RuntimeException {
      * @param value the rejected value.
      */
     public UniqueConstraintException(String name, Object value) {
-        super(String.format("'%s' must be unique. {rejectedValue: %s}", name, value));
+        super(String.format("%s: must be unique. {rejectedValue: %s}", name, value));
         this.name = name;
         this.value = value;
     }

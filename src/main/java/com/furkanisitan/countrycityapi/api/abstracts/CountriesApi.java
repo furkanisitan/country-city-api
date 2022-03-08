@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequestMapping(value = "/api/countries", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "countries", description = "The Country API")
+@Tag(name = "Countries", description = "The Country API")
 public interface CountriesApi {
 
     @Operation(summary = "Returns a list of countries.")
