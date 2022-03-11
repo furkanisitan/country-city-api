@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
 @Sql(value = "/test-init.sql")
-@Sql(value = "/test-clean.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class CountryUtilityTest {
 
     private final Long COUNTRY_ID = 1L;
