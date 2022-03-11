@@ -19,7 +19,7 @@ VALUES (1, 2, true),
        (4, 5, true);
 
 INSERT INTO cities (city_id, country_id, name, population)
-VALUES (1, null, 'Samsun', 1371274),
+VALUES (1, 1, 'Samsun', 1371274),
        (2, 1, 'Ankara', 5747325),
        (3, 2, 'Washington', 7766925),
        (4, 3, 'London', 8961989),
