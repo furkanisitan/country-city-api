@@ -1,14 +1,15 @@
 package com.furkanisitan.countrycityapi.model.entities;
 
 import com.furkanisitan.core.model.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +24,10 @@ public class Language extends BaseEntity<Long> {
 
     @Column(length = 100, nullable = false)
     private String name;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "id.language", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
     //region equals & hashCode
     @Override
