@@ -8,7 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +38,7 @@ public class Country extends BaseEntity<Long> implements HasUtility<CountryUtili
     private Set<City> cities = new HashSet<>();
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "id.country", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.country", orphanRemoval = true)
     private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
     //region equals & hashCode
