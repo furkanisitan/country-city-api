@@ -32,7 +32,7 @@ class CityMapperTest {
                 () -> assertEquals(city.getId(), response.getId()),
                 () -> assertEquals(city.getName(), response.getName()),
                 () -> assertEquals(city.getPopulation(), response.getPopulation()),
-                () -> assertEquals(city.getCountry().getCode(), response.getCountryCode())
+                () -> assertEquals(city.getCountry().getCode(), response.getCountry().getCode())
         );
     }
 

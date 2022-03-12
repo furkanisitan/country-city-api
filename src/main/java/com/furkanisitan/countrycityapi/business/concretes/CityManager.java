@@ -9,6 +9,7 @@ import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -34,7 +35,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public List<CityResponse> findAll() {
+    public List<CityListResponse> findAll() {
         return CityMapper.INSTANCE.toResponseList(repository.findAll());
     }
 

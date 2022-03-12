@@ -55,7 +55,7 @@ class CityManagerTest {
 
         assertAll(
                 () -> assertNotNull(response),
-                () -> assertEquals(request.getCountryCode(), response.getCountryCode())
+                () -> assertEquals(request.getCountryCode(), response.getCountry().getCode())
         );
 
     }

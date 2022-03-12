@@ -2,6 +2,7 @@ package com.furkanisitan.countrycityapi.business;
 
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -88,8 +89,9 @@ class CityServiceTest {
 @Qualifier("fakeCityService")
 class FakeCityService implements CityService {
 
+
     @Override
-    public List<CityResponse> findAll() {
+    public List<CityListResponse> findAll() {
         return null;
     }
 

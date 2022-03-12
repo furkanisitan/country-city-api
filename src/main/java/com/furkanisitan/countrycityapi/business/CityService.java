@@ -4,6 +4,7 @@ import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +20,7 @@ public interface CityService {
      *
      * @return all cities by mapping them to {@link CityResponse}.
      */
-    List<CityResponse> findAll();
+    List<CityListResponse> findAll();
 
     /**
      * Returns a {@link CityResponse} by {@literal id}.

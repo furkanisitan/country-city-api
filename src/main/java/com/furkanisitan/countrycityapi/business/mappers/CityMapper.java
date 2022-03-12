@@ -3,6 +3,7 @@ package com.furkanisitan.countrycityapi.business.mappers;
 import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
+import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,10 +18,12 @@ public interface CityMapper {
 
     CityMapper INSTANCE = Mappers.getMapper(CityMapper.class);
 
-    List<CityResponse> toResponseList(Collection<City> source);
+    List<CityListResponse> toResponseList(Collection<City> source);
 
-    @Mapping(target = "countryCode", source = "country.code")
     CityResponse toResponse(City source);
+
+    @Mapping(target = "countryId", source = "country.id")
+    CityListResponse toListResponse(City source);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "country", ignore = true)

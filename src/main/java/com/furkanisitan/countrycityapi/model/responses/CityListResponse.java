@@ -4,12 +4,11 @@ import com.furkanisitan.core.model.Response;
 import lombok.Data;
 
 @Data
-public class CityResponse implements Response {
+public class CityListResponse implements Response {
 
     private Long id;
     private String name;
     private long population;
-    private CityCountryResponse country;
+    private Long countryId;
 
 }
-
