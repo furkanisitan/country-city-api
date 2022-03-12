@@ -3,6 +3,7 @@ package com.furkanisitan.core.validation;
 import com.furkanisitan.core.exceptions.CreateInstanceException;
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
+import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.core.model.Entity;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -11,6 +12,7 @@ import org.springframework.data.util.Pair;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 /**
  * @param <T>  the entity type to validate.
@@ -63,12 +65,38 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
             throw new RecordNotFoundException(clazz.getSimpleName(), Pair.of(field, value));
     }
 
+    /**
+     * Checks if {@literal field} is unique.
+     *
+     * @param field property path.
+     * @param value the query value.
+     * @param <V>   the type of value.
+     * @throws UniqueConstraintException if {@literal field} is not unique.
+     */
+    public <V> void uniqueBy(String field, V value) {
+        if (repository.exists(getExample(field, value)))
+            throw new UniqueConstraintException(field, value);
+    }
+
+    /**
+     * Checks if {@literal field} is unique for update.
+     *
+     * @param field property path.
+     * @param value the query value.
+     * @param <V>   the type of value.
+     * @throws UniqueConstraintException if {@literal field} is not unique for update.
+     */
+    public <V> void uniqueBy(String field, V value, ID id) {
+        T entity = repository.findOne(getExample(field, value)).orElse(null);
+        if (entity != null && !Objects.equals(entity.getId(), id))
+            throw new UniqueConstraintException(field, value);
+    }
+
     private <V> Example<T> getExample(String field, V value) {
         try {
             var probe = clazz.getDeclaredConstructor().newInstance();
 
             var declaredField = getField(field);
-            declaredField.setAccessible(true);
             declaredField.set(probe, value);
 
             var exampleMatcher = ExampleMatcher.matchingAny().withMatcher(field, ExampleMatcher.GenericPropertyMatchers.exact());
@@ -80,10 +108,13 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
     }
 
     private Field getField(String field) throws NoSuchFieldException {
+        Field declaredField;
         try {
-            return clazz.getDeclaredField(field);
+            declaredField = clazz.getDeclaredField(field);
         } catch (NoSuchFieldException e) {
-            return clazz.getSuperclass().getDeclaredField(field);
+            declaredField = clazz.getSuperclass().getDeclaredField(field);
         }
+        declaredField.setAccessible(true);
+        return declaredField;
     }
 }
