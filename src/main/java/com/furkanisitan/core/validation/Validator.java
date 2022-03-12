@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.util.Pair;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 /**
  * @param <T>  the entity type to validate.
@@ -63,17 +64,26 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
     }
 
     private <V> Example<T> getExample(String field, V value) {
-
         try {
             var probe = clazz.getDeclaredConstructor().newInstance();
-            var declaredField = clazz.getDeclaredField(field);
+
+            var declaredField = getField(field);
             declaredField.setAccessible(true);
             declaredField.set(probe, value);
 
             var exampleMatcher = ExampleMatcher.matchingAny().withMatcher(field, ExampleMatcher.GenericPropertyMatchers.exact());
+
             return Example.of(probe, exampleMatcher);
         } catch (Exception e) {
             throw new CreateInstanceException(e.getMessage());
+        }
+    }
+
+    private Field getField(String field) throws NoSuchFieldException {
+        try {
+            return clazz.getDeclaredField(field);
+        } catch (NoSuchFieldException e) {
+            return clazz.getSuperclass().getDeclaredField(field);
         }
     }
 }
