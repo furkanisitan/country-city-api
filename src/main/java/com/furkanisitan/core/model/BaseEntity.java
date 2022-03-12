@@ -13,8 +13,6 @@ import java.util.Objects;
 
 /**
  * Base entity class.
- *
- * @param <ID> the type of the entity's id.
  */
 
 @Getter

@@ -11,8 +11,6 @@ import java.util.Objects;
 
 /**
  * Base entity class with embedded id.
- *
- * @param <ID> the type of the embedded id of entity.
  */
 
 @Getter
