@@ -6,6 +6,7 @@ import com.furkanisitan.countrycityapi.business.validators.CityValidator;
 import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
 import com.furkanisitan.countrycityapi.model.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.City_;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
@@ -18,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,7 +78,7 @@ class CityManagerTest {
         City city = new City();
         Country country = new Country();
 
-        when(cityValidator.findIfIdIsExists(request.getId())).thenReturn(city);
+        when(cityValidator.findBy(City_.ID, request.getId())).thenReturn(city);
         when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
@@ -91,7 +91,7 @@ class CityManagerTest {
         CityUpdateRequest request = new CityUpdateRequest();
         request.setId(1L);
 
-        when(cityValidator.findIfIdIsExists(request.getId()))
+        when(cityValidator.findBy(City_.ID, request.getId()))
                 .thenThrow(RecordNotFoundException.class);
 
         assertThrows(RecordNotFoundException.class, () -> cityManager.update(request));
@@ -103,7 +103,7 @@ class CityManagerTest {
         CityUpdateRequest request = new CityUpdateRequest();
         City city = new City();
 
-        when(cityValidator.findIfIdIsExists(request.getId())).thenReturn(city);
+        when(cityValidator.findBy(City_.ID, request.getId())).thenReturn(city);
         when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode()))
                 .thenThrow(ForeignKeyConstraintException.class);
 
@@ -113,16 +113,18 @@ class CityManagerTest {
     @Test
     void deleteById_DoesNotThrowsException() {
 
-        doNothing().when(cityValidator).idIsExists(anyLong());
+        var id = 0L;
+        doNothing().when(cityValidator).existsBy(City_.ID, id);
 
-        assertDoesNotThrow(() -> cityManager.deleteById(anyLong()));
+        assertDoesNotThrow(() -> cityManager.deleteById(id));
     }
 
     @Test
     void deleteById_ThrowsRecordNotFoundException_IdNotExists() {
 
-        doThrow(RecordNotFoundException.class).when(cityValidator).idIsExists(anyLong());
+        var id = 0L;
+        doThrow(RecordNotFoundException.class).when(cityValidator).existsBy(City_.ID, id);
 
-        assertThrows(RecordNotFoundException.class, () -> cityManager.deleteById(anyLong()));
+        assertThrows(RecordNotFoundException.class, () -> cityManager.deleteById(id));
     }
 }
