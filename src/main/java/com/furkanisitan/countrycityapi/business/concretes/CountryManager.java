@@ -6,6 +6,7 @@ import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
 import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
@@ -48,7 +49,7 @@ public class CountryManager implements CountryService {
     @Override
     public CountryCreateResponse create(CountryCreateRequest request) {
 
-        validator.codeIsUnique(request.getCode());
+        validator.uniqueBy(Country_.CODE, request.getCode());
         Country country = CountryMapper.INSTANCE.fromCreateRequest(request);
 
         for (var language : request.getLanguages()) {
@@ -63,8 +64,8 @@ public class CountryManager implements CountryService {
     @Override
     public void update(CountryUpdateRequest request) {
 
-        Country country = validator.findIfIdIsExists(request.getId());
-        validator.codeIsUnique(request.getCode(), request.getId());
+        Country country = validator.findBy(Country_.ID, request.getId());
+        validator.uniqueBy(Country_.CODE, request.getCode(), request.getId());
 
         CountryMapper.INSTANCE.updateFromUpdateRequest(request, country);
 
@@ -80,7 +81,7 @@ public class CountryManager implements CountryService {
     @Transactional
     @Override
     public void deleteById(Long id) {
-        validator.idIsExists(id);
+        validator.existsBy(Country_.ID, id);
         repository.deleteById(id);
     }
 

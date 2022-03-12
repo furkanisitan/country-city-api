@@ -7,6 +7,7 @@ import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
 import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
@@ -49,7 +50,7 @@ class CountryManagerTest {
         Language language = new Language();
         Country country = new Country();
 
-        doNothing().when(countryValidator).codeIsUnique(request.getCode());
+        doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode());
         when(languageValidator.getIfIdForeignKeyIsExists(languageRequest.getLanguageId())).thenReturn(language);
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
@@ -69,7 +70,7 @@ class CountryManagerTest {
 
         CountryCreateRequest request = new CountryCreateRequest();
 
-        doThrow(UniqueConstraintException.class).when(countryValidator).codeIsUnique(request.getCode());
+        doThrow(UniqueConstraintException.class).when(countryValidator).uniqueBy(Country_.CODE, request.getCode());
 
         assertThrows(UniqueConstraintException.class, () -> countryManager.create(request));
     }
@@ -82,7 +83,7 @@ class CountryManagerTest {
         languageRequest.setLanguageId(1L);
         request.setLanguages(List.of(languageRequest));
 
-        doNothing().when(countryValidator).codeIsUnique(request.getCode());
+        doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode());
         when(languageValidator.getIfIdForeignKeyIsExists(anyLong())).thenThrow(ForeignKeyConstraintException.class);
 
         assertThrows(ForeignKeyConstraintException.class, () -> countryManager.create(request));
@@ -98,8 +99,8 @@ class CountryManagerTest {
         Language language = new Language();
         Country country = new Country();
 
-        when(countryValidator.findIfIdIsExists(request.getId())).thenReturn(country);
-        doNothing().when(countryValidator).codeIsUnique(request.getCode(), request.getId());
+        when(countryValidator.findBy(Country_.ID, request.getId())).thenReturn(country);
+        doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode(), request.getId());
         when(languageValidator.getIfIdForeignKeyIsExists(languageRequest.getLanguageId())).thenReturn(language);
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
@@ -112,7 +113,7 @@ class CountryManagerTest {
 
         CountryUpdateRequest request = new CountryUpdateRequest();
 
-        doThrow(RecordNotFoundException.class).when(countryValidator).findIfIdIsExists(request.getId());
+        doThrow(RecordNotFoundException.class).when(countryValidator).findBy(Country_.ID, request.getId());
 
         assertThrows(RecordNotFoundException.class, () -> countryManager.update(request));
     }
@@ -123,8 +124,8 @@ class CountryManagerTest {
         CountryUpdateRequest request = new CountryUpdateRequest();
         Country country = new Country();
 
-        when(countryValidator.findIfIdIsExists(request.getId())).thenReturn(country);
-        doThrow(UniqueConstraintException.class).when(countryValidator).codeIsUnique(request.getCode(), request.getId());
+        when(countryValidator.findBy(Country_.ID, request.getId())).thenReturn(country);
+        doThrow(UniqueConstraintException.class).when(countryValidator).uniqueBy(Country_.CODE, request.getCode(), request.getId());
 
         assertThrows(UniqueConstraintException.class, () -> countryManager.update(request));
     }
@@ -137,8 +138,8 @@ class CountryManagerTest {
         request.setLanguages(List.of(languageRequest));
         Country country = new Country();
 
-        when(countryValidator.findIfIdIsExists(request.getId())).thenReturn(country);
-        doNothing().when(countryValidator).codeIsUnique(request.getCode(), request.getId());
+        when(countryValidator.findBy(Country_.ID, request.getId())).thenReturn(country);
+        doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode(), request.getId());
         doThrow(ForeignKeyConstraintException.class).when(languageValidator).getIfIdForeignKeyIsExists(languageRequest.getLanguageId());
 
         assertThrows(ForeignKeyConstraintException.class, () -> countryManager.update(request));
@@ -147,16 +148,18 @@ class CountryManagerTest {
     @Test
     void deleteById_DoesNotThrowsException() {
 
-        doNothing().when(countryValidator).idIsExists(anyLong());
+        var id = 0L;
+        doNothing().when(countryValidator).existsBy(Country_.ID, id);
 
-        assertDoesNotThrow(() -> countryManager.deleteById(anyLong()));
+        assertDoesNotThrow(() -> countryManager.deleteById(id));
     }
 
     @Test
     void deleteById_ThrowsRecordNotFoundException_IdNotExists() {
 
-        doThrow(RecordNotFoundException.class).when(countryValidator).idIsExists(anyLong());
+        var id = 0L;
+        doThrow(RecordNotFoundException.class).when(countryValidator).existsBy(Country_.ID, id);
 
-        assertThrows(RecordNotFoundException.class, () -> countryManager.deleteById(anyLong()));
+        assertThrows(RecordNotFoundException.class, () -> countryManager.deleteById(id));
     }
 }

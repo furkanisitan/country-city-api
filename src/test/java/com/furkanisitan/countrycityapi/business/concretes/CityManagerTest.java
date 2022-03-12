@@ -8,6 +8,7 @@ import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
 import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.City_;
 import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
@@ -47,7 +48,7 @@ class CityManagerTest {
         City city = new City();
         city.setCountry(country);
 
-        when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode())).thenReturn(country);
+        when(countryValidator.findForeignBy(Country_.CODE, request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
 
@@ -65,7 +66,7 @@ class CityManagerTest {
 
         CityCreateRequest request = new CityCreateRequest();
 
-        when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode()))
+        when(countryValidator.findForeignBy(Country_.CODE, request.getCountryCode()))
                 .thenThrow(ForeignKeyConstraintException.class);
 
         assertThrows(ForeignKeyConstraintException.class, () -> cityManager.create(request));
@@ -79,7 +80,7 @@ class CityManagerTest {
         Country country = new Country();
 
         when(cityValidator.findBy(City_.ID, request.getId())).thenReturn(city);
-        when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode())).thenReturn(country);
+        when(countryValidator.findForeignBy(Country_.CODE, request.getCountryCode())).thenReturn(country);
         when(cityRepository.save(any(City.class))).thenReturn(city);
 
         assertDoesNotThrow(() -> cityManager.update(request));
@@ -104,7 +105,7 @@ class CityManagerTest {
         City city = new City();
 
         when(cityValidator.findBy(City_.ID, request.getId())).thenReturn(city);
-        when(countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode()))
+        when(countryValidator.findForeignBy(Country_.CODE, request.getCountryCode()))
                 .thenThrow(ForeignKeyConstraintException.class);
 
         assertThrows(ForeignKeyConstraintException.class, () -> cityManager.update(request));

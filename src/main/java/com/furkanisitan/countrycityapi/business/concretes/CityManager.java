@@ -8,6 +8,7 @@ import com.furkanisitan.countrycityapi.dataaccess.CityRepository;
 import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.entities.City_;
 import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
@@ -49,7 +50,7 @@ public class CityManager implements CityService {
     @Override
     public CityResponse create(CityCreateRequest request) {
 
-        Country country = countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode());
+        Country country = countryValidator.findForeignBy(Country_.CODE, request.getCountryCode());
 
         City city = CityMapper.INSTANCE.fromCreateRequest(request);
         city.setCountry(country);
@@ -62,7 +63,7 @@ public class CityManager implements CityService {
     public void update(CityUpdateRequest request) {
 
         City city = validator.findBy(City_.ID, request.getId());
-        Country country = countryValidator.getIfCodeForeignKeyIsExists(request.getCountryCode());
+        Country country = countryValidator.findForeignBy(Country_.CODE, request.getCountryCode());
 
         CityMapper.INSTANCE.updateFromUpdateRequest(request, city);
         city.setCountry(country);

@@ -9,12 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CityValidator extends Validator<City, Long> {
 
-    private final CityRepository repository;
-
     @Autowired
     public CityValidator(CityRepository repository) {
         super(City.class, repository);
-        this.repository = repository;
     }
 
 }
