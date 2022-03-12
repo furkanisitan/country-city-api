@@ -21,6 +21,6 @@ public class RouteBodyMismatchException extends RuntimeException {
      * @param propertyName The name of the value in the body.
      */
     public RouteBodyMismatchException(String routeName, String propertyName) {
-        super(String.format("The %s in the route does not match the %s in the body.", routeName, propertyName));
+        super(String.format("%s: It doesn't match %s in the route.", propertyName, routeName));
     }
 }
