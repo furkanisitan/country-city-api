@@ -1,9 +1,6 @@
 package com.furkanisitan.core.api;
 
-import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
-import com.furkanisitan.core.exceptions.RecordNotFoundException;
-import com.furkanisitan.core.exceptions.RouteBodyMismatchException;
-import com.furkanisitan.core.exceptions.UniqueConstraintException;
+import com.furkanisitan.core.exceptions.*;
 import com.furkanisitan.core.results.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -55,6 +52,13 @@ public abstract class RestControllerExceptionHandler {
     @ResponseBody
     Result handle(UniqueConstraintException e) {
         return Result.fail(ResponseMessages.ERR_UNIQUE_CONSTRAINT, e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(CreateInstanceException.class)
+    @ResponseBody
+    Result handle(CreateInstanceException e) {
+        return Result.fail(ResponseMessages.ERR_INTERNAL_SERVER, e.getMessage());
     }
 
 }
