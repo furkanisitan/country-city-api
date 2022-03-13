@@ -17,7 +17,7 @@ public class SwaggerConfig {
                 .info(new Info().title("Country City API")
                         .description("An Spring Boot Rest API for managing countries and cities.")
                         .version("v0.0.1")
-                        .contact(new Contact().name("Furkan Işıtan").url("furkanisitan.com").email("furkanisitan96@gmail.com"))
+                        .contact(new Contact().name("Furkan Işıtan").url("https://furkanisitan.com/").email("furkanisitan96@gmail.com"))
                         .license(new License().name("MIT License").url("https://raw.githubusercontent.com/furkanisitan/country-city-api/main/LICENSE")));
     }
 
