@@ -11,31 +11,45 @@ info:
     url: https://raw.githubusercontent.com/furkanisitan/country-city-api/main/LICENSE
   version: v0.0.1
 servers:
-  - url: http://localhost:8080
-    description: Generated server url
+- url: http://localhost:8080
+  description: Generated server url
 tags:
-  - name: Cities
-    description: The City API
-  - name: Countries
-    description: The Country API
-  - name: Languages
-    description: The Language API
+- name: Cities
+  description: The City API
+- name: Countries
+  description: The Country API
+- name: Languages
+  description: The Language API
 paths:
   /api/languages/{id}:
     get:
       tags:
-        - Languages
+      - Languages
       summary: Returns a specific language.
       operationId: one
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: Language"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
+        "200":
           description: OK
           content:
             application/json:
@@ -48,32 +62,18 @@ paths:
                   id: 1
                   name: Turkish
                   code: tr
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: 'recordName: Language'
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                      - '{recordName} not found for parameters (id=''55'').'
     put:
       tags:
-        - Languages
+      - Languages
       summary: Updates a specific language.
       operationId: update
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
@@ -81,37 +81,7 @@ paths:
               $ref: '#/components/schemas/LanguageUpdateRequest'
         required: true
       responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: code | name'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-                'null':
-                  description: 'fieldName: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be null.'
-                mismatch:
-                  description: 'param: id - field: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{field}: It doesn''t match {param} in the route.'
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -119,13 +89,13 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: Language'
+                  description: "recordName: Language"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
-        '409':
+                    - "{recordName} not found for parameters (id='55')."
+        "409":
           description: Conflict
           content:
             application/json:
@@ -133,28 +103,56 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 unique:
-                  description: 'fieldName: code'
+                  description: "fieldName: code"
                   value:
                     success: false
                     message: A unique constraint error has occurred.
                     errors:
-                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+                "null":
+                  description: "fieldName: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be null."
+                mismatch:
+                  description: "param: id - field: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{field}: It doesn't match {param} in the route."
     delete:
       tags:
-        - Languages
+      - Languages
       summary: Deletes a specific language.
       operationId: delete
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '204':
-          description: No Content
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -162,27 +160,43 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: Language'
+                  description: "recordName: Language"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                    - "{recordName} not found for parameters (id='55')."
+        "204":
+          description: No Content
   /api/countries/{id}:
     get:
       tags:
-        - Countries
+      - Countries
       summary: Returns a specific country.
       operationId: one_1
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: Country"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
+        "200":
           description: OK
           content:
             application/json:
@@ -197,41 +211,27 @@ paths:
                   code: TR
                   lifeExpectancy: 78.6
                   languages:
-                    - languageId: 1
-                      languageName: Turkish
-                      languageCode: tr
-                      official: true
+                  - languageId: 1
+                    languageName: Turkish
+                    languageCode: tr
+                    official: true
                   cities:
-                    - id: 1
-                      name: Ankara
-                      population: 5747325
-                      countryCode: TR
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: 'recordName: Country'
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                  - id: 1
+                    name: Ankara
+                    population: 5747325
+                    countryCode: TR
     put:
       tags:
-        - Countries
+      - Countries
       summary: Updates a specific country.
       operationId: update_1
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
@@ -239,37 +239,7 @@ paths:
               $ref: '#/components/schemas/CountryUpdateRequest'
         required: true
       responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: code | name'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-                'null':
-                  description: 'fieldName: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be null.'
-                mismatch:
-                  description: 'param: id - field: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{field}: It doesn''t match {param} in the route.'
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -277,13 +247,13 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: Country'
+                  description: "recordName: Country"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
-        '409':
+                    - "{recordName} not found for parameters (id='55')."
+        "409":
           description: Conflict
           content:
             application/json:
@@ -291,35 +261,63 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 unique:
-                  description: 'fieldName: code'
+                  description: "fieldName: code"
                   value:
                     success: false
                     message: A unique constraint error has occurred.
                     errors:
-                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
                 foreign key:
-                  description: 'key: languages.languageId'
+                  description: "key: languages.languageId"
                   value:
                     success: false
                     message: A foreign key constraint error has occurred.
                     errors:
-                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+                    - "{key}: The foreign key does not exist. (rejectedValue: {value})"
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+                "null":
+                  description: "fieldName: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be null."
+                mismatch:
+                  description: "param: id - field: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{field}: It doesn't match {param} in the route."
     delete:
       tags:
-        - Countries
+      - Countries
       summary: Deletes a specific country.
       operationId: delete_1
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '204':
-          description: No Content
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -327,27 +325,29 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: Country'
+                  description: "recordName: Country"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                    - "{recordName} not found for parameters (id='55')."
+        "204":
+          description: No Content
   /api/cities/{id}:
     get:
       tags:
-        - Cities
+      - Cities
       summary: Returns a specific city.
       operationId: one_2
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -365,7 +365,7 @@ paths:
                     code: TR
                     name: Turkey
                     lifeExpectancy: 78.6
-        '404':
+        "404":
           description: Not Found
           content:
             application/json:
@@ -373,24 +373,24 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: City'
+                  description: "recordName: City"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                    - "{recordName} not found for parameters (id='55')."
     put:
       tags:
-        - Cities
+      - Cities
       summary: Updates a specific city.
       operationId: update_2
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
@@ -398,58 +398,7 @@ paths:
               $ref: '#/components/schemas/CityUpdateRequest'
         required: true
       responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: name | countryCode'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-                positive:
-                  description: 'fieldName: population'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must be greater than 0.'
-                'null':
-                  description: 'fieldName: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be null.'
-                mismatch:
-                  description: 'param: id - field: id'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{field}: It doesn''t match {param} in the route.'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: 'recordName: City'
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                      - '{recordName} not found for parameters (id=''55'').'
-        '409':
+        "409":
           description: Conflict
           content:
             application/json:
@@ -457,28 +406,13 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 foreign key:
-                  description: 'key: countryCode'
+                  description: "key: countryCode"
                   value:
                     success: false
                     message: A foreign key constraint error has occurred.
                     errors:
-                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
-    delete:
-      tags:
-        - Cities
-      summary: Deletes a specific city.
-      operationId: delete_2
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '204':
-          description: No Content
-        '404':
+                    - "{key}: The foreign key does not exist. (rejectedValue: {value})"
+        "404":
           description: Not Found
           content:
             application/json:
@@ -486,20 +420,86 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 no record:
-                  description: 'recordName: City'
+                  description: "recordName: City"
                   value:
                     success: false
                     message: The resource not found.
                     errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                    - "{recordName} not found for parameters (id='55')."
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: name | countryCode"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+                positive:
+                  description: "fieldName: population"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must be greater than 0."
+                "null":
+                  description: "fieldName: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be null."
+                mismatch:
+                  description: "param: id - field: id"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{field}: It doesn't match {param} in the route."
+        "204":
+          description: No Content
+    delete:
+      tags:
+      - Cities
+      summary: Deletes a specific city.
+      operationId: delete_2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: City"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
+        "204":
+          description: No Content
   /api/languages:
     get:
       tags:
-        - Languages
+      - Languages
       summary: Returns a list of languages.
       operationId: all
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -509,12 +509,12 @@ paths:
                 success: true
                 message: The request has been processed successfully.
                 payload:
-                  - id: 1
-                    name: Turkish
-                    code: tr
+                - id: 1
+                  name: Turkish
+                  code: tr
     post:
       tags:
-        - Languages
+      - Languages
       summary: Creates a new language.
       operationId: create
       requestBody:
@@ -524,7 +524,35 @@ paths:
               $ref: '#/components/schemas/LanguageCreateRequest'
         required: true
       responses:
-        '201':
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: "fieldName: code"
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+        "201":
           description: Created
           headers:
             Location:
@@ -543,42 +571,14 @@ paths:
                   id: 1
                   name: Turkish
                   code: tr
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: code | name'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-        '409':
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                unique:
-                  description: 'fieldName: code'
-                  value:
-                    success: false
-                    message: A unique constraint error has occurred.
-                    errors:
-                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
   /api/countries:
     get:
       tags:
-        - Countries
+      - Countries
       summary: Returns a list of countries.
       operationId: all_1
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -588,13 +588,13 @@ paths:
                 success: true
                 message: The request has been processed successfully.
                 payload:
-                  - id: 1
-                    name: Turkey
-                    code: TR
-                    lifeExpectancy: 78.6
+                - id: 1
+                  name: Turkey
+                  code: TR
+                  lifeExpectancy: 78.6
     post:
       tags:
-        - Countries
+      - Countries
       summary: Creates a new country.
       operationId: create_1
       requestBody:
@@ -604,7 +604,21 @@ paths:
               $ref: '#/components/schemas/CountryCreateRequest'
         required: true
       responses:
-        '201':
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+        "201":
           description: Created
           headers:
             Location:
@@ -625,25 +639,11 @@ paths:
                   code: TR
                   lifeExpectancy: 78.6
                   languages:
-                    - languageId: 1
-                      languageName: Turkish
-                      languageCode: tr
-                      official: true
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: code | name'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-        '409':
+                  - languageId: 1
+                    languageName: Turkish
+                    languageCode: tr
+                    official: true
+        "409":
           description: Conflict
           content:
             application/json:
@@ -651,27 +651,27 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 unique:
-                  description: 'fieldName: code'
+                  description: "fieldName: code"
                   value:
                     success: false
                     message: A unique constraint error has occurred.
                     errors:
-                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
                 foreign key:
-                  description: 'key: languages.languageId'
+                  description: "key: languages.languageId"
                   value:
                     success: false
                     message: A foreign key constraint error has occurred.
                     errors:
-                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+                    - "{key}: The foreign key does not exist. (rejectedValue: {value})"
   /api/cities:
     get:
       tags:
-        - Cities
+      - Cities
       summary: Returns a list of cities.
       operationId: all_2
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -681,13 +681,13 @@ paths:
                 success: true
                 message: The request has been processed successfully.
                 payload:
-                  - id: 1
-                    name: Ankara
-                    population: 5747325
-                    countryId: 1
+                - id: 1
+                  name: Ankara
+                  population: 5747325
+                  countryId: 1
     post:
       tags:
-        - Cities
+      - Cities
       summary: Creates a new city.
       operationId: create_2
       requestBody:
@@ -697,7 +697,7 @@ paths:
               $ref: '#/components/schemas/CityCreateRequest'
         required: true
       responses:
-        '201':
+        "201":
           description: Created
           headers:
             Location:
@@ -721,28 +721,7 @@ paths:
                     code: TR
                     name: Turkey
                     lifeExpectancy: 78.6
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: 'fieldName: name | countryCode'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must not be blank.'
-                positive:
-                  description: 'fieldName: population'
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                      - '{fieldName}: must be greater than 0.'
-        '409':
+        "409":
           description: Conflict
           content:
             application/json:
@@ -750,27 +729,62 @@ paths:
                 $ref: '#/components/schemas/Result'
               examples:
                 foreign key:
-                  description: 'key: countryCode'
+                  description: "key: countryCode"
                   value:
                     success: false
                     message: A foreign key constraint error has occurred.
                     errors:
-                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+                    - "{key}: The foreign key does not exist. (rejectedValue: {value})"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: name | countryCode"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
+                positive:
+                  description: "fieldName: population"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must be greater than 0."
   /api/countries/{id}/cities:
     get:
       tags:
-        - Countries
+      - Countries
       summary: Returns a list of cities of the country.
       operationId: allCities
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
-        '200':
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: Country"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
+        "200":
           description: OK
           content:
             application/json:
@@ -780,31 +794,17 @@ paths:
                 success: true
                 message: The request has been processed successfully.
                 payload:
-                  - id: 1
-                    name: Ankara
-                    population: 5747325
-                    countryId: 1
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: 'recordName: Country'
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                      - '{recordName} not found for parameters (id=''55'').'
+                - id: 1
+                  name: Ankara
+                  population: 5747325
+                  countryId: 1
 components:
   schemas:
     LanguageUpdateRequest:
       required:
-        - code
-        - id
-        - name
+      - code
+      - id
+      - name
       type: object
       properties:
         id:
@@ -830,7 +830,7 @@ components:
             type: string
     CountryLanguageRequest:
       required:
-        - languageId
+      - languageId
       type: object
       properties:
         languageId:
@@ -841,9 +841,9 @@ components:
           type: boolean
     CountryUpdateRequest:
       required:
-        - code
-        - id
-        - name
+      - code
+      - id
+      - name
       type: object
       properties:
         id:
@@ -866,9 +866,9 @@ components:
             $ref: '#/components/schemas/CountryLanguageRequest'
     CityUpdateRequest:
       required:
-        - countryCode
-        - id
-        - name
+      - countryCode
+      - id
+      - name
       type: object
       properties:
         id:
@@ -887,8 +887,8 @@ components:
           example: TR
     LanguageCreateRequest:
       required:
-        - code
-        - name
+      - code
+      - name
       type: object
       properties:
         code:
@@ -912,8 +912,8 @@ components:
           type: object
     CountryCreateRequest:
       required:
-        - code
-        - name
+      - code
+      - name
       type: object
       properties:
         code:
@@ -932,8 +932,8 @@ components:
             $ref: '#/components/schemas/CountryLanguageRequest'
     CityCreateRequest:
       required:
-        - countryCode
-        - name
+      - countryCode
+      - name
       type: object
       properties:
         name:
