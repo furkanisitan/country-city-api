@@ -6,6 +6,6 @@ package com.furkanisitan.core.exceptions;
 public class CreateInstanceException extends RuntimeException {
 
     public CreateInstanceException(String message) {
-        super(message);
+        super(String.format("CreateInstanceException: %s", message));
     }
 }
