@@ -60,4 +60,11 @@ public interface CountriesApi {
             @ExampleObject(name = "no record", description = "recordName: Country", value = Examples.Error.NOT_FOUND_BY_ID)}))
     ResponseEntity<?> delete(long id);
 
+    @Operation(summary = "Returns a list of cities of the country.")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
+            @ExampleObject(Examples.City.Success.GET_ALL)}))
+    @ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = Result.class), examples = {
+            @ExampleObject(name = "no record", description = "recordName: Country", value = Examples.Error.NOT_FOUND_BY_ID)}))
+    ResponseEntity<?> allCities(long id);
+
 }

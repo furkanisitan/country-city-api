@@ -96,6 +96,11 @@ class FakeCityService implements CityService {
     }
 
     @Override
+    public List<CityListResponse> findAllByCountryId(Long countryId) {
+        return null;
+    }
+
+    @Override
     public CityResponse findById(Long id) {
         return null;
     }

@@ -42,6 +42,11 @@ public class CityManager implements CityService {
     }
 
     @Override
+    public List<CityListResponse> findAllByCountryId(Long countryId) {
+        return CityMapper.INSTANCE.toResponseList(repository.findAllByCountryId(countryId));
+    }
+
+    @Override
     public CityResponse findById(Long id) {
         return CityMapper.INSTANCE.toResponse(repository.findById(id).orElse(null));
     }

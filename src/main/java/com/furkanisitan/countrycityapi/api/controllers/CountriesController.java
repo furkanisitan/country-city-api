@@ -4,6 +4,7 @@ import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.api.abstracts.CountriesApi;
+import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
@@ -23,10 +24,12 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 public class CountriesController implements CountriesApi {
 
     private final CountryService countryService;
+    private final CityService cityService;
 
     @Autowired
-    public CountriesController(CountryService countryService) {
+    public CountriesController(CountryService countryService, CityService cityService) {
         this.countryService = countryService;
+        this.cityService = cityService;
     }
 
     @Override
@@ -68,4 +71,15 @@ public class CountriesController implements CountriesApi {
         countryService.deleteById(id);
         return ResponseEntities.noContent();
     }
+
+    @Override
+    @GetMapping("/{id}/cities")
+    public ResponseEntity<?> allCities(@PathVariable long id) {
+
+        if (!countryService.existsById(id))
+            throw new RecordNotFoundException(Country.class.getSimpleName(), Pair.of("id", id));
+
+        return ResponseEntities.ok(cityService.findAllByCountryId(id));
+    }
+
 }

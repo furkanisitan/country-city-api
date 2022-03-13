@@ -125,4 +125,9 @@ class FakeCountryService implements CountryService {
     public void deleteById(Long id) {
 
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return false;
+    }
 }

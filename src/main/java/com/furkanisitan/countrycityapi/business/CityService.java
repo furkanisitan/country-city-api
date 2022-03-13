@@ -23,6 +23,13 @@ public interface CityService {
     List<CityListResponse> findAll();
 
     /**
+     * Returns all cities of the country by mapping them to {@link CityResponse}.
+     *
+     * @return all cities of the country by mapping them to {@link CityResponse}.
+     */
+    List<CityListResponse> findAllByCountryId(Long countryId);
+
+    /**
      * Returns a {@link CityResponse} by {@literal id}.
      *
      * @param id the primary key of the entity.
