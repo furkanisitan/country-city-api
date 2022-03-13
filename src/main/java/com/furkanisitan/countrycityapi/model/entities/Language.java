@@ -26,7 +26,7 @@ public class Language extends BaseEntity<Long> {
     private String name;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "id.language", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "id.language", orphanRemoval = true)
     private Set<CountryLanguage> countryLanguages = new HashSet<>();
 
     //region equals & hashCode
