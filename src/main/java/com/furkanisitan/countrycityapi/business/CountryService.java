@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.business.Service;
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-public interface CountryService {
+public interface CountryService extends Service {
 
     /**
      * Returns all countries by mapping them to {@link CountryListResponse}.
@@ -63,11 +64,4 @@ public interface CountryService {
      */
     void deleteById(Long id);
 
-    /**
-     * Returns whether an entity with the given id exists.
-     *
-     * @param id the primary key of the entity.
-     * @return {@code true} if an entity with the given id exists, {@code false} otherwise.
-     */
-    boolean existsById(Long id);
 }

@@ -16,7 +16,6 @@ public interface GenericUtils {
      * @return the array of {@link Field} objects representing all the declared fields of {@literal clazz}.
      */
     static <T> Field[] getFields(Class<T> clazz) {
-
         var fields = clazz.getDeclaredFields();
         var superFields = clazz.getSuperclass().getDeclaredFields();
 
@@ -47,7 +46,6 @@ public interface GenericUtils {
         }
         declaredField.setAccessible(true);
         return declaredField;
-
     }
 
 }

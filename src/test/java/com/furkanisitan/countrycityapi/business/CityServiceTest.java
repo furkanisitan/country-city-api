@@ -89,6 +89,10 @@ class CityServiceTest {
 @Qualifier("fakeCityService")
 class FakeCityService implements CityService {
 
+    @Override
+    public <V> boolean existsBy(String name, V value) {
+        return false;
+    }
 
     @Override
     public List<CityListResponse> findAll() {

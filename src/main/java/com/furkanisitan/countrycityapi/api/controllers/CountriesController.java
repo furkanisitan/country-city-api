@@ -7,6 +7,7 @@ import com.furkanisitan.countrycityapi.api.abstracts.CountriesApi;
 import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.model.entities.Country;
+import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class CountriesController implements CountriesApi {
     @GetMapping("/{id}/cities")
     public ResponseEntity<?> allCities(@PathVariable long id) {
 
-        if (!countryService.existsById(id))
+        if (!countryService.existsBy(Country_.ID, id))
             throw new RecordNotFoundException(Country.class.getSimpleName(), Pair.of("id", id));
 
         return ResponseEntities.ok(cityService.findAllByCountryId(id));

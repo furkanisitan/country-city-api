@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
+import com.furkanisitan.core.business.Manager;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.business.mappers.CountryMapper;
 import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
@@ -23,7 +24,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 @Primary
-public class CountryManager implements CountryService {
+public class CountryManager extends Manager<Country, Long> implements CountryService {
 
     private final CountryRepository repository;
     private final CountryValidator validator;
@@ -31,6 +32,7 @@ public class CountryManager implements CountryService {
 
     @Autowired
     public CountryManager(CountryRepository repository, CountryValidator validator, LanguageValidator languageValidator) {
+        super(Country.class, repository);
         this.repository = repository;
         this.validator = validator;
         this.languageValidator = languageValidator;
@@ -84,11 +86,6 @@ public class CountryManager implements CountryService {
     public void deleteById(Long id) {
         validator.existsBy(Country_.ID, id);
         repository.deleteById(id);
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
     }
 
 }

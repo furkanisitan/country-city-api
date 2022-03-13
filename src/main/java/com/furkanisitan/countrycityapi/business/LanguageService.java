@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.business.Service;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.countrycityapi.model.requests.LanguageCreateRequest;
@@ -12,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-public interface LanguageService {
+public interface LanguageService extends Service {
 
     /**
      * Returns all languages by mapping them to {@link LanguageResponse}.

@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.business.Service;
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-public interface CityService {
+public interface CityService extends Service {
 
     /**
      * Returns all cities by mapping them to {@link CityResponse}.

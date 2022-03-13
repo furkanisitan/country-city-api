@@ -100,6 +100,10 @@ class CountryServiceTest {
 @Qualifier("fakeCountryService")
 class FakeCountryService implements CountryService {
 
+    @Override
+    public <V> boolean existsBy(String name, V value) {
+        return false;
+    }
 
     @Override
     public List<CountryListResponse> findAll() {
@@ -124,10 +128,5 @@ class FakeCountryService implements CountryService {
     @Override
     public void deleteById(Long id) {
 
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return false;
     }
 }
