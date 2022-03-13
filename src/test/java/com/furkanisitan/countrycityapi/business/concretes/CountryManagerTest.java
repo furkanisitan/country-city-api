@@ -9,6 +9,7 @@ import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.entities.Country_;
 import com.furkanisitan.countrycityapi.model.entities.Language;
+import com.furkanisitan.countrycityapi.model.entities.Language_;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
@@ -23,7 +24,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +51,7 @@ class CountryManagerTest {
         Country country = new Country();
 
         doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode());
-        when(languageValidator.getIfIdForeignKeyIsExists(languageRequest.getLanguageId())).thenReturn(language);
+        when(languageValidator.findForeignBy(Language_.ID, languageRequest.getLanguageId())).thenReturn(language);
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
 
@@ -84,7 +84,7 @@ class CountryManagerTest {
         request.setLanguages(List.of(languageRequest));
 
         doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode());
-        when(languageValidator.getIfIdForeignKeyIsExists(anyLong())).thenThrow(ForeignKeyConstraintException.class);
+        when(languageValidator.findForeignBy(Language_.ID, languageRequest.getLanguageId())).thenThrow(ForeignKeyConstraintException.class);
 
         assertThrows(ForeignKeyConstraintException.class, () -> countryManager.create(request));
     }
@@ -101,7 +101,7 @@ class CountryManagerTest {
 
         when(countryValidator.findBy(Country_.ID, request.getId())).thenReturn(country);
         doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode(), request.getId());
-        when(languageValidator.getIfIdForeignKeyIsExists(languageRequest.getLanguageId())).thenReturn(language);
+        when(languageValidator.findForeignBy(Language_.ID, languageRequest.getLanguageId())).thenReturn(language);
         when(countryRepository.save(any(Country.class))).thenReturn(country);
 
 
@@ -140,7 +140,7 @@ class CountryManagerTest {
 
         when(countryValidator.findBy(Country_.ID, request.getId())).thenReturn(country);
         doNothing().when(countryValidator).uniqueBy(Country_.CODE, request.getCode(), request.getId());
-        doThrow(ForeignKeyConstraintException.class).when(languageValidator).getIfIdForeignKeyIsExists(languageRequest.getLanguageId());
+        doThrow(ForeignKeyConstraintException.class).when(languageValidator).findForeignBy(Language_.ID, languageRequest.getLanguageId());
 
         assertThrows(ForeignKeyConstraintException.class, () -> countryManager.update(request));
     }

@@ -7,6 +7,7 @@ import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
 import com.furkanisitan.countrycityapi.dataaccess.CountryRepository;
 import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.entities.Country_;
+import com.furkanisitan.countrycityapi.model.entities.Language_;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
@@ -52,9 +53,9 @@ public class CountryManager implements CountryService {
         validator.uniqueBy(Country_.CODE, request.getCode());
         Country country = CountryMapper.INSTANCE.fromCreateRequest(request);
 
-        for (var language : request.getLanguages()) {
-            var proxyLanguage = languageValidator.getIfIdForeignKeyIsExists(language.getLanguageId());
-            country.utility().addLanguage(proxyLanguage, language.isOfficial());
+        for (var countryLanguage : request.getLanguages()) {
+            var language = languageValidator.findForeignBy(Language_.ID, countryLanguage.getLanguageId());
+            country.utility().addLanguage(language, countryLanguage.isOfficial());
         }
 
         return CountryMapper.INSTANCE.toCreateResponse(repository.save(country));
@@ -71,7 +72,7 @@ public class CountryManager implements CountryService {
 
         country.utility().clearLanguages();
         for (var countryLanguage : request.getLanguages()) {
-            var language = languageValidator.getIfIdForeignKeyIsExists(countryLanguage.getLanguageId());
+            var language = languageValidator.findForeignBy(Language_.ID, countryLanguage.getLanguageId());
             country.utility().addLanguage(language, countryLanguage.isOfficial());
         }
 
