@@ -1,0 +1,948 @@
+openapi: 3.0.1
+info:
+  title: Country City API
+  description: An Spring Boot Rest API for managing countries and cities.
+  contact:
+    name: Furkan Işıtan
+    url: furkanisitan.com
+    email: furkanisitan96@gmail.com
+  license:
+    name: MIT License
+    url: https://raw.githubusercontent.com/furkanisitan/country-city-api/main/LICENSE
+  version: v0.0.1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+tags:
+  - name: Cities
+    description: The City API
+  - name: Countries
+    description: The Country API
+  - name: Languages
+    description: The Language API
+paths:
+  /api/languages/{id}:
+    get:
+      tags:
+        - Languages
+      summary: Returns a specific language.
+      operationId: one
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  id: 1
+                  name: Turkish
+                  code: tr
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Language'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+    put:
+      tags:
+        - Languages
+      summary: Updates a specific language.
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LanguageUpdateRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: code | name'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+                'null':
+                  description: 'fieldName: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be null.'
+                mismatch:
+                  description: 'param: id - field: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{field}: It doesn''t match {param} in the route.'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Language'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: 'fieldName: code'
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+    delete:
+      tags:
+        - Languages
+      summary: Deletes a specific language.
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Language'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+  /api/countries/{id}:
+    get:
+      tags:
+        - Countries
+      summary: Returns a specific country.
+      operationId: one_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  id: 1
+                  name: Turkey
+                  code: TR
+                  lifeExpectancy: 78.6
+                  languages:
+                    - languageId: 1
+                      languageName: Turkish
+                      languageCode: tr
+                      official: true
+                  cities:
+                    - id: 1
+                      name: Ankara
+                      population: 5747325
+                      countryCode: TR
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Country'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+    put:
+      tags:
+        - Countries
+      summary: Updates a specific country.
+      operationId: update_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountryUpdateRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: code | name'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+                'null':
+                  description: 'fieldName: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be null.'
+                mismatch:
+                  description: 'param: id - field: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{field}: It doesn''t match {param} in the route.'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Country'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: 'fieldName: code'
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+                foreign key:
+                  description: 'key: languages.languageId'
+                  value:
+                    success: false
+                    message: A foreign key constraint error has occurred.
+                    errors:
+                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+    delete:
+      tags:
+        - Countries
+      summary: Deletes a specific country.
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Country'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+  /api/cities/{id}:
+    get:
+      tags:
+        - Cities
+      summary: Returns a specific city.
+      operationId: one_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  id: 1
+                  name: Ankara
+                  population: 5747325
+                  country:
+                    id: 1
+                    code: TR
+                    name: Turkey
+                    lifeExpectancy: 78.6
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: City'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+    put:
+      tags:
+        - Cities
+      summary: Updates a specific city.
+      operationId: update_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityUpdateRequest'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: name | countryCode'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+                positive:
+                  description: 'fieldName: population'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must be greater than 0.'
+                'null':
+                  description: 'fieldName: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be null.'
+                mismatch:
+                  description: 'param: id - field: id'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{field}: It doesn''t match {param} in the route.'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: City'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                foreign key:
+                  description: 'key: countryCode'
+                  value:
+                    success: false
+                    message: A foreign key constraint error has occurred.
+                    errors:
+                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+    delete:
+      tags:
+        - Cities
+      summary: Deletes a specific city.
+      operationId: delete_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: City'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+  /api/languages:
+    get:
+      tags:
+        - Languages
+      summary: Returns a list of languages.
+      operationId: all
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  - id: 1
+                    name: Turkish
+                    code: tr
+    post:
+      tags:
+        - Languages
+      summary: Creates a new language.
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LanguageCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of the newly created resource.
+              style: simple
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: Resource(s) added successfully.
+                payload:
+                  id: 1
+                  name: Turkish
+                  code: tr
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: code | name'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: 'fieldName: code'
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+  /api/countries:
+    get:
+      tags:
+        - Countries
+      summary: Returns a list of countries.
+      operationId: all_1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  - id: 1
+                    name: Turkey
+                    code: TR
+                    lifeExpectancy: 78.6
+    post:
+      tags:
+        - Countries
+      summary: Creates a new country.
+      operationId: create_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountryCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of the newly created resource.
+              style: simple
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: Resource(s) added successfully.
+                payload:
+                  id: 1
+                  name: Turkey
+                  code: TR
+                  lifeExpectancy: 78.6
+                  languages:
+                    - languageId: 1
+                      languageName: Turkish
+                      languageCode: tr
+                      official: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: code | name'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: 'fieldName: code'
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                      - '{fieldName}: must be unique. (rejectedValue: {fieldValue})'
+                foreign key:
+                  description: 'key: languages.languageId'
+                  value:
+                    success: false
+                    message: A foreign key constraint error has occurred.
+                    errors:
+                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+  /api/cities:
+    get:
+      tags:
+        - Cities
+      summary: Returns a list of cities.
+      operationId: all_2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  - id: 1
+                    name: Ankara
+                    population: 5747325
+                    countryId: 1
+    post:
+      tags:
+        - Cities
+      summary: Creates a new city.
+      operationId: create_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CityCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: Location of the newly created resource.
+              style: simple
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: Resource(s) added successfully.
+                payload:
+                  id: 1
+                  name: Ankara
+                  population: 5747325
+                  country:
+                    id: 1
+                    code: TR
+                    name: Turkey
+                    lifeExpectancy: 78.6
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: 'fieldName: name | countryCode'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must not be blank.'
+                positive:
+                  description: 'fieldName: population'
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                      - '{fieldName}: must be greater than 0.'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                foreign key:
+                  description: 'key: countryCode'
+                  value:
+                    success: false
+                    message: A foreign key constraint error has occurred.
+                    errors:
+                      - '{key}: The foreign key does not exist. (rejectedValue: {value})'
+  /api/countries/{id}/cities:
+    get:
+      tags:
+        - Countries
+      summary: Returns a list of cities of the country.
+      operationId: allCities
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                  - id: 1
+                    name: Ankara
+                    population: 5747325
+                    countryId: 1
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: 'recordName: Country'
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                      - '{recordName} not found for parameters (id=''55'').'
+components:
+  schemas:
+    LanguageUpdateRequest:
+      required:
+        - code
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        code:
+          type: string
+          example: tr
+        name:
+          type: string
+          example: Turkish
+    Result:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+    CountryLanguageRequest:
+      required:
+        - languageId
+      type: object
+      properties:
+        languageId:
+          type: integer
+          format: int64
+          example: 1
+        official:
+          type: boolean
+    CountryUpdateRequest:
+      required:
+        - code
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        code:
+          type: string
+          example: TR
+        name:
+          type: string
+          example: Turkey
+        lifeExpectancy:
+          type: number
+          format: double
+          example: 78.6
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountryLanguageRequest'
+    CityUpdateRequest:
+      required:
+        - countryCode
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Ankara
+        population:
+          type: integer
+          format: int64
+          example: 5747325
+        countryCode:
+          type: string
+          example: TR
+    LanguageCreateRequest:
+      required:
+        - code
+        - name
+      type: object
+      properties:
+        code:
+          type: string
+          example: tr
+        name:
+          type: string
+          example: Turkish
+    ResultData:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+        payload:
+          type: object
+    CountryCreateRequest:
+      required:
+        - code
+        - name
+      type: object
+      properties:
+        code:
+          type: string
+          example: TR
+        name:
+          type: string
+          example: Turkey
+        lifeExpectancy:
+          type: number
+          format: double
+          example: 78.6
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountryLanguageRequest'
+    CityCreateRequest:
+      required:
+        - countryCode
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ankara
+        population:
+          type: integer
+          format: int64
+          example: 5747325
+        countryCode:
+          type: string
+          example: TR
