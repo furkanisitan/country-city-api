@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 @Data
-public class CityCreateRequest implements Request {
+public final class CityCreateRequest implements Request {
 
     @Schema(example = "Ankara")
     @NotBlank

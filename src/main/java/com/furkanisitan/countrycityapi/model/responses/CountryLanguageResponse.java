@@ -4,7 +4,7 @@ import com.furkanisitan.core.model.Response;
 import lombok.Data;
 
 @Data
-public class CountryLanguageResponse implements Response {
+public final class CountryLanguageResponse implements Response {
 
     private Long languageId;
     private String languageName;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CountryUpdateRequest implements Request {
+public final class CountryUpdateRequest implements Request {
 
     @Schema(example = "1")
     @NotNull

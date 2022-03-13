@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CountryCreateResponse {
+public final class CountryCreateResponse {
 
     private Long id;
     private String code;

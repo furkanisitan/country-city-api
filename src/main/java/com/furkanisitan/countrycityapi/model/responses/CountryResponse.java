@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CountryResponse implements Response {
+public final class CountryResponse implements Response {
 
     private Long id;
     private String code;

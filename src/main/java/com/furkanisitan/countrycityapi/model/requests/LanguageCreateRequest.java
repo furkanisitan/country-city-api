@@ -7,7 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class LanguageCreateRequest implements Request {
+public final class LanguageCreateRequest implements Request {
 
     @Schema(example = "tr")
     @NotBlank

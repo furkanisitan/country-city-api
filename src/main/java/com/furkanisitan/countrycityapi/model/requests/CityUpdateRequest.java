@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
-public class CityUpdateRequest implements Request {
+public final class CityUpdateRequest implements Request {
 
     @Schema(example = "1")
     @NotNull

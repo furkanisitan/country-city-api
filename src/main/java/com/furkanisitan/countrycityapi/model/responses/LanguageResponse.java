@@ -3,7 +3,7 @@ package com.furkanisitan.countrycityapi.model.responses;
 import lombok.Data;
 
 @Data
-public class LanguageResponse {
+public final class LanguageResponse {
 
     private Long id;
     private String name;

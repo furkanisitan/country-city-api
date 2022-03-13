@@ -4,7 +4,7 @@ import com.furkanisitan.core.model.Response;
 import lombok.Data;
 
 @Data
-public class CityListResponse implements Response {
+public final class CityListResponse implements Response {
 
     private Long id;
     private String name;

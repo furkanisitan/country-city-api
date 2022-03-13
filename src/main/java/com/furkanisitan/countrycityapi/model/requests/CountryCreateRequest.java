@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CountryCreateRequest implements Request {
+public final class CountryCreateRequest implements Request {
 
     @Schema(example = "TR")
     @NotBlank

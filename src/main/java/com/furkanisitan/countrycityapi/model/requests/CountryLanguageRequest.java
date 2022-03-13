@@ -7,7 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CountryLanguageRequest implements Request {
+public final class CountryLanguageRequest implements Request {
 
     @Schema(example = "1")
     @NotNull

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class LanguageUpdateRequest implements Request {
+public final class LanguageUpdateRequest implements Request {
 
     @Schema(example = "1")
     @NotNull
