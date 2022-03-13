@@ -5,13 +5,13 @@ import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.core.model.Entity;
+import com.furkanisitan.core.utils.GenericUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.util.Pair;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -96,7 +96,7 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
         try {
             var probe = clazz.getDeclaredConstructor().newInstance();
 
-            var declaredField = getField(field);
+            var declaredField = GenericUtils.getField(clazz, field);
             declaredField.set(probe, value);
 
             var exampleMatcher = ExampleMatcher.matchingAny().withMatcher(field, ExampleMatcher.GenericPropertyMatchers.exact());
@@ -107,14 +107,4 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
         }
     }
 
-    private Field getField(String field) throws NoSuchFieldException {
-        Field declaredField;
-        try {
-            declaredField = clazz.getDeclaredField(field);
-        } catch (NoSuchFieldException e) {
-            declaredField = clazz.getSuperclass().getDeclaredField(field);
-        }
-        declaredField.setAccessible(true);
-        return declaredField;
-    }
 }

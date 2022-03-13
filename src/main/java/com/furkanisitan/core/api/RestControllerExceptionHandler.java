@@ -55,6 +55,13 @@ public abstract class RestControllerExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NoSuchDeclaredFieldException.class)
+    @ResponseBody
+    Result handle(NoSuchDeclaredFieldException e) {
+        return Result.fail(ResponseMessages.ERR_INTERNAL_SERVER, e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CreateInstanceException.class)
     @ResponseBody
     Result handle(CreateInstanceException e) {
