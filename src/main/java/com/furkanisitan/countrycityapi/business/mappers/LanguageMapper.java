@@ -22,8 +22,10 @@ public interface LanguageMapper {
     LanguageResponse toResponse(Language source);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "countryLanguages", ignore = true)
     Language fromCreateRequest(LanguageCreateRequest source);
 
+    @Mapping(target = "countryLanguages", ignore = true)
     void updateFromUpdateRequest(LanguageUpdateRequest source, @MappingTarget Language target);
 
 }

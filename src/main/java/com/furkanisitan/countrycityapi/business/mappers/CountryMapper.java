@@ -30,8 +30,12 @@ public interface CountryMapper {
     CountryCreateResponse toCreateResponse(Country source);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cities", ignore = true)
+    @Mapping(target = "countryLanguages", ignore = true)
     Country fromCreateRequest(CountryCreateRequest source);
 
+    @Mapping(target = "cities", ignore = true)
+    @Mapping(target = "countryLanguages", ignore = true)
     void updateFromUpdateRequest(CountryUpdateRequest source, @MappingTarget Country target);
 
 }
