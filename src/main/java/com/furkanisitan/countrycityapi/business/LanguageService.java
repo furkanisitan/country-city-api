@@ -6,9 +6,9 @@ import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.countrycityapi.model.requests.LanguageCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.LanguageUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.LanguageResponse;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.List;
 

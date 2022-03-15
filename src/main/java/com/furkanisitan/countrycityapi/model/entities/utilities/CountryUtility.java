@@ -5,9 +5,9 @@ import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.entities.CountryLanguage;
 import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.entities.ids.CountryLanguageId;
-import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import java.util.Iterator;
 
@@ -27,7 +27,7 @@ public class CountryUtility extends EntityUtility<Country> {
      *
      * @see #addLanguage(Language, boolean)
      */
-    public void addLanguage(@NonNull Language language) {
+    public void addLanguage(@Nonnull Language language) {
         Assert.notNull(language, "language must not be null");
         addLanguage(language, false);
     }
@@ -41,7 +41,7 @@ public class CountryUtility extends EntityUtility<Country> {
      * @implNote It is assumed that {@link CascadeType#ALL} is used
      * in the {@link Country#countryLanguages} definition.
      */
-    public void addLanguage(@NonNull Language language, boolean isOfficial) {
+    public void addLanguage(@Nonnull Language language, boolean isOfficial) {
         Assert.notNull(language, "language must not be null");
 
         CountryLanguage countryLanguage = CountryLanguage.from(clazz, language);
@@ -56,7 +56,7 @@ public class CountryUtility extends EntityUtility<Country> {
      * @param language element to be removed from this country.
      * @throws IllegalArgumentException if language is {@literal null}.
      */
-    public void removeLanguage(@NonNull Language language) {
+    public void removeLanguage(@Nonnull Language language) {
         Assert.notNull(language, "language must not be null");
 
         CountryLanguageId id = new CountryLanguageId(clazz, language);

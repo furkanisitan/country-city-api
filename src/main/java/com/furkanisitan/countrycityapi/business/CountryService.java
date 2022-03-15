@@ -10,9 +10,9 @@ import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CountryCreateResponse;
 import com.furkanisitan.countrycityapi.model.responses.CountryListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CountryResponse;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.List;
 

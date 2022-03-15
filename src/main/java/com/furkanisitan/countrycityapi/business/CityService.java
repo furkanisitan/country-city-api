@@ -7,9 +7,9 @@ import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
 import com.furkanisitan.countrycityapi.model.responses.CityResponse;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import java.util.List;
 
