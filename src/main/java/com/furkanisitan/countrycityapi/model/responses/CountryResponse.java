@@ -14,6 +14,6 @@ public final class CountryResponse implements Response {
     private String name;
     private double lifeExpectancy;
     private List<CountryLanguageResponse> languages = new ArrayList<>();
-    private List<CityResponse> cities = new ArrayList<>();
+    private List<CountryCityResponse> cities = new ArrayList<>();
 
 }
