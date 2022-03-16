@@ -38,4 +38,16 @@ public interface GenericUtils {
         return Arrays.stream(getFields(clazz)).filter(x -> x.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new NoSuchDeclaredFieldException(name));
     }
+
+    /**
+     * Returns whether {@literal clazz} has a field with the specified {@literal name}.
+     *
+     * @param clazz the {@link Class} instance of {@literal T}.
+     * @param name  the field name.
+     * @param <T>   the type of class.
+     * @return {@code true} if the field with the given name exists, {@code false} otherwise.
+     */
+    static <T> boolean hasField(Class<T> clazz, String name) {
+        return Arrays.stream(getFields(clazz)).anyMatch(x -> x.getName().equals(name));
+    }
 }
