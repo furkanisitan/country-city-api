@@ -13,7 +13,10 @@ public final class SortDirection {
      * @return {@code true} if the direction is valid, {@code false} otherwise.
      */
     public static boolean isValid(String direction) {
-        return ASC.equals(direction) || DESC.equals(direction);
+        return switch (direction) {
+            case ASC, DESC -> true;
+            default -> false;
+        };
     }
 
     /**
