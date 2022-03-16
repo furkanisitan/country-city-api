@@ -63,7 +63,7 @@ interface Helpers {
         List<Sort.Order> orders = new ArrayList<>();
         for (var s : sort) {
             var order = getOrder(clazz, s);
-            if (order != null)
+            if (order != null && orders.stream().noneMatch(x -> x.getProperty().equals(order.getProperty())))
                 orders.add(order);
         }
 
