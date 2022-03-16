@@ -2,7 +2,10 @@ package com.furkanisitan.core.criteria;
 
 import com.furkanisitan.core.exceptions.InvalidFieldException;
 import com.furkanisitan.core.utils.GenericUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
@@ -13,17 +16,55 @@ import java.util.List;
  */
 interface Helpers {
 
+    Integer DEFAULT_PAGE = 0;
+    Integer DEFAULT_SIZE = 20;
+
     /**
+     * Creates a {@link Pageable} instance.
+     *
+     * @param page zero-based page index, must not be negative. default: {@value #DEFAULT_PAGE}
+     * @param size the size of the page to be returned, must be greater than 0. default: {@value #DEFAULT_SIZE}
+     * @param sort the {@link Sort} instance.
+     * @return a {@link Pageable} instance if {@literal page} or {@literal size} not null, {@code null} otherwise.
+     */
+    static Pageable getPageable(Integer page, Integer size, Sort sort) {
+
+        if (page == null && size == null)
+            return null;
+
+        page = page == null || page < 0 ? DEFAULT_PAGE : page;
+        size = size == null || size < 1 ? DEFAULT_SIZE : size;
+
+        return PageRequest.of(page, size, sort);
+    }
+
+    /**
+     * {@code sort} defaults to {@link Sort#unsorted()}.
+     *
+     * @see #getPageable(Integer, Integer, Sort)
+     */
+    static Pageable getPageable(Integer page, Integer size) {
+        return getPageable(page, size, Sort.unsorted());
+    }
+
+    /**
+     * Creates a {@link Sort} instance by {@literal sort} array.
+     *
      * @param clazz clazz the {@link Class} instance of {@literal T}.
-     * @param sort  a text containing the field names and directions.
+     * @param sort  a {@link String} array containing the field names and directions.
      * @param <T>   the type of class.
      * @return a {@link Sort} instance.
      */
     static <T> Sort getSort(Class<T> clazz, String[] sort) {
 
+        if (ArrayUtils.isEmpty(sort))
+            return Sort.unsorted();
+
         List<Sort.Order> orders = new ArrayList<>();
         for (var s : sort) {
-            orders.add(getOrder(clazz, s));
+            var order = getOrder(clazz, s);
+            if (order != null)
+                orders.add(order);
         }
 
         return Sort.by(orders);
@@ -36,10 +77,11 @@ interface Helpers {
      * @param order a text containing the field name and direction.
      * @param <T>   the type of class.
      * @return a {@link Sort.Order} instance if the direction is not empty, {@code null} otherwise.
+     * @throws InvalidFieldException if the {@literal clazz} doesn't have a field of a specified name.
      */
     static <T> Sort.Order getOrder(Class<T> clazz, String order) {
 
-        if (StringUtils.isEmpty(order))
+        if (StringUtils.isAllBlank(order))
             return null;
 
         var fieldBeginIndex = 1;
@@ -51,6 +93,8 @@ interface Helpers {
         }
 
         var field = order.substring(fieldBeginIndex);
+        if (StringUtils.isAllBlank(field))
+            return null;
         if (!GenericUtils.hasField(clazz, field))
             throw new InvalidFieldException(field);
 
