@@ -19,7 +19,7 @@ public final class RequestCriteria {
     /**
      * Creates a {@link RequestCriteria} instance.
      *
-     * @param clazz clazz clazz the {@link Class} instance of {@literal T}.
+     * @param clazz the {@link Class} instance of {@literal T}.
      * @param page  zero-based page index, must not be negative. default: {@value Helpers#DEFAULT_PAGE}
      * @param size  the size of the page to be returned, must be greater than 0. default: {@value Helpers#DEFAULT_SIZE}
      * @param sort  a {@link String} array containing the field names and directions.

@@ -23,6 +23,16 @@ public final class FilterCriteria {
         this.value = value;
     }
 
+    /**
+     * Creates a {@link FilterCriteria} instance.
+     *
+     * @param clazz  clazz the {@link Class} instance of {@literal T}.
+     * @param filter the query parameter.
+     * @param <T>    the type of class.
+     * @return a {@link FilterCriteria} instance.
+     * @throws InvalidFilterException if the filter format is not valid.
+     * @throws InvalidFieldException  if the specified field inside the filter is not valid.
+     */
     public static <T> FilterCriteria of(Class<T> clazz, String filter) {
 
         if (StringUtils.isAllBlank(filter))

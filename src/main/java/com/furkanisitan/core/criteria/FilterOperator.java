@@ -22,10 +22,10 @@ public enum FilterOperator {
     }
 
     /**
-     * Returns whether the specified {@literal text} for the {@link #FilterOperator} is valid.
+     * Creates a {@link FilterOperator} instance.
      *
      * @param text the filter operator.
-     * @return {@code true} if the text is valid, {@code false} otherwise.
+     * @return a {@link FilterOperator} instance.
      * @throws InvalidFilterOperatorException if the text is not valid.
      */
     public static FilterOperator of(String text) {
