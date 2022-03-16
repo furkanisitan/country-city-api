@@ -4,6 +4,7 @@ import com.furkanisitan.core.exceptions.NoSuchDeclaredFieldException;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 public interface GenericUtils {
 
@@ -34,18 +35,7 @@ public interface GenericUtils {
      * @throws NoSuchDeclaredFieldException if a field with the specified {@literal name} is not found.
      */
     static <T> Field getField(Class<T> clazz, String name) {
-        Field declaredField;
-        try {
-            declaredField = clazz.getDeclaredField(name);
-        } catch (NoSuchFieldException e) {
-            try {
-                declaredField = clazz.getSuperclass().getDeclaredField(name);
-            } catch (NoSuchFieldException ex) {
-                throw new NoSuchDeclaredFieldException(e.getMessage());
-            }
-        }
-        declaredField.setAccessible(true);
-        return declaredField;
+        return Arrays.stream(getFields(clazz)).filter(x -> x.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new NoSuchDeclaredFieldException(name));
     }
-
 }
