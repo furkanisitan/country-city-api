@@ -59,15 +59,23 @@ public abstract class SpecificationManager<T extends Entity<ID>, ID extends Seri
         if (CollectionUtils.isEmpty(criteria))
             return null;
 
-        Specification<T> specification = Specification.where(null);
-        for (var c : criteria) {
-            specification.and(new AbstractSpecification<T>(c) {
-                @Override
-                public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                    return super.toPredicate(root, query, criteriaBuilder);
-                }
-            });
+        Specification<T> specification = Specification.where(getSpecification(criteria.get(0)));
+        for (int i = 1; i < criteria.size(); i++) {
+            specification.and(getSpecification(criteria.get(i)));
         }
         return specification;
+    }
+
+    private Specification<T> getSpecification(FilterCriteria criteria) {
+
+        if (criteria == null)
+            return null;
+
+        return new AbstractSpecification<>(criteria) {
+            @Override
+            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return super.toPredicate(root, query, criteriaBuilder);
+            }
+        };
     }
 }
