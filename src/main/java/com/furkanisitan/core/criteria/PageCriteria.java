@@ -2,6 +2,7 @@ package com.furkanisitan.core.criteria;
 
 import com.furkanisitan.core.exceptions.InvalidFieldException;
 import com.furkanisitan.core.utils.GenericUtils;
+import lombok.Getter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
@@ -9,33 +10,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-/**
- * This interface contains helper methods for {@link com.furkanisitan.core.criteria} package.
- */
-interface Helpers {
+@Getter
+public final class PageCriteria {
 
-    Integer DEFAULT_PAGE = 0;
-    Integer DEFAULT_SIZE = 20;
+    private static final Integer DEFAULT_PAGE = 0;
+    private static final Integer DEFAULT_SIZE = 20;
 
-    /**
-     * Returns a list of {@link  FilterCriteria}.
-     *
-     * @param clazz  clazz the {@link Class} instance of {@literal T}.
-     * @param filter a {@link String} array containing the filter texts.
-     * @param <T>    the type of class.
-     * @return a list of {@link  FilterCriteria}.
-     */
-    static <T> List<FilterCriteria> getFilterCriteria(Class<T> clazz, String[] filter) {
+    private final Pageable pageable;
+    private final Sort sort;
 
-        if (ArrayUtils.isEmpty(filter)) return Collections.emptyList();
+    public PageCriteria(Pageable pageable, Sort sort) {
+        this.pageable = pageable;
+        this.sort = sort;
+    }
 
-        var filterCriteria = new ArrayList<FilterCriteria>();
-        for (var f : filter)
-            filterCriteria.add(FilterCriteria.of(clazz, f));
-        return filterCriteria;
+    public static <T> PageCriteria of(Class<T> clazz, Integer page, Integer size, String... sort) {
+        var s = sort(clazz, sort);
+        var pageable = page(page, size, s);
+
+        return new PageCriteria(pageable, s);
     }
 
     /**
@@ -46,7 +41,7 @@ interface Helpers {
      * @param sort the {@link Sort} instance.
      * @return a {@link Pageable} instance if {@literal page} or {@literal size} not null, {@code null} otherwise.
      */
-    static Pageable getPageable(Integer page, Integer size, Sort sort) {
+    private static Pageable page(Integer page, Integer size, Sort sort) {
 
         if (page == null && size == null) return null;
 
@@ -57,15 +52,6 @@ interface Helpers {
     }
 
     /**
-     * {@code sort} defaults to {@link Sort#unsorted()}.
-     *
-     * @see #getPageable(Integer, Integer, Sort)
-     */
-    static Pageable getPageable(Integer page, Integer size) {
-        return getPageable(page, size, Sort.unsorted());
-    }
-
-    /**
      * Creates a {@link Sort} instance by {@literal sort} array.
      *
      * @param clazz clazz the {@link Class} instance of {@literal T}.
@@ -73,13 +59,13 @@ interface Helpers {
      * @param <T>   the type of class.
      * @return a {@link Sort} instance.
      */
-    static <T> Sort getSort(Class<T> clazz, String[] sort) {
+    private static <T> Sort sort(Class<T> clazz, String[] sort) {
 
         if (ArrayUtils.isEmpty(sort)) return Sort.unsorted();
 
         List<Sort.Order> orders = new ArrayList<>();
         for (var s : sort) {
-            var order = getOrder(clazz, s);
+            var order = order(clazz, s);
             if (order != null && orders.stream().noneMatch(x -> x.getProperty().equals(order.getProperty())))
                 orders.add(order);
         }
@@ -96,7 +82,7 @@ interface Helpers {
      * @return a {@link Sort.Order} instance if the direction is not empty, {@code null} otherwise.
      * @throws InvalidFieldException if the {@literal clazz} doesn't have a field of a specified name.
      */
-    static <T> Sort.Order getOrder(Class<T> clazz, String order) {
+    private static <T> Sort.Order order(Class<T> clazz, String order) {
 
         if (StringUtils.isAllBlank(order)) return null;
 
@@ -115,5 +101,4 @@ interface Helpers {
         if (SortDirection.ASC.equals(direction)) return Sort.Order.asc(field);
         return Sort.Order.desc(field);
     }
-
 }
