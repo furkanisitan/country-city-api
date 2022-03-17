@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
 import com.furkanisitan.core.business.SpecificationManager;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.business.mappers.CountryMapper;
 import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
@@ -41,6 +42,11 @@ public class CountryManager extends SpecificationManager<Country, Long> implemen
     @Override
     public List<CountryListResponse> findAll() {
         return CountryMapper.INSTANCE.toResponseList(repository.findAll());
+    }
+
+    @Override
+    public List<CountryListResponse> findAll(RequestCriteria criteria) {
+        return CountryMapper.INSTANCE.toResponseList(all(criteria));
     }
 
     @Override

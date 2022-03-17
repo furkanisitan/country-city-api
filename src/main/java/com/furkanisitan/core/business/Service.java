@@ -1,20 +1,10 @@
 package com.furkanisitan.core.business;
 
-import com.furkanisitan.core.criteria.PageCriteria;
 import com.furkanisitan.core.model.Entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 public interface Service<T extends Entity<ID>, ID extends Serializable> {
-
-    /**
-     * Returns all instances of the {@link T} by {@literal criteria}.
-     *
-     * @param criteria contains sorting and pagination parameters.
-     * @return all instances of the {@link T} by {@literal criteria}.
-     */
-    List<T> all(PageCriteria criteria);
 
     /**
      * Checks an entity with the {@literal field} exists.

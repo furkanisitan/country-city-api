@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
 import com.furkanisitan.core.business.SpecificationManager;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.business.mappers.CityMapper;
 import com.furkanisitan.countrycityapi.business.validators.CityValidator;
@@ -41,6 +42,11 @@ public class CityManager extends SpecificationManager<City, Long> implements Cit
     @Override
     public List<CityListResponse> findAll() {
         return CityMapper.INSTANCE.toResponseList(repository.findAll());
+    }
+
+    @Override
+    public List<CityListResponse> findAll(RequestCriteria criteria) {
+        return CityMapper.INSTANCE.toResponseList(all(criteria));
     }
 
     @Override

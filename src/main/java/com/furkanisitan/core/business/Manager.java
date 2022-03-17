@@ -18,8 +18,13 @@ public abstract class Manager<T extends Entity<ID>, ID extends Serializable> imp
         this.repository = repository;
     }
 
-    @Override
-    public List<T> all(PageCriteria criteria) {
+    /**
+     * Returns all instances of the {@link T} by {@literal criteria}.
+     *
+     * @param criteria contains sorting and pagination parameters.
+     * @return all instances of the {@link T} by {@literal criteria}.
+     */
+    protected List<T> all(PageCriteria criteria) {
 
         if (criteria.getPageable() == null && criteria.getSort() == null)
             return repository.findAll();

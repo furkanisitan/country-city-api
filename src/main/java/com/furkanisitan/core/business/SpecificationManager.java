@@ -24,8 +24,13 @@ public abstract class SpecificationManager<T extends Entity<ID>, ID extends Seri
         this.repository = repository;
     }
 
-    @Override
-    public List<T> all(RequestCriteria criteria) {
+    /**
+     * Returns all instances of the {@link T} by {@literal criteria}.
+     *
+     * @param criteria contains filtering, sorting and pagination parameters.
+     * @return all instances of the {@link T} by {@literal criteria}.
+     */
+    protected List<T> all(RequestCriteria criteria) {
 
         var specification = getSpecification(criteria.getFilterCriteria());
 
@@ -39,8 +44,13 @@ public abstract class SpecificationManager<T extends Entity<ID>, ID extends Seri
 
     }
 
-    @Override
-    public List<T> all(List<FilterCriteria> criteria) {
+    /**
+     * Returns all instances of the {@link T} by {@literal criteria}.
+     *
+     * @param criteria contains filtering parameters.
+     * @return all instances of the {@link T} by {@literal criteria}.
+     */
+    protected List<T> all(List<FilterCriteria> criteria) {
         return repository.findAll(getSpecification(criteria));
     }
 

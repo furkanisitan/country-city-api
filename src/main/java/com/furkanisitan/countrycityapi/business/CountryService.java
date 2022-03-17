@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business;
 
 import com.furkanisitan.core.business.SpecificationService;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
@@ -26,6 +27,13 @@ public interface CountryService extends SpecificationService<Country, Long> {
      * @return all countries by mapping them to {@link CountryListResponse}.
      */
     List<CountryListResponse> findAll();
+
+    /**
+     * Returns all countries by mapping them to {@link CountryListResponse}.
+     *
+     * @return all countries by mapping them to {@link CountryListResponse}.
+     */
+    List<CountryListResponse> findAll(RequestCriteria criteria);
 
     /**
      * Returns a {@link CountryResponse} by {@literal id}.

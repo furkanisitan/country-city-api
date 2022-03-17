@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business;
 
 import com.furkanisitan.core.business.SpecificationService;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.countrycityapi.model.entities.Language;
@@ -22,6 +23,13 @@ public interface LanguageService extends SpecificationService<Language, Long> {
      * @return all languages by mapping them to {@link LanguageResponse}.
      */
     List<LanguageResponse> findAll();
+
+    /**
+     * Returns all languages by mapping them to {@link LanguageResponse}.
+     *
+     * @return all languages by mapping them to {@link LanguageResponse}.
+     */
+    List<LanguageResponse> findAll(RequestCriteria criteria);
 
     /**
      * Returns a {@link LanguageResponse} by {@literal id}.

@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
 import com.furkanisitan.core.business.SpecificationManager;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.countrycityapi.business.LanguageService;
 import com.furkanisitan.countrycityapi.business.mappers.LanguageMapper;
 import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
@@ -33,6 +34,11 @@ public class LanguageManager extends SpecificationManager<Language, Long> implem
     @Override
     public List<LanguageResponse> findAll() {
         return LanguageMapper.INSTANCE.toResponseList(repository.findAll());
+    }
+
+    @Override
+    public List<LanguageResponse> findAll(RequestCriteria criteria) {
+        return LanguageMapper.INSTANCE.toResponseList(all(criteria));
     }
 
     @Override
