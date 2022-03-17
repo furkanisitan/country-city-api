@@ -2,6 +2,7 @@ package com.furkanisitan.countrycityapi.api.controllers;
 
 import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.api.abstracts.LanguagesApi;
 import com.furkanisitan.countrycityapi.business.LanguageService;
@@ -29,8 +30,13 @@ public class LanguagesController implements LanguagesApi {
 
     @Override
     @GetMapping
-    public ResponseEntity<?> all() {
-        return ResponseEntities.ok(languageService.findAll());
+    public ResponseEntity<?> all(@RequestParam(required = false) String[] filter,
+                                 @RequestParam(required = false) String[] sort,
+                                 @RequestParam(required = false) Integer page,
+                                 @RequestParam(required = false) Integer size) {
+
+        var criteria = RequestCriteria.of(Language.class, page, size, sort, filter);
+        return ResponseEntities.ok(languageService.findAll(criteria));
     }
 
     @Override

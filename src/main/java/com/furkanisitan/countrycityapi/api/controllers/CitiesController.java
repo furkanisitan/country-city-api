@@ -2,10 +2,12 @@ package com.furkanisitan.countrycityapi.api.controllers;
 
 import com.furkanisitan.core.api.ApiHelpers;
 import com.furkanisitan.core.api.ResponseEntities;
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.api.abstracts.CitiesApi;
 import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.model.entities.City;
+import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,13 @@ public class CitiesController implements CitiesApi {
 
     @Override
     @GetMapping
-    public ResponseEntity<?> all() {
-        return ResponseEntities.ok(cityService.findAll());
+    public ResponseEntity<?> all(@RequestParam(required = false) String[] filter,
+                                 @RequestParam(required = false) String[] sort,
+                                 @RequestParam(required = false) Integer page,
+                                 @RequestParam(required = false) Integer size) {
+
+        var criteria = RequestCriteria.of(Language.class, page, size, sort, filter);
+        return ResponseEntities.ok(cityService.findAll(criteria));
     }
 
     @Override

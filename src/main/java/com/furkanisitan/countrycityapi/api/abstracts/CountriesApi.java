@@ -21,7 +21,7 @@ public interface CountriesApi {
     @Operation(summary = "Returns a list of countries.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
             @ExampleObject(Examples.Country.Success.GET_ALL)}))
-    ResponseEntity<?> all();
+    ResponseEntity<?> all(String[] filter, String[] sort, Integer page, Integer size);
 
     @Operation(summary = "Returns a specific country.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {

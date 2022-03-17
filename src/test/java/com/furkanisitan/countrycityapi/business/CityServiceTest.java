@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
@@ -97,6 +98,11 @@ class FakeCityService implements CityService {
 
     @Override
     public List<CityListResponse> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<CityListResponse> findAll(RequestCriteria criteria) {
         return null;
     }
 

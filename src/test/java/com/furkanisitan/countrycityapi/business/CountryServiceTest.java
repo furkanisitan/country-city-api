@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.criteria.RequestCriteria;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
@@ -100,7 +101,6 @@ class CountryServiceTest {
 @Service
 @Qualifier("fakeCountryService")
 class FakeCountryService implements CountryService {
-
     @Override
     public <V> boolean existsBy(String name, V value) {
         return false;
@@ -108,6 +108,11 @@ class FakeCountryService implements CountryService {
 
     @Override
     public List<CountryListResponse> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<CountryListResponse> findAll(RequestCriteria criteria) {
         return null;
     }
 

@@ -21,7 +21,7 @@ public interface LanguagesApi {
     @Operation(summary = "Returns a list of languages.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
             @ExampleObject(Examples.Language.Success.GET_ALL)}))
-    ResponseEntity<?> all();
+    ResponseEntity<?> all(String[] filter, String[] sort, Integer page, Integer size);
 
     @Operation(summary = "Returns a specific language.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
