@@ -40,13 +40,6 @@ public abstract class RestControllerExceptionHandler {
         return Result.fail(ResponseMessages.ERR_NOT_FOUND, e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(RouteBodyMismatchException.class)
-    @ResponseBody
-    Result handle(RouteBodyMismatchException e) {
-        return Result.fail(ResponseMessages.ERR_BAD_REQUEST, e.getMessage());
-    }
-
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UniqueConstraintException.class)
     @ResponseBody
@@ -54,17 +47,26 @@ public abstract class RestControllerExceptionHandler {
         return Result.fail(ResponseMessages.ERR_UNIQUE_CONSTRAINT, e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(NoSuchDeclaredFieldException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({
+            RouteBodyMismatchException.class,
+            InvalidFieldException.class,
+            InvalidFilterException.class,
+            InvalidValueException.class,
+            UnsupportedFilterOperatorException.class
+    })
     @ResponseBody
-    Result handle(NoSuchDeclaredFieldException e) {
-        return Result.fail(ResponseMessages.ERR_INTERNAL_SERVER, e.getMessage());
+    Result handleBadRequest(RuntimeException e) {
+        return Result.fail(ResponseMessages.ERR_BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(CreateInstanceException.class)
+    @ExceptionHandler({
+            NoSuchDeclaredFieldException.class,
+            CreateInstanceException.class
+    })
     @ResponseBody
-    Result handle(CreateInstanceException e) {
+    Result handleInternalServer(RuntimeException e) {
         return Result.fail(ResponseMessages.ERR_INTERNAL_SERVER, e.getMessage());
     }
 
