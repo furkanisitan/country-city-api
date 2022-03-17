@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,6 +21,24 @@ interface Helpers {
     Integer DEFAULT_SIZE = 20;
 
     /**
+     * Returns a list of {@link  FilterCriteria}.
+     *
+     * @param clazz  clazz the {@link Class} instance of {@literal T}.
+     * @param filter a {@link String} array containing the filter texts.
+     * @param <T>    the type of class.
+     * @return a list of {@link  FilterCriteria}.
+     */
+    static <T> List<FilterCriteria> getFilterCriteria(Class<T> clazz, String[] filter) {
+
+        if (ArrayUtils.isEmpty(filter)) return Collections.emptyList();
+
+        var filterCriteria = new ArrayList<FilterCriteria>();
+        for (var f : filter)
+            filterCriteria.add(FilterCriteria.of(clazz, f));
+        return filterCriteria;
+    }
+
+    /**
      * Creates a {@link Pageable} instance.
      *
      * @param page zero-based page index, must not be negative. default: {@value #DEFAULT_PAGE}
@@ -29,8 +48,7 @@ interface Helpers {
      */
     static Pageable getPageable(Integer page, Integer size, Sort sort) {
 
-        if (page == null && size == null)
-            return null;
+        if (page == null && size == null) return null;
 
         page = page == null || page < 0 ? DEFAULT_PAGE : page;
         size = size == null || size < 1 ? DEFAULT_SIZE : size;
@@ -57,8 +75,7 @@ interface Helpers {
      */
     static <T> Sort getSort(Class<T> clazz, String[] sort) {
 
-        if (ArrayUtils.isEmpty(sort))
-            return Sort.unsorted();
+        if (ArrayUtils.isEmpty(sort)) return Sort.unsorted();
 
         List<Sort.Order> orders = new ArrayList<>();
         for (var s : sort) {
@@ -81,8 +98,7 @@ interface Helpers {
      */
     static <T> Sort.Order getOrder(Class<T> clazz, String order) {
 
-        if (StringUtils.isAllBlank(order))
-            return null;
+        if (StringUtils.isAllBlank(order)) return null;
 
         var fieldBeginIndex = 1;
 
@@ -93,13 +109,10 @@ interface Helpers {
         }
 
         var field = order.substring(fieldBeginIndex);
-        if (StringUtils.isAllBlank(field))
-            return null;
-        if (!GenericUtils.hasField(clazz, field))
-            throw new InvalidFieldException(field);
+        if (StringUtils.isAllBlank(field)) return null;
+        if (!GenericUtils.hasField(clazz, field)) throw new InvalidFieldException(field);
 
-        if (SortDirection.ASC.equals(direction))
-            return Sort.Order.asc(field);
+        if (SortDirection.ASC.equals(direction)) return Sort.Order.asc(field);
         return Sort.Order.desc(field);
     }
 
