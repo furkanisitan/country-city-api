@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Optional;
 
 public interface GenericUtils {
 
@@ -24,19 +25,25 @@ public interface GenericUtils {
     }
 
     /**
-     * Returns a {@link Field} object that reflects the specified declared field of the class or interface represented by this {@literal clazz} object.
+     * @throws NoSuchDeclaredFieldException if a field with the specified {@literal name} is not found.
+     * @see #getFieldOf(Class, String)
+     */
+    static <T> Field getField(Class<T> clazz, String name) {
+        return getFieldOf(clazz, name).orElseThrow(() -> new NoSuchDeclaredFieldException(name));
+    }
+
+    /**
+     * Returns an optional {@link Field} object that reflects the specified declared field of the class or interface represented by this {@literal clazz} object.
      * It also controls the inherited class.
      * If Field is found, it sets the accessible flag to true.
      *
      * @param clazz the {@link Class} instance of {@literal T}.
      * @param name  the field name.
      * @param <T>   the type of class.
-     * @return the {@link Field} object for the specified field in this class
-     * @throws NoSuchDeclaredFieldException if a field with the specified {@literal name} is not found.
+     * @return the optional {@link Field} object for the specified field in this class.
      */
-    static <T> Field getField(Class<T> clazz, String name) {
-        return Arrays.stream(getFields(clazz)).filter(x -> x.getName().equals(name)).findFirst()
-                .orElseThrow(() -> new NoSuchDeclaredFieldException(name));
+    static <T> Optional<Field> getFieldOf(Class<T> clazz, String name) {
+        return Arrays.stream(getFields(clazz)).filter(x -> x.getName().equals(name)).findFirst();
     }
 
     /**
