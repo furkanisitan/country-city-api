@@ -6,18 +6,19 @@ import com.furkanisitan.core.utils.GenericUtils;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
 @Getter
 public final class FilterCriteria {
 
-    private static final String REGEX = "(^\\w+)(:|!:|:%|%:|%%|>|<|>:|<:)(.+$)";
+    private static final String REGEX = "(^\\w+)(:|!:|:%|%:|%|>|<|>:|<:)(.+$)";
 
-    private final String field;
+    private final Field field;
     private final FilterOperator operator;
     private final String value;
 
-    private FilterCriteria(String field, FilterOperator operator, String value) {
+    private FilterCriteria(Field field, FilterOperator operator, String value) {
         this.field = field;
         this.operator = operator;
         this.value = value;
@@ -43,9 +44,8 @@ public final class FilterCriteria {
             throw new InvalidFilterException(filter);
 
         var fieldName = matcher.group(1);
-        if (!GenericUtils.hasField(clazz, fieldName))
-            throw new InvalidFieldException(fieldName);
+        var field = GenericUtils.getFieldOf(clazz, fieldName).orElseThrow(() -> new InvalidFieldException(fieldName));
 
-        return new FilterCriteria(fieldName, FilterOperator.of(matcher.group(2)), matcher.group(3));
+        return new FilterCriteria(field, FilterOperator.of(matcher.group(2)), matcher.group(3));
     }
 }
