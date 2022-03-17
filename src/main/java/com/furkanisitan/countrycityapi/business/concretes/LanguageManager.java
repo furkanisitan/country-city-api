@@ -1,6 +1,6 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
-import com.furkanisitan.core.business.Manager;
+import com.furkanisitan.core.business.SpecificationManager;
 import com.furkanisitan.countrycityapi.business.LanguageService;
 import com.furkanisitan.countrycityapi.business.mappers.LanguageMapper;
 import com.furkanisitan.countrycityapi.business.validators.LanguageValidator;
@@ -19,7 +19,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 @Primary
-public class LanguageManager extends Manager<Language, Long> implements LanguageService {
+public class LanguageManager extends SpecificationManager<Language, Long> implements LanguageService {
 
     private final LanguageRepository repository;
     private final LanguageValidator validator;

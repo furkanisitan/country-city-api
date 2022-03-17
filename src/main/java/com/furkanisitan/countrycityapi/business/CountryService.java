@@ -1,9 +1,10 @@
 package com.furkanisitan.countrycityapi.business;
 
-import com.furkanisitan.core.business.Service;
+import com.furkanisitan.core.business.SpecificationService;
 import com.furkanisitan.core.exceptions.ForeignKeyConstraintException;
 import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
+import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
-public interface CountryService extends Service {
+public interface CountryService extends SpecificationService<Country, Long> {
 
     /**
      * Returns all countries by mapping them to {@link CountryListResponse}.

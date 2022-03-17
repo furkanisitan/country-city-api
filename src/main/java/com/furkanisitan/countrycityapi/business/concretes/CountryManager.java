@@ -1,6 +1,6 @@
 package com.furkanisitan.countrycityapi.business.concretes;
 
-import com.furkanisitan.core.business.Manager;
+import com.furkanisitan.core.business.SpecificationManager;
 import com.furkanisitan.countrycityapi.business.CountryService;
 import com.furkanisitan.countrycityapi.business.mappers.CountryMapper;
 import com.furkanisitan.countrycityapi.business.validators.CountryValidator;
@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 @Primary
-public class CountryManager extends Manager<Country, Long> implements CountryService {
+public class CountryManager extends SpecificationManager<Country, Long> implements CountryService {
 
     private final CountryRepository repository;
     private final CountryValidator validator;

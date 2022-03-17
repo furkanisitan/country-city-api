@@ -1,5 +1,9 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.criteria.FilterCriteria;
+import com.furkanisitan.core.criteria.PageCriteria;
+import com.furkanisitan.core.criteria.RequestCriteria;
+import com.furkanisitan.countrycityapi.model.entities.City;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import com.furkanisitan.countrycityapi.model.responses.CityListResponse;
@@ -13,6 +17,7 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Nullable;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -90,8 +95,23 @@ class CityServiceTest {
 class FakeCityService implements CityService {
 
     @Override
+    public List<City> all(PageCriteria criteria) {
+        return null;
+    }
+
+    @Override
     public <V> boolean existsBy(String name, V value) {
         return false;
+    }
+
+    @Override
+    public List<City> all(RequestCriteria criteria) {
+        return null;
+    }
+
+    @Override
+    public List<City> all(List<FilterCriteria> criteria) {
+        return null;
     }
 
     @Override
@@ -104,6 +124,7 @@ class FakeCityService implements CityService {
         return null;
     }
 
+    @Nullable
     @Override
     public CityResponse findById(Long id) {
         return null;

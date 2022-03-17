@@ -1,5 +1,9 @@
 package com.furkanisitan.countrycityapi.business;
 
+import com.furkanisitan.core.criteria.FilterCriteria;
+import com.furkanisitan.core.criteria.PageCriteria;
+import com.furkanisitan.core.criteria.RequestCriteria;
+import com.furkanisitan.countrycityapi.model.entities.Country;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
@@ -15,6 +19,7 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Nullable;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -101,8 +106,23 @@ class CountryServiceTest {
 class FakeCountryService implements CountryService {
 
     @Override
+    public List<Country> all(PageCriteria criteria) {
+        return null;
+    }
+
+    @Override
     public <V> boolean existsBy(String name, V value) {
         return false;
+    }
+
+    @Override
+    public List<Country> all(RequestCriteria criteria) {
+        return null;
+    }
+
+    @Override
+    public List<Country> all(List<FilterCriteria> criteria) {
+        return null;
     }
 
     @Override
@@ -110,6 +130,7 @@ class FakeCountryService implements CountryService {
         return null;
     }
 
+    @Nullable
     @Override
     public CountryResponse findById(Long id) {
         return null;
