@@ -23,6 +23,7 @@ public interface ExampleUtils {
             var probe = clazz.getDeclaredConstructor().newInstance();
 
             var declaredField = GenericUtils.getField(clazz, name);
+            declaredField.setAccessible(true);
             declaredField.set(probe, value);
 
             var exampleMatcher = ExampleMatcher.matchingAny().withMatcher(name, ExampleMatcher.GenericPropertyMatchers.exact());
