@@ -19,7 +19,7 @@ public class InvalidValueException extends RuntimeException {
      * @param value the value for query.
      */
     public InvalidValueException(String field, String value) {
-        super(String.format("%s: value must be valid. {rejectedValue: %s}", field, value));
+        super(String.format("%s: value must be valid. (rejectedValue: %s)", field, value));
         this.field = field;
         this.value = value;
     }

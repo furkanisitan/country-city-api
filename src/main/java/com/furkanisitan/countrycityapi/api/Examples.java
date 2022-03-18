@@ -33,9 +33,13 @@ public final class Examples {
         public static final String BAD_REQUEST_NULL = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{fieldName}: must not be null.\"]}";
         public static final String BAD_REQUEST_BLANK = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{fieldName}: must not be blank.\"]}";
         public static final String BAD_REQUEST_POSITIVE = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{fieldName}: must be greater than 0.\"]}";
-        public static final String BAD_REQUEST_MISMATCH = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{field}: It doesn't match {param} in the route.\"]}";
+        public static final String BAD_REQUEST_MISMATCH = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{field}: it doesn't match {param} in the route.\"]}";
+        public static final String BAD_REQUEST_INVALID_FIELD = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{field}: field must be valid.\"]}";
+        public static final String BAD_REQUEST_INVALID_FILTER = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{filter}: filter format must be like '{field}{operator}{value}'.\"]}";
+        public static final String BAD_REQUEST_INVALID_VALUE = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{field}: value must be valid. (rejectedValue: {value})\"]}";
+        public static final String BAD_REQUEST_UNSUPPORTED_FILTER = "{\"success\":false,\"message\":\"Invalid bad request.\",\"errors\":[\"{field}: the {operator} operator is not supported for this field.\"]}";
         public static final String CONFLICT_NOT_UNIQUE = "{\"success\":false,\"message\":\"A unique constraint error has occurred.\",\"errors\":[\"{fieldName}: must be unique. (rejectedValue: {fieldValue})\"]}";
-        public static final String CONFLICT_FOREIGN_KEY = "{\"success\":false,\"message\":\"A foreign key constraint error has occurred.\",\"errors\":[\"{key}: The foreign key does not exist. (rejectedValue: {value})\"]}";
+        public static final String CONFLICT_FOREIGN_KEY = "{\"success\":false,\"message\":\"A foreign key constraint error has occurred.\",\"errors\":[\"{key}: the foreign key does not exist. (rejectedValue: {value})\"]}";
         public static final String NOT_FOUND_BY_ID = "{\"success\":false,\"message\":\"The resource not found.\",\"errors\":[\"{recordName} not found for parameters (id='55').\"]}";
     }
 

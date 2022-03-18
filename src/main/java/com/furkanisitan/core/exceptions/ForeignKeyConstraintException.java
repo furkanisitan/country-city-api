@@ -19,7 +19,7 @@ public class ForeignKeyConstraintException extends RuntimeException {
      * @param value the value of foreign key.
      */
     public ForeignKeyConstraintException(String name, Object value) {
-        super(String.format("%s: The foreign key does not exist. {rejectedValue: %s}", name, value));
+        super(String.format("%s: the foreign key does not exist. {rejectedValue: %s}", name, value));
         this.name = name;
         this.value = value;
     }

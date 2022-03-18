@@ -21,6 +21,11 @@ public interface CountriesApi {
     @Operation(summary = "Returns a list of countries.")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = ResultData.class), examples = {
             @ExampleObject(Examples.Country.Success.GET_ALL)}))
+    @ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = Result.class), examples = {
+            @ExampleObject(name = "invalid field", value = Examples.Error.BAD_REQUEST_INVALID_FIELD),
+            @ExampleObject(name = "invalid filter", value = Examples.Error.BAD_REQUEST_INVALID_FILTER),
+            @ExampleObject(name = "invalid value", value = Examples.Error.BAD_REQUEST_INVALID_VALUE),
+            @ExampleObject(name = "unsupported filter", value = Examples.Error.BAD_REQUEST_UNSUPPORTED_FILTER)}))
     ResponseEntity<?> all(String[] filter, String[] sort, Integer page, Integer size);
 
     @Operation(summary = "Returns a specific country.")
