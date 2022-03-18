@@ -37,6 +37,78 @@ The app will start running at `http://localhost:8080`
 You can find the API documentation [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/furkanisitan/country-city-api/main/docs/api-docs.yaml).
 
 Also, after running the project, the Swagger UI page will then be available at `http://localhost:8080/swagger-ui/index.html`.
+
+## Filtering, Paging and Sorting
+
+Some endpoints get optional query parameters for filtering, paging, and sorting. 
+How to use these query parameters is explained below.
+
+### Filtering
+
+The following query parameter is used for filtering.
+
+- `filter: array[string]`
+
+A single filter text consists of field name, filter operator, and value information. The field name is added first, followed by the filter operator, and then the value.
+
+`{fieldName}{filterOperator}{value}`
+
+###### Filter Operators
+
+The following characters are used to specify the query operator of the filtering.
+
+- `:` &nbsp; -> equals
+- `!:` -> not equals
+- `:%` -> starts with
+- `%:` -> ends with
+- `%` &nbsp; -> contains
+- `>` &nbsp; -> greater than
+- `<` &nbsp; -> less than
+- `>:` -> greater than or equals
+- `<:` -> less than or equals
+
+###### Samples
+
+- `name%a,population>300000`
+- `code<t,name>f`
+
+> If more than one filter expression is given, these expressions are combined with the `and`operator.
+
+> The `:%`, `%:` and `%` operators only support string fields.
+
+### Paging
+
+The following two query parameters are used for paging.
+
+- `page: integer($int32) - default: 0`
+- `size: integer($int32) - default: 20`
+
+Paging is performed when at least one of the parameters is given. For the parameter not given, its default value is used. If both parameters are null, no paging is performed.
+
+### Sorting
+
+The following query parameter is used for sorting.
+
+- `sort: array[string]`
+
+A single sort text consists of direction and field name information. At the beginning is the direction, then the field name is added. If direction is not specified, the default is used.
+
+`{direction}{fieldName}`
+
+###### Direction Operators
+
+The following characters are used to specify the direction of the sorting.
+
+- `+` -> ascending (default)
+- `-` -> descending
+
+###### Samples
+
+- `+name,-code`
+- `name,-population`
+
+> If the same field name is given more than once, the first valid expression is used.
+
 ## Author
 
 **Furkan Işıtan**
