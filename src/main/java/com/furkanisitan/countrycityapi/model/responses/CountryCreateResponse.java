@@ -1,5 +1,6 @@
 package com.furkanisitan.countrycityapi.model.responses;
 
+import com.furkanisitan.countrycityapi.model.entities.enums.Continent;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public final class CountryCreateResponse {
     private String code;
     private String name;
     private double lifeExpectancy;
+    private Continent continent;
     private List<CountryLanguageResponse> languages = new ArrayList<>();
 
 }

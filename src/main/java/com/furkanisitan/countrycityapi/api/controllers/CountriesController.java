@@ -42,7 +42,7 @@ public class CountriesController implements CountriesApi {
                                  @RequestParam(required = false) Integer page,
                                  @RequestParam(required = false) Integer size) {
 
-        var criteria = RequestCriteria.of(Language.class, page, size, sort, filter);
+        var criteria = RequestCriteria.of(Country.class, page, size, sort, filter);
         return ResponseEntities.ok(countryService.findAll(criteria));
     }
 

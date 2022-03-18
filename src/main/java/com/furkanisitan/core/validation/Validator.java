@@ -5,6 +5,7 @@ import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.core.model.Entity;
 import com.furkanisitan.core.utils.ExampleUtils;
+import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.util.Pair;
 
@@ -26,6 +27,8 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
     }
 
     /**
+     * Returns a {@link T} entity by {@literal name} and {@literal value}.
+     *
      * @param name  the field name.
      * @param value the query value.
      * @param <V>   the type of value.
@@ -38,11 +41,13 @@ public abstract class Validator<T extends Entity<ID>, ID extends Serializable> {
     }
 
     /**
+     * Returns a {@link T} entity by {@literal name} and {@literal value}.
+     *
      * @param name  the field name.
      * @param value the query value.
      * @param <V>   the type of value.
      * @return the {@link T} entity.
-     * @throws RecordNotFoundException if entity not exists.
+     * @throws ForeignKeyConstraintException if entity not exists.
      */
     public <V> T findForeignBy(String name, V value) {
         return repository.findOne(ExampleUtils.getExample(clazz, name, value))

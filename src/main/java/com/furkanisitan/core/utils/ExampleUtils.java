@@ -16,7 +16,8 @@ public interface ExampleUtils {
      * @param <T>   the type of probe.
      * @param <V>   the type of value.
      * @return a new {@link Example} instance.
-     * @throws CreateInstanceException if an error occurs while generating an object from {@literal clazz}.
+     * @throws NoSuchDeclaredFieldException if a field with the specified {@literal name} is not found.
+     * @throws CreateInstanceException      if an error occurs while generating an object from {@literal clazz}.
      */
     static <T, V> Example<T> getExample(Class<T> clazz, String name, V value) {
         try {

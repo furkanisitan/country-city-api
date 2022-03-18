@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.data.util.Pair;
 
 /**
- * An exception representing that the foreign key does not exist.
+ * An exception representing a record not found.
  */
 
 @Getter

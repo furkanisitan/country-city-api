@@ -3,7 +3,7 @@ package com.furkanisitan.core.exceptions;
 import lombok.Getter;
 
 /**
- * An exception representing a record not found.
+ * An exception representing that the foreign key does not exist.
  */
 
 @Getter

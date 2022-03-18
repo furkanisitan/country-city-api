@@ -26,9 +26,6 @@ public abstract class Manager<T extends Entity<ID>, ID extends Serializable> imp
      */
     protected List<T> all(PageCriteria criteria) {
 
-        if (criteria.getPageable() == null && criteria.getSort() == null)
-            return repository.findAll();
-
         if (criteria.getPageable() != null)
             return repository.findAll(criteria.getPageable()).getContent();
 

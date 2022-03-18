@@ -34,9 +34,6 @@ public abstract class SpecificationManager<T extends Entity<ID>, ID extends Seri
 
         var specification = getSpecification(criteria.getFilterCriteria());
 
-        if (criteria.getPageCriteria().getPageable() == null && criteria.getPageCriteria().getSort() == null)
-            return repository.findAll(specification);
-
         if (criteria.getPageCriteria().getPageable() != null)
             return repository.findAll(specification, criteria.getPageCriteria().getPageable()).getContent();
 

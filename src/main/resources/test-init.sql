@@ -9,11 +9,11 @@ TRUNCATE TABLE cities;
 SET
 REFERENTIAL_INTEGRITY TRUE;
 
-INSERT INTO countries (country_id, code, name, life_expectancy)
-VALUES (1, 'TR', 'Turkey', 78.6),
-       (2, 'US', 'United States of America', 78.4),
-       (3, 'GB', 'United Kingdom', 81.4),
-       (4, 'DE', 'Germany', 81.7);
+INSERT INTO countries (country_id, code, name, life_expectancy, continent)
+VALUES (1, 'TR', 'Turkey', 78.6, 4),
+       (2, 'US', 'United States of America', 78.4, 5),
+       (3, 'GB', 'United Kingdom', 81.4, 4),
+       (4, 'DE', 'Germany', 81.7, 5);
 
 INSERT INTO languages (language_id, name, code)
 VALUES (1, 'English', 'en'),

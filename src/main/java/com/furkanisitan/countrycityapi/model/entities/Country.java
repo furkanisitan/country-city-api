@@ -2,6 +2,7 @@ package com.furkanisitan.countrycityapi.model.entities;
 
 import com.furkanisitan.core.model.BaseEntity;
 import com.furkanisitan.core.model.utility.HasUtility;
+import com.furkanisitan.countrycityapi.model.entities.enums.Continent;
 import com.furkanisitan.countrycityapi.model.entities.utilities.CountryUtility;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +30,10 @@ public class Country extends BaseEntity<Long> implements HasUtility<CountryUtili
 
     @Column(name = "life_expectancy", scale = 1)
     private double lifeExpectancy;
+
+    @Enumerated
+    @Column(nullable = false, columnDefinition = "TINYINT")
+    private Continent continent;
 
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "country", orphanRemoval = true)

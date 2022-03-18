@@ -1,6 +1,7 @@
 package com.furkanisitan.countrycityapi.business;
 
 import com.furkanisitan.core.criteria.RequestCriteria;
+import com.furkanisitan.countrycityapi.model.entities.enums.Continent;
 import com.furkanisitan.countrycityapi.model.requests.CountryCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryLanguageRequest;
 import com.furkanisitan.countrycityapi.model.requests.CountryUpdateRequest;
@@ -36,6 +37,7 @@ class CountryServiceTest {
         CountryCreateRequest request = new CountryCreateRequest();
         request.setName("country_name");
         request.setCode("country_code");
+        request.setContinent(Continent.AFRICA);
 
         assertDoesNotThrow(() -> fakeCountryService.create(request));
     }
@@ -76,6 +78,7 @@ class CountryServiceTest {
         request.setId(1L);
         request.setCode("country_code");
         request.setName("country_name");
+        request.setContinent(Continent.AFRICA);
 
         assertDoesNotThrow(() -> fakeCountryService.update(request));
     }

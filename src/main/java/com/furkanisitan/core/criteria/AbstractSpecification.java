@@ -32,6 +32,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 
             var value = getParsedValue();
             var fieldName = criteria.getField().getName();
+            var path = root.get(fieldName);
 
             return switch (criteria.getOperator()) {
                 case EQUALS -> criteriaBuilder.equal(root.get(fieldName), value);
@@ -63,11 +64,20 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         Class<?> type = criteria.getField().getType();
         var value = criteria.getValue();
 
+        if (type.isEnum()) return getParsedEnum(type, value);
         if (type.isAssignableFrom(Instant.class)) return Instant.parse(value);
         if (type.isAssignableFrom(LocalDate.class)) return LocalDate.parse(value);
         if (type.isAssignableFrom(LocalDateTime.class)) return LocalDateTime.parse(value);
         if (type.isAssignableFrom(LocalTime.class)) return LocalTime.parse(value);
         return value;
+    }
+
+    private Enum<?> getParsedEnum(Class type, String value) {
+        try {
+            return Enum.valueOf(type, value);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidValueException(criteria.getField().getName(), criteria.getValue());
+        }
     }
 
 }

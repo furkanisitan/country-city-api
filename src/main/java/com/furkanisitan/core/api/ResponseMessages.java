@@ -11,8 +11,5 @@ public final class ResponseMessages {
     public static final String ERR_UNIQUE_CONSTRAINT = "A unique constraint error has occurred.";
     public static final String ERR_FOREIGN_KEY_CONSTRAINT = "A foreign key constraint error has occurred.";
     public static final String ERR_INTERNAL_SERVER = "An internal server error has occurred.";
-    public static final String ERR_IDENTITY = "An identity error has occurred.";
-    public static final String ERR_INVALID_ENTITY_TYPE = "An invalid entity type error has occurred.";
-    public static final String ERR_INVALID_FILTER_CRITERIA = "Filter contains invalid or disallowed parameter(s).";
 
 }

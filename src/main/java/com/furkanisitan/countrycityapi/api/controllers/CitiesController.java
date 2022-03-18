@@ -7,7 +7,6 @@ import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.countrycityapi.api.abstracts.CitiesApi;
 import com.furkanisitan.countrycityapi.business.CityService;
 import com.furkanisitan.countrycityapi.model.entities.City;
-import com.furkanisitan.countrycityapi.model.entities.Language;
 import com.furkanisitan.countrycityapi.model.requests.CityCreateRequest;
 import com.furkanisitan.countrycityapi.model.requests.CityUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class CitiesController implements CitiesApi {
                                  @RequestParam(required = false) Integer page,
                                  @RequestParam(required = false) Integer size) {
 
-        var criteria = RequestCriteria.of(Language.class, page, size, sort, filter);
+        var criteria = RequestCriteria.of(City.class, page, size, sort, filter);
         return ResponseEntities.ok(cityService.findAll(criteria));
     }
 

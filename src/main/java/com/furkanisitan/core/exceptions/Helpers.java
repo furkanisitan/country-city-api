@@ -13,7 +13,7 @@ interface Helpers {
      * @param name       the name of the not found record.
      * @param parameters query parameters key-value pairs.
      * @return a message stating that the record not found.
-     * @implNote example output could be like this: Record not found for parameters {id:'1'}.
+     * @implNote example output could be like this: Record not found for parameters (id:'1').
      */
     @SafeVarargs
     static String notFound(String name, Pair<String, Object>... parameters) {
