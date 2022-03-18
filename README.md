@@ -1,5 +1,5 @@
 # country-city-api
-An example RESTful API that manages country, city and languages for Spring Boot.
+An example RESTful API that manages countries, cities and languages for Spring Boot.
 
 - applicationUrl: `http://localhost:8080`
 
