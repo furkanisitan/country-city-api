@@ -81,6 +81,20 @@ paths:
               $ref: '#/components/schemas/LanguageUpdateRequest'
         required: true
       responses:
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                unique:
+                  description: "fieldName: code"
+                  value:
+                    success: false
+                    message: A unique constraint error has occurred.
+                    errors:
+                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
         "400":
           description: Bad Request
           content:
@@ -111,20 +125,6 @@ paths:
                     - "{field}: it doesn't match {param} in the route."
         "204":
           description: No Content
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                unique:
-                  description: "fieldName: code"
-                  value:
-                    success: false
-                    message: A unique constraint error has occurred.
-                    errors:
-                    - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
         "404":
           description: Not Found
           content:
@@ -196,6 +196,7 @@ paths:
                   name: Turkey
                   code: TR
                   lifeExpectancy: 78.6
+                  continent: EUROPE
                   languages:
                   - languageId: 1
                     languageName: Turkish
@@ -267,6 +268,22 @@ paths:
                     message: Invalid bad request.
                     errors:
                     - "{field}: it doesn't match {param} in the route."
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: Country"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
         "409":
           description: Conflict
           content:
@@ -288,22 +305,6 @@ paths:
                     message: A foreign key constraint error has occurred.
                     errors:
                     - "{key}: the foreign key does not exist. (rejectedValue: {value})"
-        "204":
-          description: No Content
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: "recordName: Country"
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                    - "{recordName} not found for parameters (id='55')."
     delete:
       tags:
       - Countries
@@ -347,20 +348,6 @@ paths:
           type: integer
           format: int64
       responses:
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: "recordName: City"
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                    - "{recordName} not found for parameters (id='55')."
         "200":
           description: OK
           content:
@@ -379,6 +366,20 @@ paths:
                     code: TR
                     name: Turkey
                     lifeExpectancy: 78.6
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: City"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
     put:
       tags:
       - Cities
@@ -398,22 +399,20 @@ paths:
               $ref: '#/components/schemas/CityUpdateRequest'
         required: true
       responses:
-        "404":
-          description: Not Found
+        "409":
+          description: Conflict
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Result'
               examples:
-                no record:
-                  description: "recordName: City"
+                foreign key:
+                  description: "key: countryCode"
                   value:
                     success: false
-                    message: The resource not found.
+                    message: A foreign key constraint error has occurred.
                     errors:
-                    - "{recordName} not found for parameters (id='55')."
-        "204":
-          description: No Content
+                    - "{key}: the foreign key does not exist. (rejectedValue: {value})"
         "400":
           description: Bad Request
           content:
@@ -449,33 +448,8 @@ paths:
                     message: Invalid bad request.
                     errors:
                     - "{field}: it doesn't match {param} in the route."
-        "409":
-          description: Conflict
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                foreign key:
-                  description: "key: countryCode"
-                  value:
-                    success: false
-                    message: A foreign key constraint error has occurred.
-                    errors:
-                    - "{key}: the foreign key does not exist. (rejectedValue: {value})"
-    delete:
-      tags:
-      - Cities
-      summary: Deletes a specific city.
-      operationId: delete_2
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
+        "204":
+          description: No Content
         "404":
           description: Not Found
           content:
@@ -490,8 +464,35 @@ paths:
                     message: The resource not found.
                     errors:
                     - "{recordName} not found for parameters (id='55')."
+    delete:
+      tags:
+      - Cities
+      summary: Deletes a specific city.
+      operationId: delete_2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
         "204":
           description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: City"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
   /api/languages:
     get:
       tags:
@@ -606,20 +607,6 @@ paths:
                   id: 1
                   name: Turkish
                   code: tr
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: "fieldName: code | name"
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                    - "{fieldName}: must not be blank."
         "409":
           description: Conflict
           content:
@@ -634,6 +621,20 @@ paths:
                     message: A unique constraint error has occurred.
                     errors:
                     - "{fieldName}: must be unique. (rejectedValue: {fieldValue})"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
   /api/countries:
     get:
       tags:
@@ -668,6 +669,21 @@ paths:
           type: integer
           format: int32
       responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                - id: 1
+                  name: Turkey
+                  code: TR
+                  lifeExpectancy: 78.6
+                  continent: EUROPE
         "400":
           description: Bad Request
           content:
@@ -704,20 +720,6 @@ paths:
                     errors:
                     - "{field}: the {operator} operator is not supported for this\
                       \ field."
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultData'
-              example:
-                success: true
-                message: The request has been processed successfully.
-                payload:
-                - id: 1
-                  name: Turkey
-                  code: TR
-                  lifeExpectancy: 78.6
     post:
       tags:
       - Countries
@@ -730,6 +732,46 @@ paths:
               $ref: '#/components/schemas/CountryCreateRequest'
         required: true
       responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              description: Location of the newly created resource.
+              style: simple
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: Resource(s) added successfully.
+                payload:
+                  id: 1
+                  name: Turkey
+                  code: TR
+                  lifeExpectancy: 78.6
+                  continent: EUROPE
+                  languages:
+                  - languageId: 1
+                    languageName: Turkish
+                    languageCode: tr
+                    official: true
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                blank:
+                  description: "fieldName: code | name"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must not be blank."
         "409":
           description: Conflict
           content:
@@ -751,45 +793,6 @@ paths:
                     message: A foreign key constraint error has occurred.
                     errors:
                     - "{key}: the foreign key does not exist. (rejectedValue: {value})"
-        "201":
-          description: Created
-          headers:
-            Location:
-              description: Location of the newly created resource.
-              style: simple
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultData'
-              example:
-                success: true
-                message: Resource(s) added successfully.
-                payload:
-                  id: 1
-                  name: Turkey
-                  code: TR
-                  lifeExpectancy: 78.6
-                  languages:
-                  - languageId: 1
-                    languageName: Turkish
-                    languageCode: tr
-                    official: true
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                blank:
-                  description: "fieldName: code | name"
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                    - "{fieldName}: must not be blank."
   /api/cities:
     get:
       tags:
@@ -824,6 +827,20 @@ paths:
           type: integer
           format: int32
       responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultData'
+              example:
+                success: true
+                message: The request has been processed successfully.
+                payload:
+                - id: 1
+                  name: Ankara
+                  population: 5747325
+                  countryId: 1
         "400":
           description: Bad Request
           content:
@@ -860,20 +877,6 @@ paths:
                     errors:
                     - "{field}: the {operator} operator is not supported for this\
                       \ field."
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResultData'
-              example:
-                success: true
-                message: The request has been processed successfully.
-                payload:
-                - id: 1
-                  name: Ankara
-                  population: 5747325
-                  countryId: 1
     post:
       tags:
       - Cities
@@ -886,27 +889,20 @@ paths:
               $ref: '#/components/schemas/CityCreateRequest'
         required: true
       responses:
-        "400":
-          description: Bad Request
+        "409":
+          description: Conflict
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Result'
               examples:
-                blank:
-                  description: "fieldName: name | countryCode"
+                foreign key:
+                  description: "key: countryCode"
                   value:
                     success: false
-                    message: Invalid bad request.
+                    message: A foreign key constraint error has occurred.
                     errors:
-                    - "{fieldName}: must not be blank."
-                positive:
-                  description: "fieldName: population"
-                  value:
-                    success: false
-                    message: Invalid bad request.
-                    errors:
-                    - "{fieldName}: must be greater than 0."
+                    - "{key}: the foreign key does not exist. (rejectedValue: {value})"
         "201":
           description: Created
           headers:
@@ -931,20 +927,27 @@ paths:
                     code: TR
                     name: Turkey
                     lifeExpectancy: 78.6
-        "409":
-          description: Conflict
+        "400":
+          description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Result'
               examples:
-                foreign key:
-                  description: "key: countryCode"
+                blank:
+                  description: "fieldName: name | countryCode"
                   value:
                     success: false
-                    message: A foreign key constraint error has occurred.
+                    message: Invalid bad request.
                     errors:
-                    - "{key}: the foreign key does not exist. (rejectedValue: {value})"
+                    - "{fieldName}: must not be blank."
+                positive:
+                  description: "fieldName: population"
+                  value:
+                    success: false
+                    message: Invalid bad request.
+                    errors:
+                    - "{fieldName}: must be greater than 0."
   /api/countries/{id}/cities:
     get:
       tags:
@@ -959,20 +962,6 @@ paths:
           type: integer
           format: int64
       responses:
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-              examples:
-                no record:
-                  description: "recordName: Country"
-                  value:
-                    success: false
-                    message: The resource not found.
-                    errors:
-                    - "{recordName} not found for parameters (id='55')."
         "200":
           description: OK
           content:
@@ -987,6 +976,20 @@ paths:
                   name: Ankara
                   population: 5747325
                   countryId: 1
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+              examples:
+                no record:
+                  description: "recordName: Country"
+                  value:
+                    success: false
+                    message: The resource not found.
+                    errors:
+                    - "{recordName} not found for parameters (id='55')."
 components:
   schemas:
     LanguageUpdateRequest:
@@ -1031,6 +1034,7 @@ components:
     CountryUpdateRequest:
       required:
       - code
+      - continent
       - id
       - name
       type: object
@@ -1049,6 +1053,17 @@ components:
           type: number
           format: double
           example: 78.6
+        continent:
+          type: string
+          example: EUROPE
+          enum:
+          - AFRICA
+          - ANTARCTICA
+          - ASIA
+          - AUSTRALIA
+          - EUROPE
+          - NORTH_AMERICA
+          - SOUTH_AMERICA
         languages:
           type: array
           items:
@@ -1102,6 +1117,7 @@ components:
     CountryCreateRequest:
       required:
       - code
+      - continent
       - name
       type: object
       properties:
@@ -1115,6 +1131,17 @@ components:
           type: number
           format: double
           example: 78.6
+        continent:
+          type: string
+          example: EUROPE
+          enum:
+          - AFRICA
+          - ANTARCTICA
+          - ASIA
+          - AUSTRALIA
+          - EUROPE
+          - NORTH_AMERICA
+          - SOUTH_AMERICA
         languages:
           type: array
           items:
