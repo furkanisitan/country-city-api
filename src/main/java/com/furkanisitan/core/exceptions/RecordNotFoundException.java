@@ -14,7 +14,7 @@ public class RecordNotFoundException extends RuntimeException {
     private final Pair<String, Object>[] parameters;
 
     /**
-     * Creates a new RecordNotFoundException.
+     * Creates a new {@link RecordNotFoundException}.
      *
      * @param name       the name of record.
      * @param parameters the names and values of the parameters used in the query.

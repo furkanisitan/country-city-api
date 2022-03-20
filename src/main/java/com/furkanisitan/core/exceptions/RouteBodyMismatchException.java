@@ -6,7 +6,7 @@ package com.furkanisitan.core.exceptions;
 public class RouteBodyMismatchException extends RuntimeException {
 
     /**
-     * Creates a new RouteBodyMismatchException.
+     * Creates a new {@link RouteBodyMismatchException}.
      *
      * @param routeName The name of the value in the route.
      */
@@ -15,7 +15,7 @@ public class RouteBodyMismatchException extends RuntimeException {
     }
 
     /**
-     * Creates a new RouteBodyMismatchException.
+     * Creates a new {@link RouteBodyMismatchException}.
      *
      * @param routeName    The name of the value in the route.
      * @param propertyName The name of the value in the body.

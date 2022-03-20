@@ -6,7 +6,7 @@ package com.furkanisitan.core.exceptions;
 public class CreateInstanceException extends RuntimeException {
 
     /**
-     * Creates a new CreateInstanceException.
+     * Creates a new {@link CreateInstanceException}.
      *
      * @param message the exception message.
      */

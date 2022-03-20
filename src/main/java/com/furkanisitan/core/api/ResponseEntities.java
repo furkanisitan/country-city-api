@@ -12,18 +12,18 @@ public class ResponseEntities {
     /**
      * Creates a {@link ResponseEntity} object that produces a @link {@link HttpStatus#OK}} response without value.
      *
-     * @return The created {@link ResponseEntity} for the response.
+     * @return the created {@link ResponseEntity} for the response.
      */
     public static ResponseEntity<Object> ok() {
         return ResponseEntity.ok(Result.ok(ResponseMessages.OK));
     }
 
     /**
-     * Creates a {@link ResponseEntity} object that produces a  {@link HttpStatus#OK} response with value.
+     * Creates a {@link ResponseEntity} object that produces a {@link HttpStatus#OK} response with value.
      *
-     * @param value The content value to format in the entity body.
-     * @param <T>   The type of value.
-     * @return The created {@link ResponseEntity} for the response.
+     * @param value the content value to format in the entity body.
+     * @param <T>   the type of value.
+     * @return the created {@link ResponseEntity} for the response.
      */
     public static <T> ResponseEntity<Object> ok(T value) {
         return ResponseEntity.ok(
@@ -33,10 +33,10 @@ public class ResponseEntities {
     /**
      * Creates a {@link ResponseEntity} object that produces a {@link HttpStatus#CREATED} response with value.
      *
-     * @param uri   The URI at which the content has been created.
-     * @param value The content value to format in the entity body.
-     * @param <T>   The type of value.
-     * @return The created {@link ResponseEntity} for the response.
+     * @param uri   the URI at which the content has been created.
+     * @param value the content value to format in the entity body.
+     * @param <T>   the type of value.
+     * @return the created {@link ResponseEntity} for the response.
      */
     public static <T> ResponseEntity<Object> created(URI uri, T value) {
         return ResponseEntity.created(uri).body(
@@ -46,7 +46,7 @@ public class ResponseEntities {
     /**
      * Creates a {@link ResponseEntity} object that produces a {@link HttpStatus#NO_CONTENT}.
      *
-     * @return The created {@link ResponseEntity} for the response.
+     * @return the created {@link ResponseEntity} for the response.
      */
     public static ResponseEntity<Object> noContent() {
         return ResponseEntity.noContent().build();

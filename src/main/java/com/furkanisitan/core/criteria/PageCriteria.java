@@ -15,8 +15,8 @@ import java.util.List;
 @Getter
 public final class PageCriteria {
 
-    private static final Integer DEFAULT_PAGE = 0;
-    private static final Integer DEFAULT_SIZE = 20;
+    public static final Integer DEFAULT_PAGE = 0;
+    public static final Integer DEFAULT_SIZE = 20;
 
     private final Pageable pageable;
     private final Sort sort;
@@ -54,7 +54,7 @@ public final class PageCriteria {
     /**
      * Creates a {@link Sort} instance by {@literal sort} array.
      *
-     * @param clazz clazz the {@link Class} instance of {@literal T}.
+     * @param clazz the {@link Class} instance of {@literal T}.
      * @param sort  a {@link String} array containing the field names and directions.
      * @param <T>   the type of class.
      * @return a {@link Sort} instance.

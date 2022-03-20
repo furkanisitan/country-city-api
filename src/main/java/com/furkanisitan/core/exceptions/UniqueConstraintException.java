@@ -13,7 +13,7 @@ public class UniqueConstraintException extends RuntimeException {
     private final Object value;
 
     /**
-     * Creates a new UniqueConstraintException.
+     * Creates a new {@link UniqueConstraintException}.
      *
      * @param name  the name of the unique field.
      * @param value the rejected value.

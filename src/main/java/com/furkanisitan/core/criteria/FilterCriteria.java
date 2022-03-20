@@ -31,7 +31,7 @@ public final class FilterCriteria {
     /**
      * Creates a {@link FilterCriteria} instance.
      *
-     * @param clazz  clazz the {@link Class} instance of {@literal T}.
+     * @param clazz  the {@link Class} instance of {@literal T}.
      * @param filter the query parameter.
      * @param <T>    the type of class.
      * @return a {@link FilterCriteria} instance.
@@ -54,7 +54,7 @@ public final class FilterCriteria {
     /**
      * Returns a list of {@link  FilterCriteria}.
      *
-     * @param clazz  clazz the {@link Class} instance of {@literal T}.
+     * @param clazz  the {@link Class} instance of {@literal T}.
      * @param filter a {@link String} array containing the filter texts.
      * @param <T>    the type of class.
      * @return a list of {@link  FilterCriteria}.

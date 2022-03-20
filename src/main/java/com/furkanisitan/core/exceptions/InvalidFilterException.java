@@ -12,7 +12,7 @@ public class InvalidFilterException extends RuntimeException {
     private final String filter;
 
     /**
-     * Creates a new InvalidFilterException.
+     * Creates a new {@link InvalidFilterException}.
      *
      * @param filter the query parameter.
      */

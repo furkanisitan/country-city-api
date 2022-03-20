@@ -13,7 +13,7 @@ public class InvalidFieldException extends RuntimeException {
     private final String name;
 
     /**
-     * Creates a new InvalidFieldException.
+     * Creates a new {@link InvalidFieldException}.
      *
      * @param name the field name.
      */

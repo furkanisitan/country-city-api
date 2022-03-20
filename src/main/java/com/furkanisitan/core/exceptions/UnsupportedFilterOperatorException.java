@@ -14,7 +14,7 @@ public class UnsupportedFilterOperatorException extends RuntimeException {
     private final FilterOperator operator;
 
     /**
-     * Creates a new UnsupportedFilterOperatorException.
+     * Creates a new {@link UnsupportedFilterOperatorException}.
      *
      * @param field    the field name.
      * @param operator the filter operator.

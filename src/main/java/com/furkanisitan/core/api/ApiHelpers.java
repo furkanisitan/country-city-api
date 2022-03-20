@@ -9,10 +9,8 @@ import java.util.Objects;
 public interface ApiHelpers {
 
     /**
-     * @param routeValue    The route value.
-     * @param propertyValue The property value in the request body.
-     * @param routeName     The name of the value in the route.
-     * @param propertyName  The name of the value in the body.
+     * Validates that the {@literal routeValue} and {@literal propertyValue} are equal.
+     *
      * @throws RouteBodyMismatchException if {@literal routeValue} and {@literal propertyValue} are not equal.
      */
     static void validateMismatch(Long routeValue, Long propertyValue, String routeName, String propertyName) {
@@ -30,9 +28,9 @@ public interface ApiHelpers {
     }
 
     /**
-     * Creates a URI from {@literal info}.
+     * Creates a {@link URI} from {@literal info}.
      *
-     * @param info Either the value returned from a "mock" controller invocation or the "mock" controller itself after an invocation.
+     * @param info either the value returned from a "mock" controller invocation or the "mock" controller itself after an invocation.
      * @return a {@link URI}.
      * @see MvcUriComponentsBuilder#on(Class)
      * @see MvcUriComponentsBuilder#controller(Class)

@@ -13,7 +13,7 @@ public class InvalidFilterOperatorException extends RuntimeException {
     private final String operator;
 
     /**
-     * Creates a new InvalidFilterOperatorException.
+     * Creates a new {@link InvalidFilterOperatorException}.
      *
      * @param operator the text for {@link FilterOperator}.
      */

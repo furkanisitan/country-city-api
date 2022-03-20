@@ -18,7 +18,7 @@ interface Helpers {
     /**
      * Creates an error list from {@literal violations}.
      *
-     * @param violations the set of ConstraintViolation.
+     * @param violations the set of {@link ConstraintViolation}.
      * @return a {@link String} array containing error messages.
      */
     static String[] buildErrors(Set<ConstraintViolation<?>> violations) {

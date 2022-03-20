@@ -13,7 +13,7 @@ public class InvalidValueException extends RuntimeException {
     private final String value;
 
     /**
-     * Creates a new InvalidValueException.
+     * Creates a new {@link InvalidValueException}.
      *
      * @param field the field name.
      * @param value the value for query.

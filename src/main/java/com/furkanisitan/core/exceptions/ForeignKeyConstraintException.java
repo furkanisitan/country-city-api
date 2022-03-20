@@ -13,7 +13,7 @@ public class ForeignKeyConstraintException extends RuntimeException {
     private final Object value;
 
     /**
-     * Creates a new ForeignKeyConstraintException.
+     * Creates a new {@link ForeignKeyConstraintException}.
      *
      * @param name  the name of foreign key.
      * @param value the value of foreign key.

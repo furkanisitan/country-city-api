@@ -13,7 +13,7 @@ public class NoSuchDeclaredFieldException extends RuntimeException {
     private final String name;
 
     /**
-     * Creates a new NoSuchDeclaredFieldException.
+     * Creates a new {@link NoSuchDeclaredFieldException}.
      *
      * @param name the field name.
      */
