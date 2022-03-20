@@ -70,7 +70,7 @@ The following characters are used to specify the query operator of the filtering
 ###### Samples
 
 - `name%a,population>300000`
-- `continent:EUROPE<t,name%f`
+- `continent:EUROPE,name%f`
 
 > If more than one filter expression is given these expressions are combined with the `and` operator.
 
