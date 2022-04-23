@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@javax.persistence.Entity
+@Entity
 @Table(name = "country_languages")
 public class CountryLanguage extends CompositeEntity<CountryLanguageId> {
 

@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@javax.persistence.Entity
+@Entity
 @Table(name = "countries")
 @AttributeOverride(name = "id", column = @Column(name = "country_id", nullable = false))
 public class Country extends BaseEntity<Long> implements HasUtility<CountryUtility> {

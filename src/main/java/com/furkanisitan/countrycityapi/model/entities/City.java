@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@javax.persistence.Entity
+@Entity
 @Table(name = "cities")
 @AttributeOverride(name = "id", column = @Column(name = "city_id", nullable = false))
 public class City extends BaseEntity<Long> {

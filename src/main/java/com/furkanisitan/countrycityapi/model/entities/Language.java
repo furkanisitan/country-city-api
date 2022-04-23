@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@javax.persistence.Entity
+@Entity
 @Table(name = "languages")
 @AttributeOverride(name = "id", column = @Column(name = "language_id", nullable = false))
 public class Language extends BaseEntity<Long> {
