@@ -5,7 +5,6 @@ import com.furkanisitan.core.exceptions.RecordNotFoundException;
 import com.furkanisitan.core.exceptions.UniqueConstraintException;
 import com.furkanisitan.core.model.Entity;
 import com.furkanisitan.core.utils.ExampleUtils;
-import com.furkanisitan.countrycityapi.model.responses.CityResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.util.Pair;
 
